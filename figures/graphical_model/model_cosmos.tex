@@ -1,0 +1,125 @@
+% model_pca2.tex
+%
+% Copyright (C) 2010,2011 Laura Dietz
+% Copyright (C) 2012 Jaakko Luttinen
+%
+% The MIT License
+%
+% See LICENSE file for more details.
+
+% PCA model
+
+%\beginpgfgraphicnamed{model-pca}
+\begin{tikzpicture}
+
+  % Define nodes
+
+  % Y
+  \node[obs]          (D)   {$D$}; %
+
+  % W and X
+  \node[det, above=of D]            (md) {$\mu^D$} ; % 
+  \node[latent, above=of md] (w)   {$w$}; %
+  \node[latent, above=of md, left=of w]  (h)   {$h$}; %
+  \node[latent, above=of md, left=of h]  (b)   {$b$}; %
+  \node[latent, above=of md, right=of w]  (x)   {$x$}; %
+  \node[latent, above=of md, right=of x] (y)   {$y$}; %
+
+  % b hyperparameters
+  \node[const, above=2.8 of b, xshift=-0.5cm] (mb) {$\mu^b$} ; %
+  \node[const, above=3.5 of b, xshift=0.5cm]  (bb) {$\beta^b$} ; %
+
+  % h hyperparameters
+  \node[const, above=3.5 of h, xshift=-0.5cm] (mh) {$\mu^h$} ; %
+  \node[const, above=3.5 of h, xshift=0.5cm]  (bh) {$\beta^h$} ; %
+
+  % w hyperparameters
+  \node[const, above=3.5 of w, xshift=-0.5cm] (mw) {$\mu^w$} ; %
+  \node[const, above=3.5 of w, xshift=0.5cm]  (nw) {$\nu^w$} ; %
+
+  % xy hyperparameters
+  \node[const, above=3.5 of x, xshift=-0.1cm] (mxy) {$\mu^{x,y}=0$} ; %
+  \node[const, above=3.5 of y, xshift=0.1cm] (pr) {$(2,proximity)$} ; %
+  \node[det, above=1.4 of y]  (nxy) {$\nu^{x,y}$} ; %
+
+  % Factors
+  \factor[above=of D] {D-f} {left:$\mathcal{G}$} {} {} ; %
+  \factor[above=0.6 of b] {b-f} {left:$\mathcal{G}$} {mb,bb} {b} ; %
+  \factor[above=0.6 of h] {h-f} {left:$\mathcal{G}$} {mh,bh} {h} ; %
+  \factor[above=0.6 of w] {w-f} {left:$\mathcal{B}$} {mw,nw} {w} ; %
+  \factor[above=0.6 of x] {x-f} {left:$\mathcal{B}$} {mxy,nxy} {x} ; %
+  \factor[above=0.6 of y] {y-f} {left:$\mathcal{B}$} {mxy,nxy} {y} ; %
+
+  % D hyperparameters
+  \node[const, right=8 of D-f] (g) {gain} ; %
+
+  % m and theta
+  \node[latent, right=of y-f] (m)   {$m$}; %
+  \node[latent, above=0.5 of m] (t)   {$\theta$}; %
+
+  % m and theta hyperparameters
+  \node[det, right=1. of m]        (pm) {$\pi^m$} ; %
+  \node[det, right=1. of t]        (pt) {$\pi^\theta$} ; %
+  \node[const, right=of pt] (pz) {$\pi^z$} ; %
+  \node[const, right=of pm] (lj) {$\lambda^j$} ; %
+
+  % theta hyperparameters
+  %\node[const, right=1.2 of t] (pt) {$\pi^\theta(\pi^z,\lambda^j)$} ; %
+
+  % noise
+  %\node[latent, right=2.5cm of y-f]         (t)   {$\tau$}; %
+  %\node[const, above=of t, xshift=-0.5cm] (at)  {$\alpha_\tau$} ; %
+  %\node[const, above=of t, xshift=0.5cm]  (bt)  {$\beta_\tau$} ; %
+
+  % Factors
+  \factor[right=of m] {m-f} {above:$\mathcal{C}$} {pm} {m} ; %
+  \factor[right=of t] {t-f} {above:$\mathcal{C}$} {pt} {t} ; %
+  %\factor[above=of x] {x-f} {left:$\mathcal{N}$} {mx,ax} {x} ; %
+  %\factor[above=of t] {t-f} {left:$\mathcal{G}$} {at,bt} {t} ; %
+  %\factoredge {dot,t} {y-f} {y} ; %
+
+  \gate {m-gate} {(h-f)(h-f-caption)(h-f)(h-f-caption)(w-f)(w-f-caption)(x-f)(x-f-caption)(y-f)(y-f-caption)} {m}
+
+  % Connect w and x to the dot node
+  \factoredge[-] {g,md} {D-f} {D} ;
+  \edge[-] {b,h,w,x,y} {md} ;
+  \edge[-] {pz,lj,m} {pt} ;
+  \edge[-] {pz,lj} {pm} ;
+  \edge[-] {t,pr} {nxy} ;
+
+  % Plates
+  \plate {K} { %
+    (h)(h-f)(h-f-caption) %
+    (w)(w-f)(w-f-caption) %
+    (x)(x-f)(x-f-caption) %
+    (y)(y-f)(y-f-caption) %
+    (m-gate) %
+    (nxy)
+  } {$\forall k \in \{ 1..K \}$} ;
+  \plate {F} { %
+    (K)
+    (t)(t-f)(t-f-caption)(pt) %
+    (m)(m-f)(m-f-caption)(pm) %
+    (b)(b-f)(b-f-caption) %
+    (md) %
+    (D)(D-f)(D-f-caption) %
+  } {$\forall f \in \{ 1..F \}$} ;
+  \plate {N} { %
+    (F)
+    (mb)
+  } {$\forall n \in \{ 1..N \}$} ;
+  %\plate {} {%
+    %(y)(y-f)(y-f-caption) %
+    %(w)(w-f)(w-f-caption) %
+    %(dot) %
+    %(yx.north west)(yx.south west) %
+  %} {$M$} ;
+
+\end{tikzpicture}
+%\endpgfgraphicnamed
+
+%%% Local Variables: 
+%%% mode: tex-pdf
+%%% TeX-master: "example"
+%%% End: 
+

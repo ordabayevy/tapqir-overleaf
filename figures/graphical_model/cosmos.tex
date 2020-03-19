@@ -1,0 +1,37 @@
+% example.tex
+%
+% Copyright (C) 2010,2011 Laura Dietz
+% Copyright (C) 2012 Jaakko Luttinen
+%
+% The MIT License
+%
+% See LICENSE file for more details.
+
+\documentclass[landscape]{article}
+
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+%\pgfrealjobname{example} % name of this file
+
+% \title{Factor Graph Model for Bayesian Analysis of CoSMoS Data}
+% \author{Yerdos Ordabayev}
+
+\begin{document}
+
+% \maketitle
+
+
+% CoSMoS Model 
+\begin{figure}[ht]
+  \begin{center}
+    \input{model_cosmos}
+  \end{center}
+  % \caption{Spot Model + Noise Model for multiple AoIs.}
+\end{figure}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: tex-pdf
+%%% TeX-master: t
+%%% End: 

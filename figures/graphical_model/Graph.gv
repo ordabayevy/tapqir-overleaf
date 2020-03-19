@@ -1,0 +1,60 @@
+graph {
+	subgraph clusterN {
+		label=N
+		subgraph clusterF {
+			p_h [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			p_w [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			p_x [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			p_b [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			p_m [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			p_theta [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			label=F rank=same
+			b [shape=circle]
+			m [shape=circle]
+			theta [label=<&theta;> shape=circle]
+			subgraph clusterK {
+				label=K rank=same
+				h [shape=circle]
+				w [shape=circle]
+				x [shape=circle]
+			}
+			mu [label=<&mu;> shape=diamond]
+			p_D [label="" fillcolor=black fixedsize=shape height=0.15 shape=box style=filled width=0.15]
+			D [shape=circle]
+		}
+	}
+	{
+		rank=same
+		h_mean [label=<&mu;<sub>h</sub>> shape=plain]
+		h_beta [label=<&beta;<sub>h</sub>> shape=plain]
+		x_mode [label=<&mu;<sub>x</sub>=0> shape=plain]
+		x_size [label=<&sigma;<sub>x</sub>=[2, 280]> shape=plain]
+		w_mode [label=<&mu;<sub>w</sub>> shape=plain]
+		w_size [label=<&sigma;<sub>w</sub>> shape=plain]
+		gain [label=gain shape=plain]
+		offset [label=offset shape=plain]
+	}
+	h_mean -- p_h
+	h_beta -- p_h
+	x_mode -- p_x
+	x_size -- p_x
+	w_mode -- p_w
+	w_size -- p_w
+	p_m -- m
+	m -- p_theta
+	p_theta -- theta
+	theta -- p_x
+	theta -- p_w
+	p_b -- b
+	p_h -- h
+	p_w -- w
+	p_x -- x
+	b -- mu
+	h -- mu
+	w -- mu
+	x -- mu
+	mu -- p_D
+	p_D -- D
+	gain -- p_D
+	offset -- p_D
+}
