@@ -39,7 +39,7 @@
 
   % xy hyperparameters
   \node[const, above=3.5 of x, xshift=-0.1cm] (mxy) {$\mu^{x,y}=0$} ; %
-  \node[const, above=3.5 of y, xshift=0.1cm] (pr) {$(2,proximity)$} ; %
+  \node[const, above=3.5 of y, xshift=0.1cm] (pr) {$\nu_{flat},\nu_{prox}$} ; %
   \node[det, above=1.4 of y]  (nxy) {$\nu^{x,y}$} ; %
 
   % Factors
@@ -83,8 +83,8 @@
   % Connect w and x to the dot node
   \factoredge[-] {g,md} {D-f} {D} ;
   \edge[-] {b,h,w,x,y} {md} ;
-  \edge[-] {pz,lj,m} {pt} ;
-  \edge[-] {pz,lj} {pm} ;
+  \edge[-] {pz} {pt} ;
+  \edge[-] {lj,t} {pm} ;
   \edge[-] {t,pr} {nxy} ;
 
   % Plates
