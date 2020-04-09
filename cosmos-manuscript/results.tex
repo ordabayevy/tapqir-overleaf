@@ -2,7 +2,7 @@
 
 \subsection{Multi-wavelength single-molecule co-localization (CoSMoS) methods}
 
-We aim to improve methods for elucidating the molecular mechanisms of biochemical processes in vitro using multi-wavelength single-molecule fluorescence colocalization microscopy. For brevity, we call this experimental method CoSMoS (“colocalization single-molecule spectroscopy”). The key features of a CoSMoS experiment include: 1) One species of fluorescently labeled molecule (called the “target”) is tethered to the surface. Targets are immobilized at a surface density sufficiently low that the mean nearest-neighbor distance is large relative to the point-spread function (i.e., the diffraction-limited spot size) of the microscope. 2) Molecules, each species labeled with a different dye color, are added to the solution over the surface, typically at concentrations < 1 $\mu$M. When these “binder” molecules are freely diffusing in solution, they are invisible in TIRF. In contrast, when they are bound to the target, single binder molecules are detected as discrete fluorescent spots (Figure 1). The combination of features 1 and 2 means that formation of an individual binder-target complex is detected as spot appearance; dissociation of a binder-target complex is detected as spot disappearance \citep{Friedman2006-kb, Friedman2015-nx}.
+We aim to improve methods for elucidating the molecular mechanisms of biochemical processes \textit{in vitro} using multi-wavelength single-molecule fluorescence colocalization microscopy. For brevity, we call this experimental method CoSMoS (“colocalization single-molecule spectroscopy”). The key features of a CoSMoS experiment include: 1) One species of fluorescently labeled molecule (called the “target”) is tethered to the surface. Targets are immobilized at a surface density sufficiently low that the mean nearest-neighbor distance is large relative to the point-spread function (i.e., the diffraction-limited spot size) of the microscope. 2) Molecules, each species labeled with a different dye color, are added to the solution over the surface, typically at concentrations < 1 $\mu$M. When these “binder” molecules are freely diffusing in solution, they are invisible in TIRF. In contrast, when they are bound to the target, single binder molecules are detected as discrete fluorescent spots (Figure 1). The combination of features 1 and 2 means that formation of an individual binder-target complex is detected as spot appearance; dissociation of a binder-target complex is detected as spot disappearance \citep{Friedman2006-kb, Friedman2015-nx}.
 
 A representative CoSMoS experiment is illustrated by the example in Figure 1. In this experiment, we labeled the NusG protein with an orange dye. We then tethered to a microscope slide blue-dye-labeled DNA molecules at very low surface density (so that each molecule is resolved as a separate fluorescent spot) and observed real-time binding and dissociation of the other labeled molecules during the transcription process and its regulation.
 
@@ -17,9 +17,13 @@ A representative CoSMoS experiment is illustrated by the example in Figure 1. In
 %\figdata{This is another description of a data source.}\label{figdata:second}
 \end{figure}
 
-\subsection{Comparison of Bayesisan method with heuristic spot thresholding}
+\subsection{Comparison of Bayesian method with heuristic spot thresholding}
 
-We have done two types of performance comparison between the Bayesian method and the heuristic spot thresholding method. For the first performance comparison, a series of simulated data sets was constructed for a range of signal-to-noise values. For each S/N, a set of images with and without a 2-D Gaussian spots bound at the target and off-target were randomly generated. Intensity noise was generated using Gamma distribution to all simulated images.
+We have done two types of performance comparison between the Bayesian method and the heuristic spot thresholding method.
+
+\subsubsection{Simulated data}
+
+For the second performance comparison, a series of simulated data sets was constructed for a range of signal-to-noise values. For each S/N, a set of 7,500 images (15 AoIs, 500 frames) of 14 by 14 pixels shape were generated using our probabilistic generative model. Each image is a combination of the background intensity plus randomly sampled 2-D Gaussian spots bound at the target and off-target with the intensity noise generated according to Gamma distribution.
 
 Each data set was analyzed by both the Bayesian method and the heuristic spot thresholding algorithm (e.g., Figure 2, left). By comparison with the known “true” identities of the images, the accuracy of the resulting classifications was judged using a variety of specialized statistics for binary classification data, including true and false positive rates, true and false negative rates, and the Matthews Correlation Coefficient (MCC) \citep{Fawcett2006-bq, Matthews1975-rw}. The MCC statistic is widely regarded as a single overall, balanced measure which is meaningful even when the classes are of very different sizes. The MCC corresponds to the Pearson correlation coefficient between the estimated and “true” binary classifications. MCC=+1 represents a perfect prediction, MCC=0 a perfectly random prediction, and MCC=-1 indicates maximal disagreement between truth and estimation.
 
@@ -36,6 +40,10 @@ In a second comparison, images from real (i.e., not simulated) experimental data
 
 To solve the problems with existing CoSMoS data analysis methods identified above, we have developed a new image-analysis-based approach that is accurate, objective, and built on a rigorous statistical approach to the CoSMoS image analysis problem. This TIBSD method is based on probabilistic modeling methodology. Bayesian model is a statistical model where probability is used to represent all uncertainty within the model, both for observed and hidden quantities in a system of interest. Bayes' theorem allows to perform inference on hidden variables given the observed data. The proposed first use of these methods for CoSMoS allows straightforward estimates of the uncertainty for estimated model parameters and rigorous quantitative testing of alternative image, noise, and kinetic models. “Time-independent” in the name TIBSD indicates that we ignore the time dimension of the recording -- the order of the images is arbitrary and does not affect the model, as each image is considered statistically independent of the others. We note that this time-independent method can naturally be extended into a time-dependent approach to both more accurately analyze the images and to directly obtain information about molecular kinetic mechanisms.  The proposed methods will eliminate the need for subjective image inspection and minimize the manual work required for CoSMoS data analysis.
 
+\subsection{Bayesian inference}
+
+
+
 \subsection{Time-independent Bayesian Spot Discrimination (TIBSD) method for analysis of CoSMoS data}
 
 Unlike standard analysis methods for CoSMoS and single molecule FRET (smFRET), which are based on scalar intensity measurements derived from integration of emission in image regions of interest, our model fully uses information contained in the raw two-dimensional microscope images. The value of image data is proven in previous studies (Larry, Grunwald). To analyze the CoSMoS image classification problem within a Bayesian framework, one must define ideal image shapes for each class (image model) and choose a likelihood function for the observed data (noise model).
@@ -49,10 +57,10 @@ The CoSMoS data set consists of a set of images where we have $N$ target sites (
 In the TIBSD method, we model the observed image data as a mixture of background image and “spot” images of binder molecules superimposed on background image. In particular, background image is modeled as a constant average background intensity $b_{nf}$; each spot image (2D point spread function) is modelled as an ideal (i.e., noiseless) 2-D Gaussian spot with integrated scalar intensity $h_{nfk}$ centered at ($x_{nfk}, y_{nfk}$). Each image is represented as a matrix (2D-array) $\mu^D_{nfij}$ of $P \times P$ pixels ($i,j \in \{1,\dots,P\}$). 
 
 \textbf{\begin{equation*}
-    \mu^{D}_{nfij} = b_{nf} + \sum_{k=1}^{K} \dfrac{m_{nfk}h_{nfk}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}
+    \mu^{D}_{nfij} = b_{nf} + \sum_{k=1}^{K} \dfrac{h_{nfk}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}
 \end{equation*}}
 
-\subsubsection{Noise model}
+\subsubsection{Noise model (The likelihood function)}
 
  We use Gamma distribution as a noise model which is more flexible than Gaussian noise and can better approximate Poissonian camera noise. Scale parameter [add the variable name here?] of the Gamma distribution can be interpreted as a camera gain. Thus, the likelihood for the observed image can be expressed as:
  
