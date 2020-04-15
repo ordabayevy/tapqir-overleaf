@@ -2,14 +2,15 @@
 
 \subsection{Multi-wavelength single-molecule co-localization (CoSMoS) methods}
 
-We aim to improve methods for elucidating the molecular mechanisms of biochemical processes \textit{in vitro} using multi-wavelength single-molecule fluorescence colocalization microscopy. For brevity, we call this experimental method CoSMoS (“colocalization single-molecule spectroscopy”). The key features of a CoSMoS experiment include: 1) One species of fluorescently labeled molecule (called the “target”) is tethered to the surface. Targets are immobilized at a surface density sufficiently low that the mean nearest-neighbor distance is large relative to the point-spread function (i.e., the diffraction-limited spot size) of the microscope. 2) Molecules, each species labeled with a different dye color, are added to the solution over the surface, typically at concentrations < 1 $\mu$M. When these “binder” molecules are freely diffusing in solution, they are invisible in TIRF. In contrast, when they are bound to the target, single binder molecules are detected as discrete fluorescent spots (Figure 1). The combination of features 1 and 2 means that formation of an individual binder-target complex is detected as spot appearance; dissociation of a binder-target complex is detected as spot disappearance \citep{Friedman2006-kb, Friedman2015-nx}.
+We aim to improve methods for elucidating the molecular mechanisms of biochemical processes \textit{in vitro} using multi-wavelength single-molecule fluorescence colocalization microscopy. The key features of a CoSMoS experiment include: 1) One species of fluorescently labeled molecule (called the “target”) is tethered to the surface. Targets are immobilized at a surface density sufficiently low that the mean nearest-neighbor distance is large relative to the point-spread function (i.e., the diffraction-limited spot size) of the microscope.
+2) Molecules, each species labeled with a different dye color, are added to the solution over the surface, typically at concentrations < 1 $\mu$M. When these “binder” molecules are freely diffusing in solution, they are invisible in TIRF. In contrast, when they are bound to the target, single binder molecules are detected as discrete fluorescent spots (Figure \ref{fig:cosmos_experiment}). The combination of features 1 and 2 means that formation of an individual binder-target complex is detected as spot appearance; dissociation of a binder-target complex is detected as spot disappearance \citep{Friedman2006-kb, Friedman2015-nx}.
 
-A representative CoSMoS experiment is illustrated by the example in Figure 1. In this experiment, we labeled the NusG protein with an orange dye. We then tethered to a microscope slide blue-dye-labeled DNA molecules at very low surface density (so that each molecule is resolved as a separate fluorescent spot) and observed real-time binding and dissociation of the other labeled molecules during the transcription process and its regulation.
+The CoSMoS data set consists of a set of images where we have $N$ target sites ($n \in \{1,\dots,N\}$) each consisting of a series of $F$ different images in a recording ($f \in \{1,\dots,F\}$) (a “recording”). Each image is represented as a matrix (2D-array) of $P \times P$ pixel intensities ($i,j \in \{1,\dots,P\}$). We denote entire data set as a multi-dimensional array $D$ with the shape $N \times F \times P \times P$ where the value of a specific pixel intensity can be obtained by indexing as $D_{nfij}$. 
 
 \begin{figure}
 \includegraphics[width=\linewidth]{figures/figure1.jpg}
-\caption{Colocalization single molecule spectroscopy experiment. (A) Target molecules are localized in the blue channel and then on-target and off-target areas of interest are selected. (B) Movies of the binder molecule collected in the green channel. In selected AoI binder molecules can be on-target, off-target, or absent.}
-\label{fig:view}
+\caption{Co-localization single molecule spectroscopy experiment. (A) Target molecules are localized in the blue channel and then on-target and off-target areas of interest are selected. (B) Movies of the binder molecule collected in the green channel. In selected AoI binder molecules can be on-target, off-target, or absent.}
+\label{fig:cosmos_experiment}
 %% If the optional argument in the square brackets is "none", then the caption *will not appear in the main figure at all* and only the full caption will appear under the supplementary figure at the end of the manuscript.
 %\figsupp[Shorter caption for main text.]{This is a supplementary figure's full caption, which will be used at the end of the manuscript.}{\includegraphics[width=6cm]{frog}}\label{figsupp:sf1}
 %\figsupp{This is another supplementary figure.}{\includegraphics[width=6cm]{frog}}
@@ -17,119 +18,71 @@ A representative CoSMoS experiment is illustrated by the example in Figure 1. In
 %\figdata{This is another description of a data source.}\label{figdata:second}
 \end{figure}
 
-\subsection{Comparison of Bayesian method with heuristic spot thresholding}
+\subsection{Approach}
 
-We have done two types of performance comparison between the Bayesian method and the heuristic spot thresholding method.
+\subsubsection{Image model}
 
-\subsubsection{Simulated data}
+Distinctive feature of our approach is that we directly model 2D images at target sites which has not been previously done to our knowledge. CoSMoS images consist of background intensity and diffraction-limited spots. Local background intensity of the image is parameterized by scalar $b_{nf}$. We model the fluorescence spot as a 2D Gaussian which accurately approximates fluorescence microscope point spread function \citep{Zhang2007-rb}. Our model assumes that at maximum $K$ number of spots can be present in a single image. Each individual spot ($k \in \{1,\dots,K\}$) is parameterized by existence indicator ($m_{knf} \in \{0,1\}$), integrated spot intensity ($h_{knf}$), spot width ($w_{knf}$), and position relative to the target ($x_{knf},y_{knf}$). When the spot is absent ($m_{knf}=0$) the intensity is at the baseline level. The ideal shape of the image ($\mu^D_{nf}$) is calculated as the sum of the background intensity and 2D Gaussian spots present in the image. Figure shows ideal image shapes for cases when there are no spots (A), one spot (B), and two spots (C). Finally, each image has an index variable for the on-target spot ($\theta_{nf} \in \{0,1,\dots,K\}$) where zero means that the on-target spot is absent.
 
-For the second performance comparison, a series of simulated data sets was constructed for a range of signal-to-noise values. For each S/N, a set of 7,500 images (15 AoIs, 500 frames) of 14 by 14 pixels shape were generated using our probabilistic generative model. Each image is a combination of the background intensity plus randomly sampled 2-D Gaussian spots bound at the target and off-target with the intensity noise generated according to Gamma distribution.
+\subsubsection{Noise model}
 
-Each data set was analyzed by both the Bayesian method and the heuristic spot thresholding algorithm (e.g., Figure 2, left). By comparison with the known “true” identities of the images, the accuracy of the resulting classifications was judged using a variety of specialized statistics for binary classification data, including true and false positive rates, true and false negative rates, and the Matthews Correlation Coefficient (MCC) \citep{Fawcett2006-bq, Matthews1975-rw}. The MCC statistic is widely regarded as a single overall, balanced measure which is meaningful even when the classes are of very different sizes. The MCC corresponds to the Pearson correlation coefficient between the estimated and “true” binary classifications. MCC=+1 represents a perfect prediction, MCC=0 a perfectly random prediction, and MCC=-1 indicates maximal disagreement between truth and estimation.
+Scatter about the expected value of pixel intensity ($\mu^D_{nfij}$) is determined by photonic shot noise and the gain of the camera. Shot noise originates from a stochastic nature of photon counting which can be modeled by a Poisson process. Thus, the number of photons that fall on each pixel of the camera is Poisson distributed where variance of the signal equals the mean value. Gain is the camera setting that amplifies the signal from camera sensors. Our model uses Gamma distribution parameterized by mean intensity ($\mu^D_{nfij}$) and gain ($g$) to model the linear relationship between the expected value of the signal and the variance with which the signal scatter about its expected value. Figure shows images  where the ideal images were perturbed with Gamma noise as described above.
 
-In a second comparison, images from real (i.e., not simulated) experimental data recordings were analyzed (Figure 3). Over a range of S/N, the Bayesian method gave image classification accuracy (as quantified by the MCC) similar to (or possibly better than) the heuristic spot thresholding algorithm The Bayesian method performs as well as the best existing CoSMoS data analysis method. Furthermore, Bayesian method achieves this performance automatically, with no adjustable parameters whatsoever, unlike the heuristic spot picker which attains this level of performance only after careful subjective trial-and-error manual adjustment of its three threshold parameters, a process that must be repeated tediously for each data set analyzed. Finally, our new Bayesian method produces a spot probability estimate for each image (not merely a Boolean spot/no spot determination) that can be used to inform subsequent kinetics calculations based on the results (e.g., the HMM analysis).
+\subsubsection{Spot detection}
+
+Current spot detection methods produce binary outputs by using a bandpass-filter set by a user-specified intensity threshold \citep{Friedman2015-nx, Smith2019-yb}. To analyze the spot detection problem within the Bayesian framework we model spot intensities ($h_{knf}$) as a mixture of distribution of two classes with the hidden variable $m_{knf}$ specifying the identity of the class: a) no-spot baseline intensity distribution when $m_{knf}=0$ and b) spot intensity distribution of a binder molecule when $m_{knf}=1$.  This criterion ensures that fluctuations in background fluorescence are not
+recognized as binding events. Unlike previous methods, this approach assigns probabilities of belonging to each class.
+
+\subsubsection{Co-localization detection}
+
+We employ the similar approach to detect co-localization and model the center of the spot to be distributed according to a mixture of two distributions. Non-specific binding can occur anywhere within the image and thus have a uniform distribution across the AoI image. On the other hand, co-localized spot denoted by an index variable $\theta_{nf}$ is scattered around target location within the co-localization accuracy which is modeled by distribution centered on target and standard deviation equal to the co-localization accuracy. For detected spots co-localization detection determines probabilities of being on-target or off-target binding. This is especially important for images where the precision of estimation of the center of mass quickly deteriorates with the low SNR. This ensures that ... It is important to note that spot detection and co-localization are part of a single unified model, rather than separate steps of the analysis.
+
+Figure 3
 
 \begin{figure}[ht]
   \begin{center}
     \input{figures/graphical_model/model_cosmos}
   \end{center}
   \caption{Graphical model for the Bayesian classification model used in Pyro. The model has a modular structure consisting of three parts: classifier, the spot model, and the noise model. Hidden variables (circles) - background intensity ($b$), integrated intensity of the spot ($h$), width of the spot ($w$), position of the spot on the $x$-axis ($x$) and on the $y$-axis ($y$), existence indicator of spots ($m$), and index of the on-target spot ($\theta$). Observed variable (shaded circle) - image of the area of interest ($D$). Variables nested in plates are repeated for a number of times displayed at the bottom-right corner - target sites ($N$), frame count ($F$), number of spots in a single image ($K$). Densities are depicted as  small filled boxes. Deterministic functions are depicted as diamonds. Constants and hyperparameters are written without any borders. Gate (dashed box) represents variable activation conditioned on another variable.}
+  \label{fig:graph}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure2a.png}
+\includegraphics[width=\linewidth]{figures/figure2b.png}
+\includegraphics[width=\linewidth]{figures/figure2c.png}
+\caption{Co-localization single molecule spectroscopy experiment. (A) Target molecules are localized in the blue channel and then on-target and off-target areas of interest are selected. (B) Movies of the binder molecule collected in the green channel. In selected AoI binder molecules can be on-target, off-target, or absent.}
+\label{fig:view}
+\end{figure}
+
+\subsection{Comparison of Bayesian method with heuristic spot thresholding}
+
+We have done two types of performance comparison between the Bayesian method and the heuristic spot thresholding method.
+
+\subsubsection{Experimental data}
+
+For the first performance comparison, images from real (i.e., not simulated) experimental data recordings were analyzed. In this experiment, we labeled the NusG protein with an orange dye. We then tethered to a microscope slide blue-dye-labeled DNA molecules at very low surface density (so that each molecule is resolved as a separate fluorescent spot) and observed real-time binding and dissociation of the other labeled molecules during the transcription process and its regulation. The signal from the orange dye was split between short wavelength and long wavelength channels. The signal in the short wavelength channel was attenuated to varying degree to produce data sets with a range of SNR. Images from the long wavelength channel with high SNR were analyzed to determine "true" identities of the images.
+
+Each data set was analyzed by both the Bayesian method and the heuristic spot thresholding algorithm (Figure \ref{fig:real_data}). By comparison with the known “true” identities of the images, the accuracy of the resulting classifications was judged using a variety of specialized statistics for binary classification data, including true and false positive rates, true and false negative rates, and the Matthews Correlation Coefficient (MCC) \citep{Fawcett2006-bq, Matthews1975-rw}. The MCC statistic is widely regarded as a single overall, balanced measure which is meaningful even when the classes are of very different sizes. The MCC corresponds to the Pearson correlation coefficient between the estimated and “true” binary classifications. MCC=+1 represents a perfect prediction, MCC=0 a perfectly random prediction, and MCC=-1 indicates maximal disagreement between truth and estimation. Over a range of S/N, the Bayesian method gave image classification accuracy (as quantified by the MCC) better than the heuristic spot thresholding algorithm. 
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure4.png}
+\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on real experimental data.}
+\label{fig:real_data}
+\end{figure}
+
+\subsubsection{Simulated data}
+
+In a second comparison, a series of simulated data sets were constructed for a range of signal-to-noise values. For each S/N, a set of 7,500 images (15 AoIs, 500 frames) of 14 by 14 pixels shape were generated using our probabilistic generative model. Each image is a combination of the background intensity plus randomly sampled 2-D Gaussian spots bound at the target and off-target with the intensity noise generated according to Gamma distribution.
+
+Comparison of two methods showed similar performance on simulated data (Figure \ref{fig:simulated_data}). Taken together, these data demonstrated that the Bayesian method performs as well as the best existing CoSMoS data analysis method. Furthermore, Bayesian method achieves this performance automatically, with no adjustable parameters whatsoever, unlike the heuristic spot picker which attains this level of performance only after careful subjective trial-and-error manual adjustment of its three threshold parameters, a process that must be repeated tediously for each data set analyzed. Finally, our new Bayesian method produces a spot probability estimate for each image (not merely a Boolean spot/no spot determination) that can be used to inform subsequent kinetics calculations based on the results (e.g., the HMM analysis).
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure5.png}
+\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on simulated data.}
+\label{fig:simulated_data}
 \end{figure}
 
 \subsection{Probabilistic modeling based on fundamental statistical analysis of data and priors}
 
 To solve the problems with existing CoSMoS data analysis methods identified above, we have developed a new image-analysis-based approach that is accurate, objective, and built on a rigorous statistical approach to the CoSMoS image analysis problem. This TIBSD method is based on probabilistic modeling methodology. Bayesian model is a statistical model where probability is used to represent all uncertainty within the model, both for observed and hidden quantities in a system of interest. Bayes' theorem allows to perform inference on hidden variables given the observed data. The proposed first use of these methods for CoSMoS allows straightforward estimates of the uncertainty for estimated model parameters and rigorous quantitative testing of alternative image, noise, and kinetic models. “Time-independent” in the name TIBSD indicates that we ignore the time dimension of the recording -- the order of the images is arbitrary and does not affect the model, as each image is considered statistically independent of the others. We note that this time-independent method can naturally be extended into a time-dependent approach to both more accurately analyze the images and to directly obtain information about molecular kinetic mechanisms.  The proposed methods will eliminate the need for subjective image inspection and minimize the manual work required for CoSMoS data analysis.
-
-\subsection{Bayesian inference}
-
-
-
-\subsection{Time-independent Bayesian Spot Discrimination (TIBSD) method for analysis of CoSMoS data}
-
-Unlike standard analysis methods for CoSMoS and single molecule FRET (smFRET), which are based on scalar intensity measurements derived from integration of emission in image regions of interest, our model fully uses information contained in the raw two-dimensional microscope images. The value of image data is proven in previous studies (Larry, Grunwald). To analyze the CoSMoS image classification problem within a Bayesian framework, one must define ideal image shapes for each class (image model) and choose a likelihood function for the observed data (noise model).
-
-\subsubsection{Image classification}
-
-The CoSMoS data set consists of a set of images where we have $N$ target sites ($n \in \{1,\dots,N\}$) each consisting of a series of $F$ different images in a recording ($f \in \{1,\dots,F\}$) (a “recording”). In each image, a binder molecule is either present on the single target molecule or absent. In addition, we explicitly model off-target binding of binder molecule. For simplicity  we assume that experimental conditions and image size were chosen so that at most only two spots ($K=2$) can exist in one image ($m_{nfk} \in \{ 0,1 \}$ -- existence indicator of the $k$-th spot). We treat the image classification problem as a data association problem by introducing an index variable for the on-target spot ($\theta_{nf} \in \{ 0,1,\dots,K \}$) where 0 means that on-target molecule is absent.
-
-\subsubsection{Image model}
-
-In the TIBSD method, we model the observed image data as a mixture of background image and “spot” images of binder molecules superimposed on background image. In particular, background image is modeled as a constant average background intensity $b_{nf}$; each spot image (2D point spread function) is modelled as an ideal (i.e., noiseless) 2-D Gaussian spot with integrated scalar intensity $h_{nfk}$ centered at ($x_{nfk}, y_{nfk}$). Each image is represented as a matrix (2D-array) $\mu^D_{nfij}$ of $P \times P$ pixels ($i,j \in \{1,\dots,P\}$). 
-
-\textbf{\begin{equation*}
-    \mu^{D}_{nfij} = b_{nf} + \sum_{k=1}^{K} \dfrac{h_{nfk}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}
-\end{equation*}}
-
-\subsubsection{Noise model (The likelihood function)}
-
- We use Gamma distribution as a noise model which is more flexible than Gaussian noise and can better approximate Poissonian camera noise. Scale parameter [add the variable name here?] of the Gamma distribution can be interpreted as a camera gain. Thus, the likelihood for the observed image can be expressed as:
- 
- \begin{equation*}
-     p(D_{nf}|\mu^D_{nfij},gain) = Gamma(D_{nf}|\mu^D_{nfij}/gain,1/gain)
- \end{equation*}
-
-\subsubsection{Prior knowledge of colocalization accuracy}
-
-Prior knowledge of colocalization accuracy can be directly incorporated into our model as priors for the center of the spot. On-target spots are localized around the target molecule within the experimentally determined accuracy and off-target spots are uniformly distributed within the image:
-
-\begin{equation*}
-    x_{nfk} \sim
-\begin{cases}
-    Beta^{\prime}(x_{nfk}|\mu^x=0,\nu^x_{prox}),& \text{if } \theta = k\\
-    Beta^{\prime}(x_{nfk}|\mu^x=0,\nu^x_{flat}),& \text{otherwise}
-\end{cases}
-\end{equation*}
-
-\begin{equation*}
-    y_{nfk} \sim
-\begin{cases}
-    Beta^{\prime}(y_{nfk}|\mu^y=0,\nu^y_{prox}),& \text{if } \theta = k\\
-    Beta^{\prime}(y_{nfk}|\mu^y=0,\nu^y_{flat}),& \text{otherwise}
-\end{cases}
-\end{equation*}
-
-
-%\subsection{Image analysis, probabilities not binary classification}
-
-%Expresses uncertainty. Allows downstream analysis. 
-
-%\subsection{Flexible framework. Can select and use different models depending on the experiment}
-
-%\subsubsection{Ability to jointly analyze different experimental conditions}
-
-%\subsubsection{Models easily expandable to incorporate other data features}
-
-\subsection{Software and hardware implementation}
-
-The proposed research will provide more efficient ways to analyze large CoSMoS data sets. Technological developments such as faster, larger cameras \citep{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \citep{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced >1 TB image data per experiment. Increasing data set sizes make it infeasible to use existing analytical methods. The code for the model and variational inference algorithm is written using Pyro probabilistic programming language. Pyro uses Pytorch as a backend for automatic differentiation and efficient computation of parallelizable vector-math operations on graphics processing units (GPUs). Our program is open-source and can be downloaded from the github repository.
-
-\begin{comment}
-\begin{table}[bt]
-\caption{\label{tab:example}Automobile Land Speed Records (GR 5-10).}
-% Use "S" column identifier to align on decimal point 
-\begin{tabular}{S l l l r}
-\toprule
-{Speed (mph)} & Driver          & Car                        & Engine    & Date     \\
-\midrule
-407.447     & Craig Breedlove & Spirit of America          & GE J47    & 8/5/63   \\
-413.199     & Tom Green       & Wingfoot Express           & WE J46    & 10/2/64  \\
-434.22      & Art Arfons      & Green Monster              & GE J79    & 10/5/64  \\
-468.719     & Craig Breedlove & Spirit of America          & GE J79    & 10/13/64 \\
-526.277     & Craig Breedlove & Spirit of America          & GE J79    & 10/15/65 \\
-536.712     & Art Arfons      & Green Monster              & GE J79    & 10/27/65 \\
-555.127     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/2/65  \\
-576.553     & Art Arfons      & Green Monster              & GE J79    & 11/7/65  \\
-600.601     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/15/65 \\
-622.407     & Gary Gabelich   & Blue Flame                 & Rocket    & 10/23/70 \\
-633.468     & Richard Noble   & Thrust 2                   & RR RG 146 & 10/4/83  \\
-763.035     & Andy Green      & Thrust SSC                 & RR Spey   & 10/15/97\\
-\bottomrule
-\end{tabular}
-
-\medskip 
-Source: \url{https://www.sedl.org/afterschool/toolkits/science/pdf/ast_sci_data_tables_sample.pdf}
-
-\tabledata{This is a description of a data source.}
-
-\end{table}
-\end{comment}
