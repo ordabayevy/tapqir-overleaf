@@ -1,0 +1,171 @@
+\section{Methods}
+
+\subsection{CoSMoS Dataset}
+
+The CoSMoS data set consists of a set of images where we have $N$ target sites ($n \in \{1,\dots,N\}$) each consisting of a series of $F$ different images in a recording ($f \in \{1,\dots,F\}$) (a “recording”). Each image is represented as a matrix (2D-array) of $P \times P$ pixel intensities ($i,j \in \{1,\dots,P\}$). We denote entire data set as a multi-dimensional array $D$ and the value of a specific pixel intensity as $D_{nfij}$.
+
+\subsection{Graphical model}
+
+Table of glossaries.
+
+Generative probabilistic models encode a set of assumptions on how observed data is generated, which is called the generative process. The use of latent variables and parameters in these assumptions explains the data by some underlying unobserved states. It is possible to reverse the generative process to—given the data—estimate variables and parameters, which in turn gives rise to predictors in an unsupervised manner.
+
+The factor graph depicts the factorization of the joint distribution. Variables are depicted by a circle, which is shaded in the case of observed variables. Constants or hyperparameters are denoted without border. Input parameters and output variables are connected by edges, with an arrow pointing towards the output variable.
+
+If variables or factors are to be repeated, plates provide a notation for this. A template of variables, factors and connections that is to be iterated over, is placed inside the plate. Text in the lower right corner indicates how many replicas are created. Specifying an iteration variable induces an index for the repeated variables. Connections across the plate border represent multiple connections between each replica and the variable/factor outside the plate.
+
+The structure of the probabilistic relationships that define a CoSMoS experiment can be represented as a plated factor graph. In this graph nodes are either variables (circles) or probability distributions (small filled boxes), and edges signify dependencies. Such a graphical model for a coupled CoSMoS experiment on N target sites with K states is shown in Fig. 1. The dependency structure between
+variables in this model reflects three fundamental assumptions about the
+data: 1), at each time, there is a fixed probability of entering into a given
+state, which depends only on the current state, and has no memory of earlier
+parts of the state trajectory; 2), observations associated with a given state
+are independent and identically distributed; and 3), the parameters qn of
+each trajectory are coupled through a shared prior, pðqnjj0Þ, whose distribution reflects the variability of parameter values in an experiment.
+
+\subsection{Bayesian inference}
+
+Probabilistic (Bayesian) model defines statistical relationship between hidden (unknown) and observed variables through a joint probability. In the case of CoSMoS experiment, unknown variables include global variables such as average probability of detecting a spot ($\pi^z$) and local variables like background intensity ($b_{nf}$) and the presence ($\theta_{nf}$), intensity ($h_{nfk}$), position ($x_{nfk}, y_{nfk}$), and width ($w_{nfk}$) of the spot. Observed variables are cropped 2D-images centered at target positions ($D_{nf}$). The structure and conditional independencies in the model can be represented as a factorization of the joint probability.
+
+\textbf{\begin{equation*}
+    p(b,\theta,m,h,w,x,y,pi^z,pi^j,D) = p(b)p(\theta|\pi^z)p(m|\theta,\pi^j)p(h|m)p(w)p(x|\theta)p(y|\theta)p(D|b,h,w,x,y)
+\end{equation*}}
+
+
+Alternatively, factorization of the joint probability can be visualized as a factor graph (Figure \ref{fig:graph}). In this graph, circular nodes represent random variables and solid square nodes represent probability distributions.
+
+Bayesian inference is a statistical inference method that utilizes Bayes' theorem to update the probability of unknown variables conditional on observed data.
+
+\subsection{Bayesian inference}
+
+Probabilistic (Bayesian) model defines statistical relationship between hidden (unknown) and observed variables through a joint probability. In the case of CoSMoS experiment, unknown variables include global variables such as average probability of detecting a spot ($\pi^z$) and local variables like background intensity ($b_{nf}$) and the presence ($\theta_{nf}$), intensity ($h_{nfk}$), position ($x_{nfk}, y_{nfk}$), and width ($w_{nfk}$) of the spot. Observed variables are cropped 2D-images centered at target positions ($D_{nf}$). The structure and conditional independencies in the model can be represented as a factorization of the joint probability.
+
+\textbf{\begin{equation*}
+    p(b,\theta,m,h,w,x,y,pi^z,pi^j,D) = p(b)p(\theta|\pi^z)p(m|\theta,\pi^j)p(h|m)p(w)p(x|\theta)p(y|\theta)p(D|b,h,w,x,y)
+\end{equation*}}
+
+Alternatively, factorization of the joint probability can be visualized as a factor graph (Figure \ref{fig:graph}). In this graph, circular nodes represent random variables and solid square nodes represent probability distributions.
+
+Bayesian inference is a statistical inference method that utilizes Bayes' theorem to update the probability of unknown variables conditional on observed data.
+
+\textbf{\begin{equation*}
+    p(b,\theta,m,h,w,x,y,pi^z,pi^j|D) = 
+    \dfrac{p(b,\theta,m,h,w,x,y,pi^z,pi^j,D)}{p(D)}
+\end{equation*}}
+
+Bayesian inference seeks to determine the probability of a set of unknown
+variables in light of a set of observed data. In the context of single-molecule
+studies, these unknown variables are a set of model parameters q and a state
+sequence zt, whereas the observations are a signal trajectory, xt. A graphical
+model defines a statistical relationship between these variables that can
+commonly be factored into two terms
+
+The two distributions pðxjz; qÞ and pðz; qjj0Þ, known as the likelihood and
+prior distribution, respectively, describe our assumptions about the model.
+The likelihood describes the measurement signal we expect to see given
+the state trajectory, zt, of the molecule and a set of emission model parameters that describe the distribution of measurement values associated
+with each state. The prior distribution encodes our expectations about the
+transition probabilities and emission model parameters. Based on these assumptions, the goal of Bayesian inference is now to reason about the socalled posterior probability of the state trajectory (zt) and model parameters
+(q) in light of a set of measurements (xt). Bayes’ rule states that this posterior probability pðz; qjx; jÞ can be expressed as
+
+\subsubsection{Noise model (The likelihood function)}
+
+A model for CoSMoS data should capture several important aspects of co-localization process. The discrete hidden state of the observable image is a function of the total number of spots in the image and index of the on-target spot. The state probability is independent for each image.
+
+\begin{equation*}
+    \theta_{nf} \sim Categorical(\pi^z)
+    m_{nf} \sim Categorical(\lambda, \theta)
+\end{equation*}
+
+Intensity of the spot is a function of the hidden state. Position prior is the function of the hidden state. Local background intensity.
+
+\subsubsection{Image model}
+
+In the TIBSD method, we model the observed image data as a mixture of background image and “spot” images of binder molecules superimposed on background image. In particular, background image is modeled as a constant average background intensity $b_{nf}$; each spot image (2D point spread function) is modelled as an ideal (i.e., noiseless) 2-D Gaussian spot with integrated scalar intensity $h_{nfk}$ centered at ($x_{nfk}, y_{nfk}$).  
+
+\textbf{\begin{equation*}
+    \mu^{D}_{nfij} = b_{nf} + \sum_{k=1}^{K} \dfrac{h_{nfk}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}
+\end{equation*}}
+
+We use Gamma distribution as a noise model which is more flexible than Gaussian noise and can better approximate Poissonian camera noise. Scale parameter [add the variable name here?] of the Gamma distribution can be interpreted as a camera gain. Thus, the likelihood for the observed image can be expressed as:
+ 
+ \begin{equation*}
+     p(D_{nf}|\mu^D_{nfij},gain) = Gamma(D_{nf}|\mu^D_{nfij}/gain,1/gain)
+ \end{equation*}
+
+Stochastic variational inference.
+
+\subsection{Time-independent Bayesian Spot Discrimination (TIBSD) method for analysis of CoSMoS data}
+
+Unlike standard analysis methods for CoSMoS and single molecule FRET (smFRET), which are based on scalar intensity measurements derived from integration of emission in image regions of interest, our model fully uses information contained in the raw two-dimensional microscope images. The value of image data is proven in previous studies \citep{Friedman2015-nx,Smith2019-yb}. To analyze the CoSMoS image classification problem within a Bayesian framework, one must define ideal image shapes for each class (image model) and choose a likelihood function for the observed data (noise model).
+
+In each image, a binder molecule is either present on the single target molecule or absent. In addition, we explicitly model off-target binding of binder molecule. For simplicity  we assume that experimental conditions and image size were chosen so that at most only two spots ($K=2$) can exist in one image ($m_{nfk} \in \{ 0,1 \}$ -- existence indicator of the $k$-th spot). We treat the image classification problem as a data association problem by introducing an index variable for the on-target spot ($\theta_{nf} \in \{ 0,1,\dots,K \}$) where 0 means that on-target molecule is absent.
+
+
+
+
+
+\subsubsection{Prior knowledge of colocalization accuracy}
+
+Prior knowledge of colocalization accuracy can be directly incorporated into our model as priors for the center of the spot. On-target spots are localized around the target molecule within the experimentally determined accuracy and off-target spots are uniformly distributed within the image:
+
+\begin{equation*}
+    x_{nfk} \sim
+\begin{cases}
+    Beta^{\prime}(x_{nfk}|\mu^x=0,\nu^x_{prox}),& \text{if } \theta = k\\
+    Beta^{\prime}(x_{nfk}|\mu^x=0,\nu^x_{flat}),& \text{otherwise}
+\end{cases}
+\end{equation*}
+
+\begin{equation*}
+    y_{nfk} \sim
+\begin{cases}
+    Beta^{\prime}(y_{nfk}|\mu^y=0,\nu^y_{prox}),& \text{if } \theta = k\\
+    Beta^{\prime}(y_{nfk}|\mu^y=0,\nu^y_{flat}),& \text{otherwise}
+\end{cases}
+\end{equation*}
+
+
+%\subsection{Image analysis, probabilities not binary classification}
+
+%Expresses uncertainty. Allows downstream analysis. 
+
+%\subsection{Flexible framework. Can select and use different models depending on the experiment}
+
+%\subsubsection{Ability to jointly analyze different experimental conditions}
+
+%\subsubsection{Models easily expandable to incorporate other data features}
+
+\subsection{Software and hardware implementation}
+
+The proposed research will provide more efficient ways to analyze large CoSMoS data sets. Technological developments such as faster, larger cameras \citep{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \citep{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced >1 TB image data per experiment. Increasing data set sizes make it infeasible to use existing analytical methods. The code for the model and variational inference algorithm is written using Pyro probabilistic programming language. Pyro uses Pytorch as a backend for automatic differentiation and efficient computation of parallelizable vector-math operations on graphics processing units (GPUs). Our program is open-source and can be downloaded from the github repository.
+
+\begin{comment}
+\begin{table}[bt]
+\caption{\label{tab:example}Automobile Land Speed Records (GR 5-10).}
+% Use "S" column identifier to align on decimal point 
+\begin{tabular}{S l l l r}
+\toprule
+{Speed (mph)} & Driver          & Car                        & Engine    & Date     \\
+\midrule
+407.447     & Craig Breedlove & Spirit of America          & GE J47    & 8/5/63   \\
+413.199     & Tom Green       & Wingfoot Express           & WE J46    & 10/2/64  \\
+434.22      & Art Arfons      & Green Monster              & GE J79    & 10/5/64  \\
+468.719     & Craig Breedlove & Spirit of America          & GE J79    & 10/13/64 \\
+526.277     & Craig Breedlove & Spirit of America          & GE J79    & 10/15/65 \\
+536.712     & Art Arfons      & Green Monster              & GE J79    & 10/27/65 \\
+555.127     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/2/65  \\
+576.553     & Art Arfons      & Green Monster              & GE J79    & 11/7/65  \\
+600.601     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/15/65 \\
+622.407     & Gary Gabelich   & Blue Flame                 & Rocket    & 10/23/70 \\
+633.468     & Richard Noble   & Thrust 2                   & RR RG 146 & 10/4/83  \\
+763.035     & Andy Green      & Thrust SSC                 & RR Spey   & 10/15/97\\
+\bottomrule
+\end{tabular}
+
+\medskip 
+Source: \url{https://www.sedl.org/afterschool/toolkits/science/pdf/ast_sci_data_tables_sample.pdf}
+
+\tabledata{This is a description of a data source.}
+
+\end{table}
+\end{comment}
