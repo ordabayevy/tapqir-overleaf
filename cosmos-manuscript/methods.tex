@@ -22,6 +22,14 @@ parts of the state trajectory; 2), observations associated with a given state
 are independent and identically distributed; and 3), the parameters qn of
 each trajectory are coupled through a shared prior, pðqnjj0Þ, whose distribution reflects the variability of parameter values in an experiment.
 
+\begin{figure}[ht]
+  \begin{center}
+    \input{figures/graphical_model/model_cosmos}
+  \end{center}
+  \caption{Graphical model for the Bayesian classification model used in Pyro. The model has a modular structure consisting of three parts: classifier, the spot model, and the noise model. Hidden variables (circles) - background intensity ($b$), integrated intensity of the spot ($h$), width of the spot ($w$), position of the spot on the $x$-axis ($x$) and on the $y$-axis ($y$), existence indicator of spots ($m$), and index of the on-target spot ($\theta$). Observed variable (shaded circle) - image of the area of interest ($D$). Variables nested in plates are repeated for a number of times displayed at the bottom-right corner - target sites ($N$), frame count ($F$), number of spots in a single image ($K$). Densities are depicted as  small filled boxes. Deterministic functions are depicted as diamonds. Constants and hyperparameters are written without any borders. Gate (dashed box) represents variable activation conditioned on another variable.}
+  \label{fig:graph}
+\end{figure}
+
 \subsection{Bayesian inference}
 
 Probabilistic (Bayesian) model defines statistical relationship between hidden (unknown) and observed variables through a joint probability. In the case of CoSMoS experiment, unknown variables include global variables such as average probability of detecting a spot ($\pi^z$) and local variables like background intensity ($b_{nf}$) and the presence ($\theta_{nf}$), intensity ($h_{nfk}$), position ($x_{nfk}, y_{nfk}$), and width ($w_{nfk}$) of the spot. Observed variables are cropped 2D-images centered at target positions ($D_{nf}$). The structure and conditional independencies in the model can be represented as a factorization of the joint probability.
