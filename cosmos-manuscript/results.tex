@@ -42,8 +42,8 @@ We employ the similar approach to detect co-localization events and model the ce
 
 \begin{figure}
 \includegraphics[width=\linewidth]{figures/figure2.png}
-\includegraphics[width=\linewidth]{figures/figure2g.png}
-\caption{.}
+%\includegraphics[width=\linewidth]{figures/figure2g.png}
+\caption{Image models. CoSMoS images are modeled as 2D Gaussian spots superimposed onto the background intensity. Examples of the ideal image shapes for cases when there are (A) no spots, (B) single on-target spot, (C) single off-target spot, and (D) two spots. Noisy images (E-H) are generated using Gamma distribution with the parameter gain = 7 as described in the text.}
 \label{fig:model}
 \end{figure}
 
@@ -77,8 +77,8 @@ In a second comparison, a series of simulated data sets were constructed for a r
 
 Comparison of two methods showed similar performance on simulated data (Figure \ref{fig:simulated_data}). Taken together, these data demonstrated that the Bayesian method performs as well as or even better than the best existing CoSMoS data analysis method. Furthermore, Bayesian method achieves this performance automatically, with no adjustable parameters whatsoever, unlike the heuristic spot picker which attains this level of performance only after careful subjective trial-and-error manual adjustment of its three threshold parameters, a process that must be repeated tediously for each data set analyzed. Finally, our new Bayesian method produces a spot probability estimate for each image (not merely a Boolean spot/no spot determination) that can be used to inform subsequent kinetics calculations based on the results (e.g., the HMM analysis).
 
-\begin{figure}
-\includegraphics[width=\linewidth]{figures/figure5.png}
-\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on simulated data.}
-\label{fig:simulated_data}
-\end{figure}
+%\begin{figure}
+%\includegraphics[width=\linewidth]{figures/figure5.png}
+%\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on simulated data.}
+%\label{fig:simulated_data}
+%\end{figure}
