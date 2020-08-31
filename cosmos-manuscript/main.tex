@@ -2,6 +2,7 @@
 %%% ELIFE ARTICLE TEMPLATE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% PREAMBLE 
+\RequirePackage{fix-cm}
 \documentclass[9pt,lineno]{elife}
 % Use the onehalfspacing option for 1.5 line spacing
 % Use the doublespacing option for 2.0 line spacing
@@ -13,9 +14,22 @@
 \usepackage[version=4]{mhchem}
 \usepackage{siunitx}
 \usepackage{comment}
+\usepackage{xparse,mathtools}
+\usepackage{bm}
 \usepackage{tikz}
 \usetikzlibrary{bayesnet}
 \DeclareSIUnit\Molar{M}
+\DeclareMathSizes{10}{10}{7}{4}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\rvect}{m}
+ {
+  \seq_set_split:Nnn \l_tmpa_seq { , } { #1 }
+  \begin{bmatrix}
+  \seq_use:Nn \l_tmpa_seq { & }
+  \end{bmatrix}
+ }
+\ExplSyntaxOff
 
 % \input{cosmos-manuscript/glossary}
 

@@ -40,6 +40,53 @@ each trajectory are coupled through a shared prior, pðqnjj0Þ, whose distributi
   \label{fig:graph}
 \end{figure}
 
+\begin{table}[bt]
+\caption{\label{tab:example}Model.}
+% Use "S" column identifier to align on decimal point 
+\begin{tabular}{l l l l r}
+\toprule
+\multicolumn{2}{l}{\textbf{Model parameters}} \\
+\midrule
+\multicolumn{2}{l}{\textit{Learned}} \\
+Gain & gain \\
+On-target spot probability & $\bm{\pi}^z = \rvect{\pi^z_0, \pi^z_1}$ \\
+Off-target spot probability & $\bm{\pi}^j = \rvect{\pi^j_0, \pi^j_1}$ \\
+AoI Background Intensity (mean, beta) & $\mu^b_n, \beta^b_n$ \\
+On-target index & $\bm{\pi}^{\theta} = \rvect{\pi^z_0, \dfrac{\pi^z_1}{2}, \dfrac{\pi^z_1}{2}}$ \\
+Spot presence &   \[
+    \pi^m_{knf} = \begin{cases}
+        \rvect{0, 1} & \text{if $\theta_{knf} = 1$} \\
+        \bm{\pi}^j & \text{otherwise}
+        \end{cases} \] \\
+\\
+\multicolumn{2}{l}{\textit{Fixed}} \\
+Intensity & $\sigma^h = 10000$ \\
+Width & $\min^w = 0.75, \max^w = 2.25$ \\
+X & $\mu^x = 0, \nu^x = [2, 230]$ \\
+\\
+\multicolumn{2}{l}{\textbf{Image \& Spot parameters} (hidden local variables)} \\
+\midrule
+Background Intensity    & $b_{nf} \sim \text{Gamma}(b_{nf}|\mu^b_n, \beta^b_n)$ \\
+On-target spot          & $\theta_{nf} \sim \text{Categorical}(\theta_{nf}|\pi^\theta_n)$ \\
+Spot presence           & $m_{knf} \sim \text{Categorical}(m_{knf}|\pi^m_{nf})$ \\
+Integrated intensity    & $h_{knf} \sim \text{HalfNormal}(h_{knf}|\sigma^h)$ \\
+Width              & $w_{knf} \sim \text{Uniform}(w_{knf}|\min^w, \max^w)$ \\
+$x$-axis center           & $x_{knf} \sim \text{AffineBeta}(x_{knf}|\mu^x, \nu^x_{\theta_{knf}})$ \\
+\\
+\multicolumn{2}{l}{\textbf{Image Data} (observed local variables)} \\
+\midrule
+Ideal spot  & $\mu^{D}_{nfij} = b_{nf} + \sum_{k=1}^{K} \dfrac{m_{knf} h_{knf}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}$ \\
+Pixel Intensities              & $D_{nfij} \sim \text{ConvGamma}(D_{nfij}|\mu^D_{nfij},\text{gain},\text{offset})$ \\
+\bottomrule
+\end{tabular}
+
+\medskip 
+Source: \url{https://www.sedl.org/afterschool/toolkits/science/pdf/ast_sci_data_tables_sample.pdf}
+
+\tabledata{This is a description of a data source.}
+
+\end{table}
+
 \subsection{Bayesian inference}
 
 Probabilistic (Bayesian) model defines statistical relationship between hidden (unknown) and observed variables through a joint probability. In the case of CoSMoS experiment, unknown variables include global variables such as average probability of detecting a spot ($\pi^z$) and local variables like background intensity ($b_{nf}$) and the presence ($\theta_{nf}$), intensity ($h_{nfk}$), position ($x_{nfk}, y_{nfk}$), and width ($w_{nfk}$) of the spot. Observed variables are cropped 2D-images centered at target positions ($D_{nf}$). The structure and conditional independencies in the model can be represented as a factorization of the joint probability.
@@ -156,34 +203,3 @@ Prior knowledge of colocalization accuracy can be directly incorporated into our
 \subsection{Software and hardware implementation}
 
 The proposed research will provide more efficient ways to analyze large CoSMoS data sets. Technological developments such as faster, larger cameras \citep{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \citep{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced >1 TB image data per experiment. Increasing data set sizes make it infeasible to use existing analytical methods. The code for the model and variational inference algorithm is written using Pyro probabilistic programming language. Pyro uses Pytorch as a backend for automatic differentiation and efficient computation of parallelizable vector-math operations on graphics processing units (GPUs). Our program is open-source and can be downloaded from the github repository.
-
-\begin{comment}
-\begin{table}[bt]
-\caption{\label{tab:example}Automobile Land Speed Records (GR 5-10).}
-% Use "S" column identifier to align on decimal point 
-\begin{tabular}{S l l l r}
-\toprule
-{Speed (mph)} & Driver          & Car                        & Engine    & Date     \\
-\midrule
-407.447     & Craig Breedlove & Spirit of America          & GE J47    & 8/5/63   \\
-413.199     & Tom Green       & Wingfoot Express           & WE J46    & 10/2/64  \\
-434.22      & Art Arfons      & Green Monster              & GE J79    & 10/5/64  \\
-468.719     & Craig Breedlove & Spirit of America          & GE J79    & 10/13/64 \\
-526.277     & Craig Breedlove & Spirit of America          & GE J79    & 10/15/65 \\
-536.712     & Art Arfons      & Green Monster              & GE J79    & 10/27/65 \\
-555.127     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/2/65  \\
-576.553     & Art Arfons      & Green Monster              & GE J79    & 11/7/65  \\
-600.601     & Craig Breedlove & Spirit of America, Sonic 1 & GE J79    & 11/15/65 \\
-622.407     & Gary Gabelich   & Blue Flame                 & Rocket    & 10/23/70 \\
-633.468     & Richard Noble   & Thrust 2                   & RR RG 146 & 10/4/83  \\
-763.035     & Andy Green      & Thrust SSC                 & RR Spey   & 10/15/97\\
-\bottomrule
-\end{tabular}
-
-\medskip 
-Source: \url{https://www.sedl.org/afterschool/toolkits/science/pdf/ast_sci_data_tables_sample.pdf}
-
-\tabledata{This is a description of a data source.}
-
-\end{table}
-\end{comment}

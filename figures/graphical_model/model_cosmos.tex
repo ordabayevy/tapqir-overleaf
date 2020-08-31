@@ -27,7 +27,7 @@
 
   % b hyperparameters
   \node[const, above=2.8 of b, xshift=-0.5cm] (mb) {$\mu^b$} ; %
-  \node[const, above=3.5 of b, xshift=0.5cm]  (bb) {$\beta^b$} ; %
+  \node[const, above=2.8 of b, xshift=0.5cm]  (bb) {$\beta^b$} ; %
 
   % h hyperparameters
   \node[const, above=3.5 of h, xshift=-0.5cm] (mh) {$\mu^h$} ; %
@@ -43,12 +43,12 @@
   \node[det, above=1.4 of y]  (nxy) {$\nu^{x,y}$} ; %
 
   % Factors
-  \factor[above=of D] {D-f} {left:$\mathcal{G}$} {} {} ; %
+  \factor[above=of D] {D-f} {left:$\mathcal{CG}$} {} {} ; %
   \factor[above=0.6 of b] {b-f} {left:$\mathcal{G}$} {mb,bb} {b} ; %
-  \factor[above=0.6 of h] {h-f} {left:$\mathcal{G}$} {mh,bh} {h} ; %
-  \factor[above=0.6 of w] {w-f} {left:$\mathcal{B}$} {mw,nw} {w} ; %
-  \factor[above=0.6 of x] {x-f} {left:$\mathcal{B}$} {mxy,nxy} {x} ; %
-  \factor[above=0.6 of y] {y-f} {left:$\mathcal{B}$} {mxy,nxy} {y} ; %
+  \factor[above=0.6 of h] {h-f} {left:$\mathcal{HN}$} {mh,bh} {h} ; %
+  \factor[above=0.6 of w] {w-f} {left:$\mathcal{AB}$} {mw,nw} {w} ; %
+  \factor[above=0.6 of x] {x-f} {left:$\mathcal{AB}$} {mxy,nxy} {x} ; %
+  \factor[above=0.6 of y] {y-f} {left:$\mathcal{AB}$} {mxy,nxy} {y} ; %
 
   % D hyperparameters
   \node[const, right=8 of D-f] (g) {gain} ; %
@@ -76,7 +76,7 @@
   \factor[right=of t] {t-f} {above:$\mathcal{C}$} {pt} {t} ; %
   %\factor[above=of x] {x-f} {left:$\mathcal{N}$} {mx,ax} {x} ; %
   %\factor[above=of t] {t-f} {left:$\mathcal{G}$} {at,bt} {t} ; %
-  %\factoredge {dot,t} {y-f} {y} ; %
+  %\factoredge {dot,t} {y-f} {y} ; %https://www.overleaf.com/project/5e713c4e4705e60001bcd032
 
   \gate {m-gate} {(h-f)(h-f-caption)(h-f)(h-f-caption)(w-f)(w-f-caption)(x-f)(x-f-caption)(y-f)(y-f-caption)} {m}
 
@@ -106,7 +106,7 @@
   } {$\forall f \in \{ 1..F \}$} ;
   \plate {N} { %
     (F)
-    (mb)
+    (mb)(bb)
   } {$\forall n \in \{ 1..N \}$} ;
   %\plate {} {%
     %(y)(y-f)(y-f-caption) %
