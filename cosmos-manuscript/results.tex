@@ -41,7 +41,7 @@ Current spot detection methods produce binary outputs by using a bandpass-filter
 We employ the similar approach to detect co-localization events and model the center of the spot to be distributed according to a mixture of two distributions (Figure \ref{fig:model}G). We model non-specific binding events explicitly with a uniform distribution of the center of the spot since non-specific binding can occur anywhere within the image. On the other hand, co-localized spot denoted by an index variable $\theta_{nf}$ is scattered around target location within the co-localization accuracy which is modeled by distribution centered on target with the standard deviation equal to the co-localization accuracy. Again, co-localization detection is performed in a probabilistic manner and for each spot probabilities of being on-target and off-target are calculated. It is important to note that spot detection and co-localization detection are part of a single unified model, rather than separate steps of the analysis.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{figures/figure2.png}
+\includegraphics[width=\linewidth]{figures/figure2/figure2.png}
 %\includegraphics[width=\linewidth]{figures/figure2g.png}
 \caption{Image models. CoSMoS images are modeled as 2D Gaussian spots superimposed onto the background intensity. Examples of the ideal image shapes for cases when there are (A) no spots, (B) single on-target spot, (C) single off-target spot, and (D) two spots. Noisy images (E-H) are generated using Gamma distribution with the parameter gain = 7 as described in the text.}
 \label{fig:model}
@@ -66,7 +66,25 @@ For the first performance comparison, images from real (i.e., not simulated) exp
 Each data set was analyzed by both the Bayesian method and the heuristic spot thresholding algorithm (Figure \ref{fig:real_data}). By comparison with the known “true” identities of the images, the accuracy of the resulting classifications was judged using a variety of specialized statistics for binary classification data, including true and false positive rates, true and false negative rates, and the Matthews Correlation Coefficient (MCC) \citep{Fawcett2006-bq, Matthews1975-rw}. The MCC statistic is widely regarded as a single overall, balanced measure which is meaningful even when the classes are of very different sizes. The MCC corresponds to the Pearson correlation coefficient between the estimated and “true” binary classifications. MCC=+1 represents a perfect prediction, MCC=0 a perfectly random prediction, and MCC=-1 indicates maximal disagreement between truth and estimation. Over a range of S/N, the Bayesian method gave image classification accuracy (as quantified by the MCC) better than the heuristic spot thresholding algorithm. 
 
 \begin{figure}
-\includegraphics[width=\linewidth]{figures/figure4.png}
+\includegraphics[width=\linewidth]{figures/figure4/figure4.png}
+\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on real experimental data.}
+\label{fig:real_data}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure5/figure5.png}
+\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on real experimental data.}
+\label{fig:real_data}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure6/figure6.png}
+\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on real experimental data.}
+\label{fig:real_data}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/figure6/figure6.png}
 \caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on real experimental data.}
 \label{fig:real_data}
 \end{figure}
