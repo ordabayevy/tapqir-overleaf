@@ -1,0 +1,136 @@
+%\beginpgfgraphicnamed{model-pca}
+\begin{tikzpicture}
+
+  % Define nodes
+
+  % Y
+  \node[det] (D) {$D$} ;
+  \node[latent, above=of D, xshift=1. cm]          (I)   {$I$}; %
+  \node[latent, above=of D, xshift=-1. cm]          (offset)   {$\delta$}; %
+  \factor[above=1.2 of I] {I-f} {right:Gamma} {} {} ; %
+  \factor[above=0.6 of offset] {o-f} {right:Cat} {} {} ; %
+
+  % W and X
+  \node[det, above=of I-f]            (mi) {$\mu^I$} ; % 
+  \node[det, above=0.6 of mi, xshift=1.5 cm]      (ms) {$\mu^S$} ; % 
+  \node[latent, above=of ms] (w)   {$w$}; %
+  \node[latent, above=of ms, left=of w]  (h)   {$h$}; %
+  \node[latent, above=of ms, left=of h]  (b)   {$b$}; %
+  \node[latent, above=of ms, right=of w]  (x)   {$x$}; %
+  \node[latent, above=of ms, right=2 of x] (y)   {$y$}; %
+
+  % b hyperparameters
+  \node[const, above=2. of b, xshift=-0.5cm] (mb) {$\mu^b$} ; %
+  \node[const, above=2. of b, xshift=0.5cm]  (bb) {$\sigma^b$} ; %
+
+  % h hyperparameters
+  \node[const, above=2.8 of h] (mh) {$\sigma^h=10000$} ; %
+  % \node[const, above=3.5 of h, xshift=0.5cm]  (bh) {$\beta^h$} ;
+
+  % w hyperparameters
+  \node[const, above=3.4 of w] (mw) {$w_{\min}=0.75, w_{\max}=2.25$} ; %
+  % \node[const, above=3.5 of w, xshift=0.5cm]  (nw) {$\nu^w$} ; %
+
+  % offset hyperparameters
+  % \node[const, left=of offset] (Delta) {$\Delta$} ; %
+
+  % xy hyperparameters
+  % \node[const, above=3.5 of x, xshift=-0.1cm] (mxy) {$\mu^{x,y}=0$} ; %
+  \node[const, above=2.8 of x] (pr) {$\sigma^{xy}=0.5$} ; %
+  % \node[det, above=1.4 of y]  (nxy) {$\nu^{x,y}$} ; %
+
+  % Factors
+
+  \factor[above=0.6 of b] {b-f} {left:Gam} {mb,bb} {b} ; %
+  \factor[above=0.6 of h] {h-f} {left:HN} {mh} {h} ; %
+  \factor[above=0.6 of w] {w-f} {left:Unif} {mw} {w} ; %
+  \factor[above=0.6 of x] {x-f} {left:AB} {} {x,y} ; %
+  \factor[above=0.6 of y] {y-f} {left:Unif} {} {x,y} ; %
+  
+
+  % D hyperparameters
+  \node[const, left=3 of I-f] (g) {$\gamma$} ; %
+  \node[const, left=1. of o-f] (po) {$\bm{\pi^\delta}$} ; %
+
+  % m and theta
+  \node[latent, right=0.6 of y, yshift=0.5 cm] (m)   {$m$}; %
+  \node[latent, right=3.3 of y-f] (t)   {$\theta$}; %
+  
+  % Factors
+  \factor[below=0.6 of m] {m-f} {below:Cat} {} {} ; %
+  \factor[above=of t] {t-f} {left:Cat} {} {} ; %
+
+  % m and theta hyperparameters
+  \node[det, right=0.6 of m-f]        (pm) {$\pi^m$} ; %
+  \node[det, above=1. of t-f]        (pt) {$\pi^\theta$} ; %
+  \node[const, above=0.6 of pt] (pz) {$\pi^z$} ; %
+  \node[const, above=3.3 of pm] (lj) {$\pi^j$} ; %
+
+  % theta hyperparameters
+  %\node[const, right=1.2 of t] (pt) {$\pi^\theta(\pi^z,\lambda^j)$} ; %
+
+  % noise
+  %\node[latent, right=2.5cm of y-f]         (t)   {$\tau$}; %
+  %\node[const, above=of t, xshift=-0.5cm] (at)  {$\alpha_\tau$} ; %
+  %\node[const, above=of t, xshift=0.5cm]  (bt)  {$\beta_\tau$} ; %
+
+  % Factors
+
+  
+  %\factor[above=of x] {x-f} {left:$\mathcal{N}$} {mx,ax} {x} ; %
+  %\factor[above=of t] {t-f} {left:$\mathcal{G}$} {at,bt} {t} ; %
+  %\factoredge {dot,t} {y-f} {y} ; %https://www.overleaf.com/project/5e713c4e4705e60001bcd032
+
+  % Gates
+  \vgate {t-gate} %
+  {(x-f)(x-f-caption)} {$\theta = k$} %
+  {(y-f)(y-f-caption)} {$\theta \neq k$} %
+  {t} ; %
+  \gate {m-gate}
+  {(t-gate)(h)(w)(x)(y)(h-f)(h-f-caption)(h-f)(h-f-caption)(w-f)(w-f-caption)(x-f)}
+  {m} ;
+
+
+  % Connect w and x to the dot node
+  \factoredge[] {g,mi} {I-f} {I} ;
+  \edge[]{b,ms}{mi}
+  \edge[] {h,w,x,y} {ms} ;
+  \edge[] {pz} {pt} ;
+  \edge[] {lj,t} {pm} ;
+  \edge[] {I, offset}{D}
+  \factoredge[]{pm}{m-f}{m}
+  \factoredge[]{pt}{t-f}{t}
+  \edge[-]{pr}{x-f}
+  \factoredge[]{po}{o-f}{offset}
+
+  % Plates
+  \plate {P} {%
+    (ms) %
+    (mi)(I)(D)(offset) %
+    (K.south west) %
+  } {$\forall i,j \in \{ 1..P \}$} ;
+  \plate {K} { %
+    (h)(h-f)(h-f-caption) %
+    (w)(w-f)(w-f-caption) %
+    (x)(x-f)(x-f-caption) %
+    (y)(y-f)(y-f-caption) %
+    (m-gate) %
+    (m)(m-f)(m-f-caption)(pm)
+    (ms) %
+  } {$\forall k \in \{ 1..K \}$} ;
+  \plate {F} { %
+    (K)
+    (t)(t-f)(t-f-caption) %
+    (mi) %
+    (b)(b-f)(b-f-caption) %
+    (I)(I-f)(I-f-caption) %
+    (P.south west)
+  } {$\forall f \in \{ 1..F \}$} ;
+  \plate {N} { %
+    (F)
+    (mb)(bb)
+  } {$\forall n \in \{ 1..N \}$} ;
+  
+
+\end{tikzpicture}
+%\endpgfgraphicnamed

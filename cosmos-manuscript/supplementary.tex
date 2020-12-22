@@ -1,48 +1,45 @@
 \section{Supplementary Material}
 
-\subsection{Variable definitions}
+\input{cosmos-manuscript/algorithm}
 
-Target site
-\begin{equation*}
-    n \in \{1,\dots,N\}
-\end{equation*}
-%
-Frame number
-\begin{equation*}
-    f \in \{1,\dots,F\}
-\end{equation*}
-%
-$x$-axis pixel number
-\begin{equation*}
-    i \in \{1,\dots,I\}
-\end{equation*}
-%
-$y$-axis pixel number
-\begin{equation*}
-    j \in \{1,\dots,J\}
-\end{equation*}
-%
-Spot index
-\begin{equation*}
-    k \in \{1,\dots,K\}
-\end{equation*}
-%
-Background intensity
-\begin{equation*}
-    b_{nf} > 0
-\end{equation*}
-%
-Hidden state
-\begin{equation*}
-    m_{nf}
-\end{equation*}
-%
-Integrated spot intensity
-\begin{equation*}
-    h_{nfk} > 0
-\end{equation*}
-%
-Ideal spot shape
-\begin{equation*}
-    \mu^{D}_{nfij} = b_{nf} + \sum_k \dfrac{m_{nfk}h_{nfk}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)}
-\end{equation*}
+\begin{table}
+\caption{\label{tab:example}Probability distributions used in the model.}
+% Use "S" column identifier to align on decimal point 
+\begin{tabular}{l l}
+\toprule
+Distribution & PDF \\
+\midrule
+$x \sim \textbf{AffineBeta}(\mu, \nu, a, b)$ &
+    $\dfrac{y^{\alpha-1}(1-y)^{\beta-1}}{\text{B}(\alpha, \beta)}$
+    where $\alpha=\dfrac{\nu (\mu-a)}{b-a}$, $\beta=\dfrac{\nu (b-\mu)}{b-a}$, and $y = \dfrac{x-a}{b-a}$ \\
+$x \sim \textbf{Bernoulli}(\pi)$ &
+    $\pi^x (1-\pi)^{1-x}$ \\
+$x \sim \textbf{Beta}(\alpha, \beta)$ &
+    $\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{\text{B}(\alpha, \beta)}$ \\
+$x \sim \textbf{Categorical}_{\{z_i\}^k_{i=1}}(\bm{p})$ &
+    $\prod_{i=1}^k p_i^{[x=z_i]}$ \\
+$x \sim \textbf{Gamma}(\mu, \sigma)$ &
+    $\dfrac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1} e^{-\beta x}$
+    where $\alpha = \dfrac{\mu^2}{\sigma^2}$ and $\beta = \dfrac{\mu}{\sigma^2}$ \\
+$x \sim \textbf{HalfNormal}(\sigma)$ &
+    $\dfrac{\sqrt{2}}{\sigma \sqrt{\pi}} \exp \left( -\dfrac{x^2}{2\sigma^2} \right)$
+    for  $x > 0$ \\
+$x \sim \textbf{Uniform}(a, b)$ &
+    $\dfrac{1}{b-a}$ for $x \in [a, b]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{equation}
+\begin{aligned}
+    & p(b, \theta, m, h, w, x, y, I, D) = \\
+    & \prod^N_{n=1} \prod^F_{f=1} p(b_{nf} | \mu^b_n, \sigma^b_n) p(\theta_{nf} | \pi^z) \\
+    & \prod^K_{k=1} p(m_{knf} | \pi^z, \pi^j, \theta_{nf}) p(h_{knf} | m_{knf})
+    p(w_{knf} | m_{knf})
+    p(x_{knf} | m_{knf}, \theta_{nf}) p(y_{knf} | m_{knf}, \theta_{nf}) \\
+    & \prod^P_{i=1} \prod^P_{j=1} p(I_{nfij} | \mu^I_{nfij}, \gamma)
+    p(\delta_{nfij} | \bm{\pi}^\delta)
+    p(D_{nfij} | I_{nfij}, \delta_{nfij})
+\end{aligned}
+\end{equation}

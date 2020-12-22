@@ -1,0 +1,81 @@
+\algrenewcommand\algorithmicrequire{\textbf{Model parameter:}}
+\begin{algorithm}
+\caption{Generative model for pixel intensities}
+\label{alg:pseudocode}
+\begin{algorithmic}[1]
+\Require $\gamma$ (floated)
+\Comment{camera gain}
+\Require $\pi^z$ (floated)
+\Comment{average on-target spot probability}
+\Require $\pi^j$ (floated)
+\Comment{average off-target spot probability}
+\Require $\sigma^{xy} = 0.5 $ (fixed)
+\Comment{std of on-target spot position (pixels)}
+\Require $\nu^{xy} = \left( \dfrac{P+1}{2 \sigma^{xy}} \right)^2 - 1 $
+\Comment{reparameterization of $\sigma^{xy}$}
+\Require $\sigma^{h} = 10000$ (fixed)
+\Comment{scale of intensity distribution (a.u.)}
+\Require $\{\mu^b_n\}^N_{n=1}, \{\sigma^b_n\}^N_{n=1}$ (floated)
+\Comment{mean and std of background intensity (a.u.)}
+\Require $w_{\min} = 0.75, w_{\max} = 2.25$ (fixed)
+\Comment{width range (pixels)}
+\Require $\{ \delta_r \}^R_{r=1}, \bm{\pi}^\delta$ (fixed)
+\Comment{empirical offset samples and weights}
+\ForAll{target sites $n \in \{1 \dots N\}$}
+    \ForAll{frames $f \in \{1 \dots F\}$}
+    \Comment{time-independent}
+        \State $b_{nf} \sim \textbf{Gamma}(\mu^b_n, \sigma^b_n)$
+        \Comment{draw background intensity}
+        \State $\theta_{nf} \sim \textbf{Categorical}_{1,\dots,K}(\dfrac{1}{K}, \dots, \dfrac{1}{K})$
+        \Comment{draw on-target spot index}
+        
+        \ForAll{spots $k \in \{1 \dots K\}$}
+            \State $ m_{knf} \sim
+                    \begin{cases}
+                    \textbf{Bernoulli}(\pi^z) & \text{$\theta_{nf} = k$ (on-target)} \\
+                    \textbf{Bernoulli}(\pi^j) & \text{$\theta_{nf} \neq k$ (off-target)}
+                    \end{cases} $
+            \Comment{draw spot presence indicator}
+            \If{$m_{knf}=1$}
+            \Comment{if spot is present}
+                \State $h_{knf} \sim \textbf{HalfNormal}(\sigma^h)$
+                \Comment{draw spot intensity}
+                \State $w_{knf} \sim \textbf{Uniform}(w_{\min}, w_{\max})$
+                \Comment{draw spot width}
+                \State $ x_{knf} \sim
+                        \begin{cases}
+                        \textbf{AffineBeta}(0, \nu^{xy}, -\frac{P+1}{2}, \frac{P+1}{2}) & \text{$\theta_{nf} = k$} \\
+                        \textbf{Uniform}(-\frac{P+1}{2}, \frac{P+1}{2}) & \text{$\theta_{nf} \neq k$}
+                        \end{cases}$
+                \Comment{draw $x$-axis center}
+                \State $ y_{knf} \sim
+                        \begin{cases}
+                        \textbf{AffineBeta}(0, \nu^{xy}, -\frac{P+1}{2}, \frac{P+1}{2}) & \text{$\theta_{nf} = k$ (on-target)} \\
+                        \textbf{Uniform}(-\frac{P+1}{2}, \frac{P+1}{2}) & \text{$\theta_{nf} \neq k$ (off-target)}
+                        \end{cases}$
+                \Comment{draw $y$-axis center}
+            \EndIf
+        \EndFor
+            
+        \ForAll{pixels $i,j \in \{1 \dots P\}$}
+            \ForAll{spots $k \in \{1 \dots K\}$}
+                \State $\mu^{S}_{knfij} =
+                        \begin{cases}
+                            \dfrac{h_{knf}}{2 \pi w^2_{nfk}} \exp{\left ( -\dfrac{(i-x_{nfk})^2 + (j-y_{nfk})^2}{2w^2_{nfk}} \right)} & \text{if $m_{knf} = 1$} \\
+                            0 & \text{otherwise}
+                        \end{cases}$
+                \Comment{2D Gaussian spot}
+            \EndFor
+            \State $\mu^I_{nfij} = b_{nf} + \sum_k \mu^S_{knfij}$
+            \Comment{mean pixel intensity w/o offset}
+            \State $I_{nfij} \sim \textbf{Gamma} (\mu^I_{nfij}, \sqrt{\mu^I_{nfij} \gamma})$
+            \Comment{draw pixel intensity w/o offset}
+            \State $\delta_{nfij} \sim \textbf{Categorical}_{\{ \delta_r \}^R_{r=1}}(\bm{\pi}^\delta)$
+            \Comment{draw offset signal}
+            \State \Return $D_{nfij} = \delta_{nfij} + I_{nfij}$
+            \Comment{observed pixel intensity}
+        \EndFor
+    \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
