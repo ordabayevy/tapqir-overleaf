@@ -32,6 +32,11 @@ In a second comparison, a series of simulated data sets were constructed for a r
 
 Comparison of two methods showed similar performance on simulated data (Figure \ref{fig:simulated_data}). Taken together, these data demonstrated that the Bayesian method performs as well as or even better than the best existing CoSMoS data analysis method. Furthermore, Bayesian method achieves this performance automatically, with no adjustable parameters whatsoever, unlike the heuristic spot picker which attains this level of performance only after careful subjective trial-and-error manual adjustment of its three threshold parameters, a process that must be repeated tediously for each data set analyzed. Finally, our new Bayesian method produces a spot probability estimate for each image (not merely a Boolean spot/no spot determination) that can be used to inform subsequent kinetics calculations based on the results (e.g., the HMM analysis).
 
+
+\subsection{Spot Detection}
+
+Spot detection is performed in a probabilistic manner. Spot existence probability depends on the information in the entire image. However, it primarily correlates with the intensity of the spot. Discrimination of spots from random fluctuations in the background signal depends on the prior and not on the threshold parameter. In the absence of prior information uninformative prior can be used. Plotting results show that with half normal prior spots have to be roughly above 1 SNR.
+
 %\begin{figure}
 %\includegraphics[width=\linewidth]{figures/figure5.png}
 %\caption{Performance comparison of the Bayesian method with the heuristic spot thresholding algorithm on simulated data.}
