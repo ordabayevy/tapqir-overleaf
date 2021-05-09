@@ -1,13 +1,59 @@
 \section*{Discussion}
 
-To solve these problems, we present here a Bayesian approach for analysis and interpretation of CoSMoS data. Bayesian inference provides a natural means to combine prior empirical information with observed experimental data in a rigorous statistical framework. We define a probabilistic generative model which can be interpreted as a causal process that produces the observed image data.  Our new method: 1) provides uncertainties for all of the model parameters, including a spot probability for each image (not merely a Boolean "spot/no spot" classification) 2) maximizes extraction of useful information from data (particularly at the low S/N inherent to many CoSMoS experiments) by analyzing raw images; 3) defines a unified probabilistic model which allows one to directly infer model parameters from CoSMoS image data; 4) explicitly models non-specific interactions of binder molecules with the surface; 5) uses Gamma distributed noise, which is more realistic than Gaussian noise; and 6) has a flexible framework that can naturally be extended to kinetic models and multi-wavelength analysis. 
-
 More recent spot detection methods are based on extracting quantitative features of the spot (e.g., intensity profile, size, shape, and distance to target) from the 2-D image and then identifying spots using manually chosen thresholds for these parameters \cite{Friedman2015-nx, Smith2019-yb}. These image analysis based methods can be more accurate than previous approaches in part because they make use of information contained in the 2-D images that are disregarded when only the integrated intensity is used \cite{Friedman2015-nx}. While these methods greatly improve CoSMoS data analysis, they nevertheless suffer from significant deficiencies. First, current methods require subjective choice of user-set thresholds for spot amplitude, diameter and proximity. These settings significantly affect error rates and no objective method to select them currently exists, making the approach non-robust and overly complicated. Second, it is unsatisfying from a theoretical perspective that existing analysis methods are performed in multiple steps with a loss of information about the uncertainties at each step of the analysis. Spot detection is performed on the extracted features of the spot and not the raw 2-D images themselves. Furthermore, spot detection step produces only a binary output (spot present or absent); they do not output the probability of spot presence in marginal images, a critical feature in the analysis of low S/N data. Kinetic analysis, in turn, is based on the binary output of the spot detection step, further reducing the amount of information transmitted from the raw images. Third, it is nontrivial to incorporate prior knowledge (e.g., co-localization accuracy, size of the spot, frequency of non-specific binding) into these analysis methods.
 
-\subsection*{Software and hardware implementation}
+Tapqir is a probabilistic program for Bayesian analysis and classification of single-molecule fluorescence image data. Similar to other advanced analysis methods \cite{Friedman2015-nx,Smith2019-yb}, Tapqir maximizes extraction of useful information from data (particularly at the low S/N inherent to many CoSMoS experiments) by directly analyzing 2D images. A distinction of Tapqir is threefold: 1) probabilistic modeling, 2) Bayesian inference, and 3) implementation as a probabilistic program.
 
-The proposed research will provide more efficient ways to analyze large CoSMoS data sets. Technological developments such as faster, larger cameras \citep{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \citep{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced >1 TB image data per experiment. Increasing data set sizes make it infeasible to use existing analytical methods. The code for the model and variational inference algorithm is written using Pyro probabilistic programming language. Pyro uses Pytorch as a backend for automatic differentiation and efficient computation of parallelizable vector-math operations on graphics processing units (GPUs). Our program is open-source and can be downloaded from the github repository.
+% probabilistic modeling
 
-Generally, the gain and offset of the camera can be determined from the calibration data using the linear relationship between the noise variance and the mean intensity. Thus, there is no need for additional calibration experiment.
+Tapqir is able to accurately model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, in particular a realistic description of photon noise, explicit modeling of both target-specific and target-nonspecific interactions of binder molecules with the surface. We use a mixture model to detect binder molecules that are present in the image and to distinguish between specifically and non-specifically bound molecules. 
 
-Figure 3 shows that gain and proximity can be fitted along with other parameters.
+% Bayesian inference
+
+incorporates prior knowledge
+Bayesian inference provides uncertainties for all of the model parameters and predicts target-specific spot presence/absence probabilities for each image (not merely a Boolean "spot/no spot" classification). Generally, the gain and offset of the camera can be determined from the calibration data using the linear relationship between the noise variance and the mean intensity. Thus, there is no need for additional calibration experiment.
+
+Bayesian inference provides a natural means to combine prior empirical information with observed experimental data in a rigorous statistical framework. We define a probabilistic generative model which can be interpreted as a causal process that produces the observed image data.  defines a unified probabilistic model which allows one to directly infer model parameters from CoSMoS image data;
+
+eliminate manual tweaking
+
+% probabilistic programming
+
+Tapqir is implemented in Python-based probabilistic programming language Pyro. The advantage of using PPL like Pyro is its automated SVI approach which allows to focus on the model development, efficient computation on GPU, scalability to large datasets. Increasing data set sizes make it infeasible to use existing analytical methods. The code for the model and variational inference algorithm is written using Pyro probabilistic programming language. Pyro uses Pytorch as a backend for automatic differentiation and efficient computation of parallelizable vector-math operations on graphics processing units (GPUs). Our program is open-source and can be downloaded from the github repository.
+
+makes it "easy" to introduce new models
+
+%future direction:
+as describe, tapqir gives classification probs.  Already showed this is useful in kinetic modelling, but could be mad mmore useful....
+Our model does not explicitly account for kinetic processes.  But it has a flexible framework that can naturally be extended to kinetic models and multi-wavelength analysis. 
+
+
+
+% move to intro?
+The proposed research will provide more efficient and reliable ways to analyze large CoSMoS data sets. Technological developments such as faster, larger cameras \cite{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \cite{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced $>1$ TB image data per experiment. 
+
+
+
+\begin{comment}
+
+methods experimentl data part
+Discussion 
+Remake figures with new program 6, 7, 5h, 3,5 update
+Spreadsheets (scripts)
+Spreadsheet key
+Add missing references
+literature review
+get larry to read
+
+--potentially after submission --
+Software (is it required before submission?)
+Installation ducomentation
+Use documentation
+More datasets
+Use larry
+
+--on publication --
+Data archive
+
+\end{comment}
+
