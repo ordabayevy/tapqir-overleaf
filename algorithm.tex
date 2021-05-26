@@ -3,7 +3,7 @@
 \caption{Generative model for pixel intensities}
 \label{alg:pseudocode}
 \begin{algorithmic}[1]
-\State $g \sim \mathbf{Gamma}(10, 1)$
+\State $g \sim \mathbf{HalfNormal}(50)$
 \Comment{camera gain}
 \State $\sigma^{xy} \sim \mathbf{Exponential}(1)$
 \Comment{std of on-target spot position (pixels)}
@@ -40,12 +40,12 @@
                 \State $ x_{\mathsf{spot}(i)} \sim
                     \begin{cases}
                     \mathbf{AffineBeta}\left( x_c, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = i \\
-                    \mathbf{AffineBeta}\left( 0, \dfrac{P+1}{2 \sqrt{3}}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq i \end{cases} $
+                    \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq i \end{cases} $
                 \Comment{$x$-axis center}
                 \State $ y_{\mathsf{spot}(i)} \sim
                     \begin{cases}
                     \mathbf{AffineBeta}\left( y_c, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = i \\
-                    \mathbf{AffineBeta}\left( 0, \dfrac{P+1}{2 \sqrt{3}}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq i \end{cases}
+                    \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq i \end{cases}
                     $
                 \Comment{$y$-axis center}
                 \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
@@ -59,7 +59,7 @@
         \EndFor
             
         \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
-            \State $\mu^I = b + \sum{\mathsf{spot}[K]} m \odot \mu^S$
+            \State $\mu^I = b + \sum_{\mathsf{spot}[K]} m \odot \mu^S$
             \Comment{mean pixel intensity w/o offset}
             \State $I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})$
             \Comment{pixel intensity w/o offset}

@@ -2,7 +2,7 @@
 
 \subsection*{Probabilistic model for the CoSMoS image data} 
 
-Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, in particular a realistic description of photon noise, using model parameters that likewise reflect underlying physical factors known to affect the experimental setup. We use a mixture model to detect binder molecules that are present in the image and to distinguish between specifically and non-specifically bound molecules. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown Figure S1A. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
+Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, in particular a realistic description of photon noise, using model parameters that likewise reflect underlying physical factors known to affect the experimental setup. We use a mixture model to detect binder molecules that are present in the image and to distinguish between specifically and non-specifically bound molecules. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
 \subsubsection*{Observed data and likelihood function}
 
@@ -31,7 +31,7 @@ In our model, each pixel in the photon-dependent image $I$ has a  variance which
     I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})
 \end{gather*}
 
-The parameterization of the Gamma distribution (and all other distributions we use in this work) is given in Table S2.
+The parameterization of the Gamma distribution (and all other distributions we use in this work) is given in Extended Data Table 2.
 
 \subsubsection*{Image model}
 
@@ -41,7 +41,7 @@ The mean of the photon-dependent pixel intensity $\mu^I$ is represented  as the 
     \mu^I \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]} \\
     b \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]} \\
     m \in \{ 0, 1 \}^{\mathrm{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F] } \\
-    \mu^I = b + \sum{\mathsf{spot}[K]} m \odot{} \mu^S \\
+    \mu^I = b + \sum_{\mathsf{spot}[K]} m \odot{} \mu^S \\
 \end{gather*}
 
 \noindent
@@ -59,7 +59,7 @@ The intensities for a 2-dimensional Gaussian spot centered at ($x$, $y$) are def
 \end{gather*}
 
 \noindent
-with parameters total integrated intensity $h$, width $w$, and center ($x$, $y$). Coordinates $x$, $y$, $i$, and $j$ are taken relative to the AOI center. 
+with parameters total integrated intensity $h$, width $w$, and center ($x$, $y$). Spatial coordinates $x$, $y$, $i$, and $j$ are taken relative to the AOI center. 
 %
 \begin{gather*}
     h \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]} \\
@@ -84,7 +84,7 @@ Probability of target-specific spot presence is calculated as
 
 \subsubsection*{Prior distributions}
 
-The prior distributions for the unobserved model parameters are detailed below and illustrated in Figure S1. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
+The prior distributions for the unobserved model parameters are detailed below and illustrated in Extended Data Fig. 1a. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
 %
 \begin{enumerate}
     \item Background intensity is modeled using a hierarchical Gamma prior
@@ -148,7 +148,7 @@ The mean non-specific binding rate $\lambda$ is expected to be much less than tw
     w \sim \textbf{Uniform}(0.75, 2.25)
 \end{equation}
 
-\item Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are co-localized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with range constrained to one-half pixel beyond the image region, a mean position at the target molecule location $x_c$ and $y_c$, and a standard deviation parameterized as proximity $\sigma^{xy}$ (Figure S1b, orange). The specified range for ($x$, $y$) allows the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Figure S1b, blue). The Uniform distribution is a special case of the Affine-Beta distribution.
+\item Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are co-localized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with range constrained to one-half pixel beyond the image region, a mean position at the target molecule location $x_c$ and $y_c$, and a standard deviation parameterized as proximity $\sigma^{xy}$ (Extended Data Fig. 1b, orange). The specified range for ($x$, $y$) allows the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue). The Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{gather*}
     x_{\mathsf{spot}(i)} \sim
@@ -319,7 +319,7 @@ Below we list variational distributions and their variational parameters.
 
 \subsection*{Implementation}
 
-The CoSMoS model and variational inference method outlined above are implemented as a probabilistic program, Tapqir, in the Python-based probabilistic programming language (PPL) Pyro \cite{Bingham2019-qy,Obermeyer2019-xt}. For a faster convergence we first fit the data to a model where $\theta$ is marginalize out and then fit to a full model to obtain $q(\theta)$.
+The CoSMoS model and variational inference method outlined above are implemented as a probabilistic program, Tapqir, in the Python-based probabilistic programming language (PPL) Pyro \cite{Bingham2019-qy,Obermeyer2019-xt}. For a faster convergence we first fit the data to a model where $\theta$ is marginalized out and then fit to a full model to obtain $q(\theta)$.
 
 \subsubsection*{Optimization}
 
@@ -333,7 +333,7 @@ In all of our analysis at each fitting iteration we use random subsample of AOIs
 
 \subsection*{Data simulation}
 
-For each simulation, the size of the dataset ($D=14$, $N$, $F$, $N_c$, $F_c$) was fixed and a subset of parameters ($K=2$, $\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) were set to desired values.  The remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) were produced using Tapqir's generative model. Chosen parameter values and dataset sizes are provided in Supplementary Information.
+For each simulation, the size of the dataset ($D=14$, $N$, $F$, $N_c$, $F_c$) was fixed and a subset of parameters ($K=2$, $\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) were set to desired values.  The remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) were produced using Tapqir's generative model. Chosen parameter values and dataset sizes are provided in Supplementary Data.
 
 For kinetic simulations, $\theta$ was modeled using a discrete Markov process. For $K=2$, $\theta$ has three states, with $\theta = 0, 1, 2$ corresponding to no specifically bound spot being present, spot 1 being specifically bound, and spot 2 being specifically bound, respectively. When a specifically bound molecule is present (i.e., $\theta = 1, 2$), the probability is equally split between those indices. We assume that the Markov process is at equilibrium and initialized the chain with the equilibrium probabilities.
 
@@ -351,7 +351,11 @@ For kinetic simulations, $\theta$ was modeled using a discrete Markov process. F
 \noindent
 where $\mathsf{init}$ is a vector of equilibrium probabilities for $\theta$, $\mathsf{trans}$ is the transition probability matrix, and $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$ are the apparent first-order binding and dissociation rate constants in units of $\mathrm{s}^{-1}$, respectively, assuming 1 s/frame.
 
-For posterior predictive checking, simulated images were produced using Tapqir's generative model where model parameters were sampled from the variational distribution $q(\psi)$. % reference Figure S3 (sampling from posterior of simulated data)
+For posterior predictive checking, simulated images were produced ($D^\mathrm{rep}$) using Tapqir's generative model where model parameters were sampled from the posterior distribution $p(\psi|D)$ which is approximated by the variational distribution $q(\psi)$. % reference Figure S3 (sampling from posterior of simulated data)
+
+\begin{gather*}
+    D^\mathrm{rep} | D \sim p(I^\mathrm{rep} | \psi) p(\delta^\mathrm{rep}) p(\psi | D)
+\end{gather*}
 
 \subsection*{Classification accuracy statistics}
 
@@ -375,23 +379,19 @@ where TP is true positives, TN is true negatives, FP is false positives, and FN 
 
 \subsubsection*{SNR}
 
-We calculate signal-to-noise ratio (SNR) as the mean of ratio of signal to noise for each spot
+We define SNR as
 
 \begin{gather*}
-    \mathrm{SNR} = \mathrm{mean} \left( \dfrac{\mathsf{signal}}{\mathsf{noise}} \right)
+    \mathrm{SNR} = \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}}
 \end{gather*}
 
-Spot signal is defined as weighted average of total signal minus mean background and mean offset signals
+where $\mathsf{signal}$ designates spot signal above background, $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, and $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity.
+
+Spot signal is calculated as weighted average of total signal minus mean background and mean offset signals
 
 \begin{gather*}
     \mathsf{weight} = \dfrac{1}{2 \pi \cdot w^2} \exp{\left( -\dfrac{(i-x)^2 + (j-y)^2}{2 \cdot w^2} \right)} \\
     \mathsf{signal}_{\mathsf{spot}(k)} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} D \cdot \mathsf{weight}_{\mathsf{spot}(k)} - b_{\mathrm{mean}} - \delta_\mathrm{mean} \quad \textrm{for } p(\theta = k) > 0.5
-\end{gather*}
-
-\noindent and noise as
-
-\begin{gather*}
-    \mathsf{noise}^2 = \sigma^2_{\mathsf{offset}} + b_\mathrm{mean} \cdot g_\mathrm{mean}
 \end{gather*}
 
 For simulated data theoretical signal can be directly calculated as
@@ -413,7 +413,7 @@ For single-exponential kinetics used in all of our analyses maximum-likelihood e
 \end{gather*}
 
 \begin{algorithm}
-\caption{Generative model for pixel intensities}
+\caption{Monte Carlo sampling for parameter estimation}
 \begin{algorithmic}[1]
 \For{$i = 1, 2, \dots, 1000 $}
     \State Sample binary $z$ from approximate posterior $p(\mathsf{specific})$
