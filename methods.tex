@@ -177,10 +177,10 @@ We give $\sigma^{xy}$ an Exponential prior with a characteristic width of one pi
     g \sim \mathbf{HalfNormal}(50)
 \end{gather*}
 
-\item The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values and their weights are used to construct a Categorical prior
+\item The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values ($\delta_\mathrm{samples}$) and their weights ($\delta_\mathrm{weights}$) are used to construct an Empirical prior
 %
 \begin{gather*}
-    \delta \sim \mathbf{Categorical}(X, \dots, X)
+    \delta \sim \mathbf{Empirical}(\delta_\mathrm{samples}, \delta_\mathrm{weights})
 \end{gather*}
 
 \end{enumerate}
@@ -193,15 +193,13 @@ Combining the likelihood function and prior distributions we obtain the factoriz
 %
 \begin{gather*}
     p(D, \psi) \\
-    = \sum_\delta p(I | b, m, h, w, x, y, g) p(g) p(\delta) \\
-    p(b | \mu^b, \sigma^b) p(\mu^b) p(\sigma^b) \\
-    p(h | m) p(w | m) \\
-    p(x | \sigma^{xy}, \theta, m) p(y | \sigma^{xy}, \theta, m) p(\sigma^{xy}) \\
-    p(\theta | \pi) p(m | \theta, \pi, \lambda) p(\pi) p(\lambda) 
+    = p(g) p(\sigma^{xy}) p(\pi) p(\lambda) \\ \prod_{\mathsf{AOI}[N]} p(\mu^b) p(\sigma^b) \prod_{\mathsf{frame}[F]} p(b | \mu^b, \sigma^b) \sum_\theta p(\theta | \pi) \prod_{\mathsf{spot}[K]} p(m | \theta, \lambda) p(h)^m p(w)^m p(x | \sigma^{xy}, \theta)^m p(y | \sigma^{xy}, \theta)^m \\
+    \prod_{\mathsf{pixelX}[P]} \prod_{\mathsf{pixelY}[P]} \sum_\delta p(\delta) p(I | \mu^I, g) \\
+    \prod_{\mathsf{AOI}[N_c]} p(\mu^b) p(\sigma^b) \prod_{\mathsf{frame}[F_c]} p(b | \mu^b, \sigma^b) \prod_{\mathsf{spot}[K]} p(m | \lambda) p(h)^m p(w)^m p(x)^m p(y)^m \prod_{\mathsf{pixelX}[P]} \prod_{\mathsf{pixelY}[P]} \sum_\delta p(\delta) p(I | \mu^I, g) \\
 \end{gather*} 
 
 \noindent
-where $\psi = \{ b, \theta, m, h, w, x, y, g, \mu^b, \sigma^b, \pi, \lambda, \sigma^{xy} \}$.
+where $\psi = \{ g, \sigma^{xy}, \pi, \lambda, \mu^b, \sigma^b, b, \theta, m, h, w, x, y, \delta \}$.
 
 For a Bayesian analysis, we want to obtain the posterior distribution for the parameters $\psi$ given the observed data using Bayes equation:
 %
@@ -225,10 +223,9 @@ that we use as an approximation to the true posterior distribution $p(\psi | D)$
 The variational distribution $q(\psi)$ has the following factorization with respect to model parameters:
 %
 \begin{gather*}
-    q(\psi) = q(g) q(b) q(\mu^b) q(\sigma^b) \\
-    q(h | m) q(w | m) \\
-    q(x | m) q(y | m) q(\sigma^{xy}) \\
-    q(\theta) q(m | \theta) q(\pi) q(\lambda)
+    q(\psi) = q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \\
+    \prod_{\mathsf{AOI}[N]} q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}[F]} q(b) \prod_{\mathsf{spot}[K]} q(m) q(h)^m q(w)^m q(x)^m q(y)^m \\
+    \prod_{\mathsf{AOI}[N_c]} q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}[F_c]} q(b) \prod_{\mathsf{spot}[K]} q(m) q(h)^m q(w)^m q(x)^m q(y)^m
 \end{gather*}
 
 Below we list variational distributions and their variational parameters.
@@ -278,18 +275,12 @@ Below we list variational distributions and their variational parameters.
     
     Proximity $\sigma^{xy}$
     \begin{gather*}
-        \sigma^{xy}_\mathrm{mean} \in \mathbb{R}_{>0} \\
-        \sigma^{xy}_\mathrm{beta} \in \mathbb{R}_{>0} \\
-        \sigma^{xy} \sim \mathbf{Gamma}(\sigma^{xy}_\mathrm{mean}, \sigma^{xy}_\mathrm{beta})
+        \sigma^{xy}_\mathrm{mean} \in (0, (P+1) / \sqrt{12}) \\
+        \sigma^{xy}_\mathrm{beta} \in \mathbb{R}_{>2} \\
+        \sigma^{xy} \sim \mathbf{AffineBeta}(\sigma^{xy}_\mathrm{mean}, \sigma^{xy}_\mathrm{size})
     \end{gather*}
     
-    \item Target-specific index parameter $\theta$
-    \begin{gather*}
-        \theta_\mathrm{prob} \in [0, 1]^{\mathrm{AOI}[N] \times \mathrm{frame}[F] \times \theta[K+1]} \\
-        \theta \sim \mathbf{Categorical}(\theta_\mathrm{prob})
-    \end{gather*}
-    
-    Average target-specific binding probability $\pi$
+    \item Average target-specific binding probability $\pi$
     \begin{gather*}
         \pi_\mathrm{mean} \in [0, 1] \\
         \pi_\mathrm{size} \in \mathbb{R}_{>2} \\
@@ -298,7 +289,7 @@ Below we list variational distributions and their variational parameters.
     
     \item Spot existence indicator $m$
     \begin{gather*}
-        m_\mathrm{prob} \in [ 0, 1 ]^{\theta[K+1] \times \mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]} \\
+        m_\mathrm{prob} \in [ 0, 1 ]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]} \\
         m \sim \mathbf{Bernoulli}(m_\mathrm{prob})
     \end{gather*}
     
