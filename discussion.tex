@@ -16,7 +16,7 @@ Prior work \cite{Smith2019-yb,Smith2015-gf} did not use a Bayesian image classif
 Tapqir predicts target-specific spot presence probabilities $p(\mathsf{specific})$ for each image, rather than Boolean ``spot/no spot'' classification used in prior work. Probabilities provide more nuanced information about spot classification which can be useful for downstream analysis. Even though Tapqir does not explicitly account for kinetic processes, we demonstrate that spot probabilities can be used in determining rate constants (and their uncertainties) of the underlying molecular mechanisms. In this respect, Tapqir provides comparable results to other methods but does so without subjective parameter tweaking and in a manner that quantitatively accounts for the strength of the experimental data.
 
 % probabilistic programming
-Tapqir is implemented in Pyro, a Python-based probabilistic programming language (PPL) \cite{Bingham2019-qy}. Probabilistic programming is a relatively new paradigm in which probabilistic models are expressed in a high-level language that allows easy formulation, modification, and automated inference \cite{Van_de_Meent2018-mi}. Design principles and use of GPU-supported backend numeric libraries in modern PPLs such as Pyro enable flexible and expressive probabilistic modeling scalable to large datasets. Scalability is a significant consideration, since the sizes of CoSMoS datasets have increased due to faster, larger cameras \cite{Quan2011-cg}, the availability of fluorescent dyes with dramatically improved photostability (ref. JF group, Blanchard) (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \cite{Friedman2006-kb}. 
+Tapqir is implemented in Pyro, a Python-based probabilistic programming language (PPL) \cite{Bingham2019-qy}. Probabilistic programming is a relatively new paradigm in which probabilistic models are expressed in a high-level language that allows easy formulation, modification, and automated inference \cite{Van_de_Meent2018-mi}. Design principles and use of GPU-supported backend numeric libraries in modern PPLs such as Pyro enable flexible and expressive probabilistic modeling scalable to large datasets. Scalability is a significant consideration, since the sizes of CoSMoS datasets have increased due to faster, larger cameras \cite{Quan2011-cg}, the availability of fluorescent dyes with dramatically improved photostability \cite{Grimm2015-ea} (ref. JF group, Blanchard) (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \cite{Friedman2006-kb}. 
 
 Tapqir and Pyro are open-source software; Tapqir and its documentation are available at \url{https://github.com/gelles-brandeis/tapqir}.
 
@@ -28,21 +28,15 @@ In this work we focused on developing an image model for colocalization detectio
 % possible reviewers:  Ruben Gonzales, Jan van de Meent, Chris Wiggins, Taekjip Ha, ?David Grunwald, ?Carlas Smith, ?Aaron Hoskin, Shixin Liu (Rockefeller)
 % Possible info for cover letter: Like other recent methods for CoSMoS analysis\cite{Friedman2015-nx,Smith2019-yb}, Tapqir maximizes extraction of useful information from data (particularly at the low S/N inherent to many CoSMoS experiments) by directly analyzing 2-D images as opposed to integrated fluorescence. Like Tapqir, these image analysis based methods can be more accurate than previous approaches in part because they make use of information contained in the 2-D images that are disregarded when only the integrated intensity is used\cite{Friedman2015-nx}. While these methods greatly improve CoSMoS data analysis relative to methods based on integrated fluorescence intensity records, they nevertheless suffer from significant deficiencies. First, current methods require subjective choice of user-set thresholds for spot amplitude, diameter and proximity. These settings significantly affect error rates and no objective method to select them currently exists, making the approach non-robust and overly complicated. Second, it is unsatisfying from a theoretical perspective that existing analysis methods are performed in multiple steps with a loss of information about the uncertainties at each step of the analysis. Spot detection is performed on the extracted features of the spot and not the raw 2-D images themselves. Furthermore, spot detection step produces only a binary output (spot present or absent); they do not output the probability of spot presence in marginal images, a critical feature in the analysis of low S/N data. Kinetic analysis, in turn, is based on the binary output of the spot detection step, further reducing the amount of information transmitted from the raw images. Third, it is nontrivial to incorporate prior knowledge (e.g., co-localization accuracy, size of the spot, frequency of non-specific binding) into these analysis methods.
 
-% Technological developments such as faster, larger cameras \cite{Quan2011-cg}, availability of fluorescent dyes with dramatically improved photostability (which increase the amount of data from a single experiment), and microscopes that efficiently collect single-molecule data at more wavelengths simultaneously \cite{Friedman2006-kb} have all increased the sizes of CoSMoS datasets. Gelles lab studies of transient molecular binding events at high frame rates have produced $>1$ TB image data per experiment. 
-
 \begin{comment}
 
 NEW TODO LIST
 - Add missing references
 - Update Abstract
-- Offset prior in Methods
-- Check variational distributions
-- Add N, F, D to Supplementary Data
 - Update the style of the table in Fig. 2e
 - Update Fig. 6
 - Table 1 footnote
 - **Posterior predictive checking
-- **Pytorch bug
 - Negative simulations
 - Seed simulations
 - Kinetic simulations
