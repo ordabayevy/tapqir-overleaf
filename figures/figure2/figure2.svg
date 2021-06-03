@@ -4818,17 +4818,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
+     inkscape:zoom="1.4142136"
      inkscape:cx="233.89672"
      inkscape:cy="334.49704"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1115"
-     inkscape:window-height="1383"
-     inkscape:window-x="3343"
-     inkscape:window-y="35"
+     inkscape:window-width="2560"
+     inkscape:window-height="1440"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      showguides="true" />
   <metadata
@@ -4839,7 +4839,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -5898,12 +5898,12 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:1.25;font-family:sans-serif;fill:#ff7f0e;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="62.699547"
-       y="106.40771"
+       y="112.04144"
        id="text10256-2-4-28"><tspan
          sodipodi:role="line"
          id="tspan10254-2-7-9"
          x="62.699547"
-         y="106.40771"
+         y="112.04144"
          style="font-weight:bold;font-size:3.52778px;fill:#ff7f0e;fill-opacity:1;stroke-width:0.264583">2</tspan></text>
     <path
        style="fill:none;stroke:#ff0000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.5, 1;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker4381)"
@@ -5950,45 +5950,45 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:1.25;font-family:sans-serif;fill:#1f77b4;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="39.129616"
-       y="106.0993"
+       y="111.92013"
        id="text10256-2-9-7"><tspan
          sodipodi:role="line"
          id="tspan10254-2-2-3"
          x="39.129616"
-         y="106.0993"
+         y="111.92013"
          style="font-weight:bold;font-size:3.52778px;fill:#1f77b4;fill-opacity:1;stroke-width:0.264583">1</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:1.25;font-family:sans-serif;fill:#1f77b4;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="7.3489523"
-       y="109.49337"
+       y="115.31419"
        id="text10256-2-9-6"><tspan
          sodipodi:role="line"
          id="tspan10254-2-2-1"
          x="7.3489523"
-         y="109.49337"
+         y="115.31419"
          style="font-weight:bold;font-size:3.52778px;fill:#1f77b4;fill-opacity:1;stroke-width:0.264583">1</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:1.25;font-family:sans-serif;fill:#ff7f0e;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="43.972382"
-       y="101.46356"
+       y="107.2844"
        id="text10256-2-4-28-2"><tspan
          sodipodi:role="line"
          id="tspan10254-2-7-9-9"
          x="43.972382"
-         y="101.46356"
+         y="107.2844"
          style="font-weight:bold;font-size:3.52778px;fill:#ff7f0e;fill-opacity:1;stroke-width:0.264583">2</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.52778px;line-height:1.25;font-family:sans-serif;fill:#ff7f0e;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="22.5135"
-       y="104.09329"
+       y="109.91412"
        id="text10256-2-4-28-3"><tspan
          sodipodi:role="line"
          id="tspan10254-2-7-9-1"
          x="22.5135"
-         y="104.09329"
+         y="109.91412"
          style="font-weight:bold;font-size:3.52778px;fill:#ff7f0e;fill-opacity:1;stroke-width:0.264583">2</tspan></text>
     <text
        xml:space="preserve"
