@@ -5217,7 +5217,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
      inkscape:cx="210.36426"
-     inkscape:cy="242.18407"
+     inkscape:cy="221.67797"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -6566,17 +6566,21 @@
     <text
        xml:space="preserve"
        style="font-size:3.52778px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;word-spacing:0px;stroke-width:0.264583"
-       x="53.747532"
-       y="45.801781"
-       id="text42356"><tspan
+       x="46.827446"
+       y="44.107124"
+       id="text96643"><tspan
          sodipodi:role="line"
-         id="tspan42354"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:cmmi10;-inkscape-font-specification:cmmi10;stroke-width:0.264583"
-         x="53.747532"
-         y="45.801781"><tspan
-           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math'"
-           id="tspan51796">μ</tspan><tspan
-           style="font-size:65%;baseline-shift:super"
-           id="tspan73420">S</tspan></tspan></text>
+         id="tspan96641"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="46.827446"
+         y="44.107124"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math'"
+           id="tspan106173">μ</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:65%;font-family:cmmi10;-inkscape-font-specification:cmmi10;baseline-shift:super"
+           id="tspan108333">S</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:65%;font-family:sans-serif;-inkscape-font-specification:sans-serif;baseline-shift:sub"
+           id="tspan109405">spot</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:65%;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';baseline-shift:sub"
+           id="tspan111481">(2)</tspan></tspan></text>
   </g>
 </svg>
