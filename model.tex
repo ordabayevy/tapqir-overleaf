@@ -1,0 +1,66 @@
+%\label{alg:pseudocode}
+\paragraph{Algorithm 1.} Generative model for pixel intensities.
+
+\begin{algorithmic}[1]
+\State $g \sim \mathbf{HalfNormal}(50)$
+\Comment{camera gain}
+\State $\sigma^{xy} \sim \mathbf{Exponential}(1)$
+\Comment{std of on-target spot position (pixels)}
+\State $\pi \sim \mathbf{Beta}(1/2, 1/2)$
+\Comment{average specific binding probability}
+\State $\lambda \sim \mathbf{Exponential}(1)$
+\Comment{non-specific binding rate}
+\ForAll{$\mathsf{AOI}[N]$}
+    \State $\mu^b \sim \mathbf{HalfNormal}(1000)$
+    \Comment{mean background intensity}
+    \State $\sigma^b \sim \mathbf{HalfNormal}(100)$
+    \Comment{std of background intensity}
+    \ForAll{$\mathsf{frame}[F]$}
+        \State $b \sim \mathbf{Gamma}(\mu^b, \sigma^b)$
+        \Comment{background intensity}
+        \State $\theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)$
+        \Comment{target-specific spot index}
+        
+        \ForAll{$\mathsf{spot}[K]$}
+            \State $ m_{\mathsf{spot}(k)}
+                \begin{cases}
+                    = 1 & \text{$\theta = k$} \\
+                    \sim \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
+                    \sim \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
+                \end{cases} $
+            \Comment{spot presence}
+            \State $h \sim \mathbf{HalfNormal}(10000)$
+            \Comment{spot intensity}
+            \State $w \sim \mathbf{Uniform}(0.75, 2.25)$
+            \Comment{spot width}
+            \State $ x_{\mathsf{spot}(k)} \sim
+                \begin{cases}
+                \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k \\
+                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \end{cases} $
+            \Comment{$x$-axis center}
+            \State $ y_{\mathsf{spot}(k)} \sim
+                \begin{cases}
+                \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k \\
+                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \end{cases}
+                $
+            \Comment{$y$-axis center}
+            \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
+            \State $\mu^{S}_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} =
+                        \dfrac{m \cdot h}{2 \pi w^2} \exp{\left ( -\dfrac{(i-x-x_c)^2 + (j-y-y_c)^2}{2w^2} \right)}$
+            \Comment{2-D Gaussian spot}
+            \EndFor
+        \EndFor
+            
+        \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
+            \State $\delta \sim \mathbf{Empirical}( \delta_\mathrm{samples}, \delta_\mathrm{weights})$
+            \Comment{offset signal}
+            \State $\mu^I = b + \sum_{\mathsf{spot}[K]} \mu^S$
+            \Comment{mean pixel intensity w/o offset}
+            \State $I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})$
+            \Comment{pixel intensity w/o offset}
+            \State $D = \delta + I$
+            \Comment{observed pixel intensity}
+        \EndFor
+    \EndFor
+\EndFor
+\end{algorithmic}

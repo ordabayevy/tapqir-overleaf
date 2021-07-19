@@ -1,0 +1,68 @@
+%\label{alg:pseudocode}
+\paragraph{Algorithm 2.} Generative model for pixel intensities.
+
+\algnewcommand{\Initialize}[1]{%
+  \State \textbf{Initialize:}
+  \Statex \hspace*{\algorithmicindent}\parbox[t]{.8\linewidth}{\raggedright #1}
+}
+
+\begin{algorithmic}[1]
+\Initialize{
+    $g_\mathrm{mean} \gets 5$, \quad $g_\mathrm{mean} \in \mathbb{R}_{>0} $ \\
+    $g_\mathrm{beta} \gets 100$, \quad $g_\mathrm{beta} \in \mathbb{R}_{>0} $ \\
+    $\sigma^{xy}_\mathrm{mean} \gets 0$, \quad $\sigma^{xy}_\mathrm{mean} \in (0, (P+1) / \sqrt{12}) $ \\
+    $\sigma^{xy}_\mathrm{beta} \gets 100$, \quad $\sigma^{xy}_\mathrm{beta} \in \mathbb{R}_{>2} $ \\
+    $\pi_\mathrm{mean} \gets 0.5$, \quad $\pi_\mathrm{mean} \in [0, 1] $ \\
+    $\pi_\mathrm{size} \gets 2$, \quad $\pi_\mathrm{size} \in \mathbb{R}_{>2} $ \\
+    $\lambda_\mathrm{mean} \gets 0.5$, \quad $\lambda_\mathrm{mean} \in \mathbb{R}_{>0} $ \\
+    $\lambda_\mathrm{beta} \gets 100$, \quad $\lambda_\mathrm{beta} \in \mathbb{R}_{>0} $ \\
+    $\mu^b_\mathrm{mean} \gets \mathbb{R}_{>0}^{\mathrm{AOI}[N]}$, \quad $\mu^b_\mathrm{mean} \in \mathbb{R}_{>0}^{\mathrm{AOI}[N]}$ \\
+    $\sigma^b_\mathrm{mean} \gets 1^{\mathrm{AOI}[N]}$, \quad $\sigma^b_\mathrm{mean} \in \mathbb{R}_{>0}^{\mathrm{AOI}[N]}$ \\
+    $b_\mathrm{mean} \gets \mathbb{R}_{>0}^{\mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $b_\mathrm{mean} \in \mathbb{R}_{>0}^{\mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $b_\mathrm{beta} \gets 1^{\mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $b_\mathrm{beta} \in \mathbb{R}_{>0}^{\mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $m_\mathrm{prob} \gets [ 0, 1 ]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $m_\mathrm{prob} \in [ 0, 1 ]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $h_\mathrm{mean} \gets 2000^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]} $, \quad $h_\mathrm{mean} \in \mathbb{R}_{>0}^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]} $ \\
+    $h_\mathrm{beta} \gets 0.001^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $h_\mathrm{beta} \in \mathbb{R}_{>0}^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $w_\mathrm{mean} \gets 1.5^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $w_\mathrm{mean} \in [0.75, 2.25]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $w_\mathrm{size} \gets 100^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $w_\mathrm{size} \in \mathbb{R}_{>2}^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $x_\mathrm{mean} \gets 0^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $x_\mathrm{mean} \in [-(P+1)/2, (P+1)/2]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $y_\mathrm{mean} \gets 0^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $y_\mathrm{mean} \in [-(P+1)/2, (P+1)/2]^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$ \\
+    $xy_\mathrm{size} \gets \mathbb{R}_{>2}^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$, \quad $xy_\mathrm{size} \in \mathbb{R}_{>2}^{\mathrm{spot}[K] \times \mathrm{AOI}[N] \times \mathrm{frame}[F]}$
+    }
+\State $g \sim \mathbf{Gamma}(g_\mathrm{mean}, g_\mathrm{beta})$
+\Comment{camera gain}
+\State $\sigma^{xy} \sim \mathbf{AffineBeta}(\sigma^{xy}_\mathrm{mean}, \sigma^{xy}_\mathrm{size}, 0, (P+1) / \sqrt{12})$
+\Comment{std of on-target spot position (pixels)}
+\State $\pi \sim \mathbf{Beta}(\pi_\mathrm{mean}, \pi_\mathrm{size})$
+\Comment{average specific binding probability}
+\State $\lambda \sim \mathbf{Gamma}(\lambda_\mathrm{mean}, \lambda_\mathrm{beta})$
+\Comment{non-specific binding rate}
+\ForAll{$\mathsf{AOI}[N]$}
+    \State $\mu^b \sim \mathbf{Delta}(\mu^b_\mathrm{mean})$
+    \Comment{mean background intensity} 
+    \State $\sigma^b \sim \mathbf{Delta}(\sigma^b_\mathrm{mean})$
+    \Comment{std of background intensity}
+    \ForAll{$\mathsf{frame}[F]$}
+        \State $b \sim \mathbf{Gamma}(b_\mathrm{mean}, b_\mathrm{beta})$
+        \Comment{background intensity}
+        \State $\theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)$
+        \Comment{target-specific spot index}
+        \ForAll{$\mathsf{spot}[K]$}
+            \State $m \sim \mathbf{Bernoulli}(m_\mathrm{prob})$
+            \Comment{spot presence}
+            \State $h \sim \mathbf{Gamma}(h_\mathrm{mean}, h_\mathrm{beta})$
+            \Comment{spot intensity}
+            \State $w \sim \mathbf{AffineBeta}(w_\mathrm{mean}, w_\mathrm{size}, 0.75, 2.25)$
+            \Comment{spot width}
+            \State $x \sim \mathbf{AffineBeta} \left( x_\mathrm{mean}, xy_\mathrm{size}, -(P+1)/2, (P+1)/2 \right) $
+            \Comment{$x$-axis center}
+            \State $y \sim \mathbf{AffineBeta} \left( y_\mathrm{mean}, xy_\mathrm{size}, -(P+1)/2, (P+1)/2 \right)$
+            \Comment{$y$-axis center}
+        \EndFor
+        \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
+            \State $\delta \sim \mathbf{Empirical}( \delta_\mathrm{samples}, \delta_\mathrm{weights})$
+            \Comment{offset signal}
+        \EndFor
+    \EndFor
+\EndFor
+\end{algorithmic}
