@@ -18,6 +18,7 @@
 \begin{figure} [t]
 \caption{\textbf{Extended graphical representation of the generative probabilistic model and the prior distributions for $x$ and $y$ spot position parameters.} \textbf{a}, Directed factor graph representation (ref) of model parameters and parameter distributions. Model parameters are depicted as circles, parameter distributions as small filled squares, and deterministic functions as diamonds. Names of the probability distributions are written next to the squares. Input parameters and output parameters are connected by lines, with an arrow pointing towards the dependent parameter. Observed image ($D$) is the sum of the noisy photon-dependent image ($I$) and the photon-independent camera offset ($\delta$). The dashed box represents selection of spot parameters based on the spot existence indicator $m$. Plates (rounded rectangles) contain nodes that are repeated for the number of instances displayed at the bottom-right corner: number of AOIs ($N$), frame count ($F$), maximum number of spots in a single image ($K=2$), and number of image pixels ($P \times P$). \textbf{b}, Prior distributions of $x$ and $y$ for specific and non-specific binding. Probability densities for $x$ and $y$ are defined in the range of the image $-(P+1)/2$, $(P+1)/2$ and are conditional on the identity of the spot (specific or non-specific).  Probability densities for $x$ and $y$ parameters are identical. }
 \end{figure}
+have a row above each data set with an experiment description, align columns
 \clearpage
 
 \begin{figure}[h]
@@ -78,6 +79,41 @@ $\sigma^{54}$RNAPCy3-597P255 & \begin{tabular}[x]{@{}c@{}}$N = 102$, $F = 4407$\
 
 
 % \multicolumn{10}{l}{\footnotesize{\parbox{4in}{$^1$Parameters $N=5$, $F=500$, $N_c=5$, $F_c=500$, $b=150$, $w=1.4$, $\pi=0.15$, $\lambda=0.15$, $g=7$, $\sigma^{xy}=0.2$, $\delta=150$}}}
+\begin{table}[h]
+\caption{\label{tab:parameters} \textbf{Glossary of mathematical symbols.}}
+\begin{tabular}{l l l}
+\toprule
+Symbol & Description & Domain \\
+\midrule
+$K$ & maximum number of spots per image & $\mathbb{N}$ \\
+$N$ & number of AOIs & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$F$ & number of frames & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$P$ & number of pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$g$ & camera gain & $\mathbb{R}_{>0}$ \rule{0pt}{3ex} \\
+$\sigma^{xy}$ & proximity & $(0, (P+1)/\sqrt{12})$ \rule{0pt}{3ex} \\
+$\pi$ & average target-specific binding probability & [0, 1] \rule{0pt}{3ex} \\
+$\lambda$ & target-nonspecific binding rate & $\mathbb{R}_{>0}$ \rule{0pt}{3ex} \\
+$\mu^b$ & mean background intensity across AOI & $\mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ \rule{0pt}{3ex} \\
+$\sigma^b$ & standard deviation of background intensity across AOI & $\mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ \rule{0pt}{3ex} \\
+$b$ & background intensity & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$\theta$ & target-specific spot index & $\{0, 1, \dots, K \}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$m$ & spot presence indicator & $\{ 0, 1 \}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$h$ & integrated spot intensity & $\mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$w$ & spot width & $[0.75, 2.25]^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$x$ & center of the spot on the $x$-axis & $\mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y$ & center of the spot on the $y$-axis & $\mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$\mu^S$ & 2-D Gaussian spot & $\mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$\mu^I$ & ideal image & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$\delta$ & offset signal & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$I$ & observed image w/o offset & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$D$ & observed image & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$x_c$ & target molecule position on the $x$-axis & $[-1/2, 1/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y_c$ & target molecule position on the $y$-axis & $[-1/2, 1/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+\bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+\pagebreak
 
 \begin{table}[h]
 \caption{\label{tab:dist} \textbf{Probability distributions used in the model.}}
