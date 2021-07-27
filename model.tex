@@ -1,5 +1,5 @@
 %\label{alg:pseudocode}
-\paragraph{Algorithm 1.} Generative model for pixel intensities.
+\paragraph{Algorithm 1.} The Tapqir generative model. \\
 
 \begin{algorithmic}[1]
 \State $g \sim \mathbf{HalfNormal}(50)$
@@ -22,11 +22,11 @@
         \Comment{target-specific spot index}
         
         \ForAll{$\mathsf{spot}[K]$}
-            \State $ m_{\mathsf{spot}(k)}
+            \State $ m_{\mathsf{spot}(k)} \sim
                 \begin{cases}
-                    = 1 & \text{$\theta = k$} \\
-                    \sim \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
-                    \sim \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
+                    \mathbf{Bernoulli}(1) & \text{$\theta = k$} \\
+                    \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
+                    \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
                 \end{cases} $
             \Comment{spot presence}
             \State $h \sim \mathbf{HalfNormal}(10000)$
