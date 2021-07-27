@@ -77,8 +77,6 @@ $\sigma^{54}$RNAPCy3-597P255 & \begin{tabular}[x]{@{}c@{}}$N = 102$, $F = 4407$\
 % \multicolumn{6}{l}{\footnotesize{\parbox{0.9\textwidth}{$^2$See Methods for SNR calculation.}}}
 
 
-
-% \multicolumn{10}{l}{\footnotesize{\parbox{4in}{$^1$Parameters $N=5$, $F=500$, $N_c=5$, $F_c=500$, $b=150$, $w=1.4$, $\pi=0.15$, $\lambda=0.15$, $g=7$, $\sigma^{xy}=0.2$, $\delta=150$}}}
 \begin{table}[h]
 \caption{\label{tab:parameters} \textbf{Glossary of mathematical symbols.}}
 \begin{tabular}{l l l}
@@ -107,8 +105,13 @@ $\mu^I$ & ideal image & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[
 $\delta$ & offset signal & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
 $I$ & observed image w/o offset & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
 $D$ & observed image & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
-$x_c$ & target molecule position on the $x$-axis & $[-1/2, 1/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
-$y_c$ & target molecule position on the $y$-axis & $[-1/2, 1/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$x^\mathsf{target}$ & target molecule position on the $x$-axis & $[P/2-1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y^\mathsf{target}$ & target molecule position on the $y$-axis & $[P/2-1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$i$ & pixel index on the $x$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
+$j$ & pixel index on the $y$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
+$D^\mathsf{raw}$ & raw microscope images & $\mathbb{R}_{>0}^{\mathsf{frame}[F] \times \mathsf{pixelX}[H] \times \mathsf{pixelY}[W]}$ \rule{0pt}{3ex} \\
+$x^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $x$-axis & $[-0.5, H-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $y$-axis & $[-0.5, W-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
 \bottomrule
 \end{tabular}
 \end{table}

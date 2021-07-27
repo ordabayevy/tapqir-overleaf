@@ -2,23 +2,21 @@
 
 \subsection*{The Tapqir model} 
 
-Tapqir models observed CoSMoS image data $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ that consists of a set of $P \times P$ grayscale pixel intensity values as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames. Pixel indices ($i \in \{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$, $j \in \{0, \dots, (P-1)\}^{\mathsf{pixelY}[P]}$) in a Cartesian coordinate system represent the center point of a pixel on image plane. Images are centered with pixel resolution at drift-corrected locations ($x_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$, $y_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$) of target molecules which are obtained at image preprocessing step. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
+Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 2. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
-Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
-%We begin by describing the generative process, for which a graphical summary is in Supplementary Fig. 6 and an algorithmic summary is in Algorithm 1. We then describe the inference procedure, as well as how downstream analysis tasks are directly linked to posterior queries of the model
-%Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. We use model parameters that likewise reflect underlying physical factors known to affect the experimental setup. We use a mixture model to detect binder molecules that are present in the image and to distinguish between specifically and non-specifically bound molecules. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
+\paragraph{CoSMoS data.} Tapqir models observed CoSMoS image data $D$ that consists of a set of $P \times P$ grayscale pixel intensity values as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. Images are centered with pixel resolution at drift-corrected locations ($x^\mathsf{target}$, $y^\mathsf{target}$) of target molecules which are obtained from the image preprocessing step or raw data $D^\mathsf{raw}$ and target molecule positions in raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$). While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
 
-% \subsubsection*{Observed data and likelihood function}
+\input{preprocessing}
 
-%Microscope image preprocessing gives a list of drift-corrected locations of the target molecules in each frame with sub-pixel accuracy $x_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ and $y_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$. Based on this information, we select $P \times P$-pixel AOIs centered with pixel resolution at the target location. The observed data ($D$) thus consists of a set of $P \times P$ grayscale values of pixel intensity as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$. where $x_c$ and $y_c$ are the coordinates of the target molecule relative to the center of the AOI. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
+%Microscope image preprocessing gives a list of drift-corrected locations of the target molecules in each frame with sub-pixel accuracy. Based on this information, we select $P \times P$-pixel AOIs centered with pixel resolution at the target location. The observed data ($D$) thus consists of a set of $P \times P$ grayscale values of pixel intensity as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$. where $x_c$ and $y_c$ are the coordinates of the target molecule relative to the center of the AOI. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
 
-\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ introduced by the camera and the noisy photon-dependent pixel intensity values $I \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$.
+\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta$ introduced by the camera and the noisy photon-dependent pixel intensity values $I$.
 %
 \begin{equation}
     D = \delta + I
 \end{equation}
 
-In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity of that pixel $\mu^I \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ multiplied by the gain $g \in \mathbb{R}_{>0}$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution
+In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity $\mu^I$ of that pixel multiplied by the gain $g$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution
 %
 \begin{equation}
     I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})
@@ -26,25 +24,23 @@ In our model, each pixel in the photon-dependent image $I$ has a  variance which
 
 The Gamma distribution here is parameterized by its mean and standard deviation. The parameterization of the Gamma distribution and all other distributions we use in this work is given in Extended Data Table 2.
 
-\paragraph{Image model.} The idealized noise-free image $\mu^I$ is represented  as the sum of a background intensity $b \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ and the intensities from fluorescence spots modeled as  2-D Gaussians $\mu^S \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$:
+\paragraph{Image model.} The idealized noise-free image $\mu^I$ is represented  as the sum of a background intensity $b$ and the intensities from fluorescence spots modeled as  2-D Gaussians $\mu^S$:
 %
 \begin{equation}
     \mu^I = b + \sum_{\mathsf{spot}} \mu^S
 \end{equation}
 
 \noindent
-For simplicity we allow at most $K$ number of spots in each frame of each AOI.  (In this article, we always use $K$ equal to 2.)  The presence of a given spot in the image is encoded in the binary spot existence parameter $m \in \{ 0, 1 \}^{\mathrm{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, where $m = 1$ when the corresponding spot is present and $m = 0$ when it is absent.
+For simplicity we allow at most $K$ number of spots in each frame of each AOI.  (In this article, we always use $K$ equal to 2.)  The presence of a given spot in the image is encoded in the binary spot existence parameter $m$, where $m = 1$ when the corresponding spot is present and $m = 0$ when it is absent.
 
-
-
-The intensities for a 2-D Gaussian spot centered at for each pixel coordinate ($i$, $j$) is given by:
+The intensities for a 2-D Gaussian spot at each pixel coordinate ($i$, $j$) is given by:
 %
 \begin{equation}
-    \mu^S_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} = \dfrac{m \cdot h}{2 \pi w^2} \exp{\left( -\dfrac{(i-x-x_c)^2 + (j-y-y_c)^2}{2 w^2} \right)}
+    \mu^S_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} = \dfrac{m \cdot h}{2 \pi w^2} \exp{\left( -\dfrac{(i-x-x^\mathsf{target})^2 + (j-y-y^\mathsf{target})^2}{2 w^2} \right)}
 \end{equation}
 
 \noindent
-with spot parameters total integrated intensity $h \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, width $w \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, and center ($x \in \mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, $y \in \mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$) relative to the target molecule located at ($x_c$, $y_c$). 
+with spot parameters total integrated intensity $h$, width $w$, and center ($x$, $y$) relative to the target molecule located at ($x^\mathsf{target}$, $y^\mathsf{target}$). 
 %
 
 To discriminate between spots from target-specific and target-nonspecific binding, we use parameter $\theta \in \{ 0, 1, \dots, K \}^{ \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ to specify the index of the target-specific spot when it is present and use zero when no target-specific spot is present.
@@ -112,10 +108,10 @@ The optimal width $w$ of fluorescence spots in CoSMoS experiments is typically i
 Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x_c$, $y_c$), and a standard deviation parameterized as proximity $\sigma^{xy} \in \mathbb{R}_{>0} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{equation}
-    x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
+    x_{\mathsf{spot}(k)} \sim
     \begin{cases}
-        \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
-        \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
+        \mathbf{AffineBeta}\left( x^\mathsf{target}, \sigma^{xy}, x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
+        \mathbf{Uniform}\left(x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
     \end{cases}
 \end{equation}
 
@@ -141,7 +137,7 @@ The prior distribution for the offset signal $\delta$ is empirically measured fr
 
 \subsection*{Joint distribution}
 
-Let $\phi$ the set of all model parameters. The joint distribution is factorized as:
+Let $\phi$ be the set of all model parameters. The joint distribution is factorized as:
 %
 \begin{equation}
 \begin{aligned}
@@ -191,8 +187,6 @@ that we use as an approximation to the true posterior distribution $p(\phi | D)$
 Below we list variational distributions, variational parameters and the domains of variational parameters. Variational inference procedure is prone to get stuck in local maxima and is heavily affected by initial values of variational parameters. Below we also provide the initial values of variational parameters that worked well in our analysis.
 
 \input{guide}
-
-
 
 \subsection*{Implementation}
 
@@ -283,8 +277,6 @@ For single-exponential kinetics used in all of our analyses maximum-likelihood e
 \end{align}
 \end{subequations}
 
-%\begin{algorithm}
-%\caption{Monte Carlo sampling for parameter estimation}
 \paragraph{Algorithm 3.} Monte Carlo sampling for parameter estimation. \\
 \begin{algorithmic}[1]
 \For{$i = 1, 2, \dots, 1000 $}
@@ -294,10 +286,6 @@ For single-exponential kinetics used in all of our analyses maximum-likelihood e
 \EndFor{}
 \State Calculate mean and CI from the distribution of $\hat{k}$
 \end{algorithmic}
-%\end{algorithm}
 
 %section and table of  fixed parameter values
 
-
-
-% Note about marginalized model and list of model parameters
