@@ -2,23 +2,21 @@
 
 \subsection*{The Tapqir model} 
 
-Tapqir models observed CoSMoS image data $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ that consists of a set of $P \times P$ grayscale pixel intensity values as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames. Pixel indices ($i \in \{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$, $j \in \{0, \dots, (P-1)\}^{\mathsf{pixelY}[P]}$) in a Cartesian coordinate system represent the center point of a pixel on image plane. Images are centered with pixel resolution at drift-corrected locations ($x_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$, $y_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$) of target molecules which are obtained at image preprocessing step. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
+Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 2. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
-Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. We use sets of global and local model parameters $\phi$ and $\psi$ that reflect underlying physical factors known to affect the experimental setup. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
-%We begin by describing the generative process, for which a graphical summary is in Supplementary Fig. 6 and an algorithmic summary is in Algorithm 1. We then describe the inference procedure, as well as how downstream analysis tasks are directly linked to posterior queries of the model
-%Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. We use model parameters that likewise reflect underlying physical factors known to affect the experimental setup. We use a mixture model to detect binder molecules that are present in the image and to distinguish between specifically and non-specifically bound molecules. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 1. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
+\paragraph{CoSMoS data.} Tapqir models observed CoSMoS image data $D$ that consists of a set of $P \times P$ grayscale pixel intensity values as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. Images are centered with pixel resolution at drift-corrected locations ($x^\mathsf{target}$, $y^\mathsf{target}$) of target molecules which are obtained from the image preprocessing step or raw data $D^\mathsf{raw}$ and target molecule positions in raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$). While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
 
-% \subsubsection*{Observed data and likelihood function}
+\input{preprocessing}
 
-%Microscope image preprocessing gives a list of drift-corrected locations of the target molecules in each frame with sub-pixel accuracy $x_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ and $y_c \in [P/2 - 1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$. Based on this information, we select $P \times P$-pixel AOIs centered with pixel resolution at the target location. The observed data ($D$) thus consists of a set of $P \times P$ grayscale values of pixel intensity as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$. where $x_c$ and $y_c$ are the coordinates of the target molecule relative to the center of the AOI. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
+%Microscope image preprocessing gives a list of drift-corrected locations of the target molecules in each frame with sub-pixel accuracy. Based on this information, we select $P \times P$-pixel AOIs centered with pixel resolution at the target location. The observed data ($D$) thus consists of a set of $P \times P$ grayscale values of pixel intensity as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$. where $x_c$ and $y_c$ are the coordinates of the target molecule relative to the center of the AOI. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
 
-\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ introduced by the camera and the noisy photon-dependent pixel intensity values $I \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$.
+\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta$ introduced by the camera and the noisy photon-dependent pixel intensity values $I$.
 %
 \begin{equation}
     D = \delta + I
 \end{equation}
 
-In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity of that pixel $\mu^I \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ multiplied by the gain $g \in \mathbb{R}_{>0}$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution
+In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity $\mu^I$ of that pixel multiplied by the gain $g$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution
 %
 \begin{equation}
     I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})
@@ -26,31 +24,29 @@ In our model, each pixel in the photon-dependent image $I$ has a  variance which
 
 The Gamma distribution here is parameterized by its mean and standard deviation. The parameterization of the Gamma distribution and all other distributions we use in this work is given in Extended Data Table 2.
 
-\paragraph{Image model.} The idealized noise-free image $\mu^I$ is represented  as the sum of a background intensity $b \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ and the intensities from fluorescence spots modeled as  2-D Gaussians $\mu^S \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$:
+\paragraph{Image model.} The idealized noise-free image $\mu^I$ is represented  as the sum of a background intensity $b$ and the intensities from fluorescence spots modeled as  2-D Gaussians $\mu^S$:
 %
 \begin{equation}
-    \mu^I = b + \sum_{\mathsf{spot}[K]} \mu^S
+    \mu^I = b + \sum_{\mathsf{spot}} \mu^S
 \end{equation}
 
 \noindent
-For simplicity we allow at most $K$ number of spots in each frame of each AOI.  (In this article, we always use $K$ equal to 2.)  The presence of a given spot in the image is encoded in the binary spot existence parameter $m \in \{ 0, 1 \}^{\mathrm{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, where $m = 1$ when the corresponding spot is present and $m = 0$ when it is absent.
+For simplicity we allow at most $K$ number of spots in each frame of each AOI.  (In this article, we always use $K$ equal to 2.)  The presence of a given spot in the image is encoded in the binary spot existence parameter $m$, where $m = 1$ when the corresponding spot is present and $m = 0$ when it is absent.
 
-
-
-The intensities for a 2-D Gaussian spot centered at ($x$, $y$) are defined for each pixel coordinate ($i \in \{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$, $j \in \{0, \dots, (P-1)\}^{\mathsf{pixelY}[P]}$)
+The intensities for a 2-D Gaussian spot at each pixel coordinate ($i$, $j$) is given by:
 %
 \begin{equation}
-    \mu^S_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} = \dfrac{m \cdot h}{2 \pi w^2} \exp{\left( -\dfrac{(i-x-x_c)^2 + (j-y-y_c)^2}{2 w^2} \right)}
+    \mu^S_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} = \dfrac{m \cdot h}{2 \pi w^2} \exp{\left( -\dfrac{(i-x-x^\mathsf{target})^2 + (j-y-y^\mathsf{target})^2}{2 w^2} \right)}
 \end{equation}
 
 \noindent
-with spot parameters total integrated intensity $h \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, width $w \in \mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, and center ($x \in \mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$, $y \in \mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$). Spatial coordinates $x$, $y$, $i$, and $j$ are taken relative to the AOI center. 
+with spot parameters total integrated intensity $h$, width $w$, and center ($x$, $y$) relative to the target molecule located at ($x^\mathsf{target}$, $y^\mathsf{target}$). 
 %
 
-To discriminate between spots from target-specific and target-nonspecific binding, we use parameter $\theta \in \{ 0, 1, \dots, K \}^{ \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ to specify the index of the target-specific spot when it is present and use zero when no target-specific spot is present:
+To discriminate between spots from target-specific and target-nonspecific binding, we use parameter $\theta \in \{ 0, 1, \dots, K \}^{ \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ to specify the index of the target-specific spot when it is present and use zero when no target-specific spot is present.
 %
 
-\paragraph{Prior distributions.} The prior distributions for the unobserved model parameters are detailed below and illustrated in Extended Data Fig. 1a. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
+\paragraph{Prior distributions.} The prior distributions for the model parameters are detailed below and illustrated in Extended Data Fig. 1a. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
 
 Background intensity $b$ follows a Gamma distribution:
 %
@@ -74,15 +70,27 @@ The prior distribution for the index of the target-specific spot $\theta$ is mod
     \theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)
 \end{equation}
 
-The prior distribution for the spot presence indicator $m$ is conditional on $\theta$. When spot index $k$ corresponds to a target-specific spot, i.e., $\theta = k$, then $m_{\mathsf{spot}(k)} = 1$. When spot index $k$ does not correspond to a target-specific spot, i.e., $\theta \neq k$, then either there is a target-nonspecific spot corresponding to $k$ or a spot corresponding to $k$ does not exist. Consequently, for $\theta \neq k$ we assign $m_{\mathsf{spot}(k)}$ to either 0 or 1 with a probability dependent on the non-specific binding rate $\lambda \in \mathbb{R}_{>0}$.
+The average target-specific binding probability $\pi$ has an uninformative Jeffreys prior given by a Beta distribution
 %
 \begin{equation}
-    m_{\mathsf{spot}(k)}
+    \pi \sim \mathbf{Beta}(1/2, 1/2)
+\end{equation}
+
+The prior distribution for the spot presence indicator $m$ is conditional on $\theta$. When $\theta$ corresponds to spot index $k$, i.e., $\theta = k$, then $m_{\mathsf{spot}(k)} = 1$. When $\theta$ does not correspond to a spot index $k$, i.e., $\theta \neq k$, then either spot $k$ is target-nonspecific or a spot corresponding to $k$ does not exist. Consequently, for $\theta \neq k$ we assign $m_{\mathsf{spot}(k)}$ to either 0 or 1 with a probability dependent on the non-specific binding rate $\lambda \in \mathbb{R}_{>0}$:
+%
+\begin{equation}
+    m_{\mathsf{spot}(k)} \sim
     \begin{cases}
-         = 1 & \text{$\theta = k$} \\
-        \sim \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
-        \sim \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
+        \mathbf{Bernoulli}(1) & \text{$\theta = k$} \\
+        \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
+        \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
     \end{cases}
+\end{equation}
+
+The mean non-specific binding rate $\lambda$ is expected to be much less than two non-specifically bound spots per frame per AOI; therefore, we use an Exponential prior of the form
+%
+\begin{equation}
+    \lambda \sim \mathbf{Exponential}(1)
 \end{equation}
 
 The prior distribution for the integrated spot intensity $h$ is chosen to fall off at a value much greater than typical spot intensity values 
@@ -97,29 +105,17 @@ The optimal width $w$ of fluorescence spots in CoSMoS experiments is typically i
     w \sim \mathbf{Uniform}(0.75, 2.25)
 \end{equation}
 
-Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are co-localized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with a mean position at the target molecule location $x_c$ and $y_c$, and a standard deviation parameterized as proximity $\sigma^{xy} \in \mathbb{R}_{>0} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
+Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x_c$, $y_c$), and a standard deviation parameterized as proximity $\sigma^{xy} \in \mathbb{R}_{>0} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{equation}
-    x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
+    x_{\mathsf{spot}(k)} \sim
     \begin{cases}
-        \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
-        \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
+        \mathbf{AffineBeta}\left( x^\mathsf{target}, \sigma^{xy}, x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
+        \mathbf{Uniform}\left(x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
     \end{cases}
 \end{equation}
 
-The average target-specific binding probability $\pi$ has an uninformative Jeffreys prior given by a Beta distribution
-%
-\begin{equation}
-    \pi \sim \mathbf{Beta}(1/2, 1/2)
-\end{equation}
-
-The mean non-specific binding rate $\lambda$ is expected to be much less than two non-specifically bound spots per frame per AOI; therefore, we use an Exponential prior of the form
-%
-\begin{equation}
-    \lambda \sim \mathbf{Exponential}(1)
-\end{equation}
-
-We give $\sigma^{xy}$ an Exponential prior with a characteristic width of one pixel.
+We give $\sigma^{xy}$ an Exponential prior with a characteristic width of one pixel:
 %
 \begin{equation}
     \sigma^{xy} \sim \mathbf{Exponential}(1)
@@ -131,7 +127,7 @@ Gain $g$ depends on the settings of the amplifier and electron multiplier (if pr
     g \sim \mathbf{HalfNormal}(50)
 \end{equation}
 
-The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values ($\delta_\mathrm{samples}$) and their weights ($\delta_\mathrm{weights}$) are used to construct an Empirical prior
+The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values $\delta_\mathrm{samples}$ and their weights $\delta_\mathrm{weights}$ are used to construct an Empirical prior:
 %
 \begin{equation}
     \delta \sim \mathbf{Empirical}(\delta_\mathrm{samples}, \delta_\mathrm{weights})
@@ -141,7 +137,7 @@ The prior distribution for the offset signal $\delta$ is empirically measured fr
 
 \subsection*{Joint distribution}
 
-For convenience, we group global parameters and local parameters separately, $\phi = \{ g, \sigma^{xy}, \pi, \lambda \}$ and $\psi = \{ \mu^b, \sigma^b, b, \theta, m, h, w, x, y, \delta \}$, respectively. The joint distribution is factorized as
+Let $\phi$ be the set of all model parameters. The joint distribution is factorized as:
 %
 \begin{equation}
 \begin{aligned}
@@ -152,20 +148,20 @@ For convenience, we group global parameters and local parameters separately, $\p
 
 \subsection*{Inference}
 
-For a Bayesian analysis, we want to obtain the posterior distribution for parameters $\phi$ and $\psi$ given the observed data $D$ using Bayes equation:
+For a Bayesian analysis, we want to obtain the posterior distribution for parameters $\phi$ given the observed data $D$ using Bayes rule:
 %
 \begin{equation}
-    p(\phi, \psi | D) =
-    \dfrac{p(D, \phi, \psi)}{\int_{\phi, \psi} p(D, \phi, \psi) d\phi d\psi}
+    p(\phi | D) =
+    \dfrac{p(D, \phi)}{\int_{\phi} p(D, \phi) d\phi}
 \end{equation}
 
-Note that the integral in the denominator of this expression is necessary to calculate the posterior distribution, but it is usually analytically intractable. However, variational inference provides a robust method to approximate the posterior distribution $p(\phi, \psi | D)$ with a parameterized variational distribution $q(\phi, \psi)$ \cite{Bishop2006-oa}.
+Note that the integral in the denominator of this expression is necessary to calculate the posterior distribution, but it is usually analytically intractable. However, variational inference provides a robust method to approximate the posterior distribution $p(\phi | D)$ with a parameterized variational distribution $q(\phi)$ \cite{Bishop2006-oa}.
 %
 \begin{equation}
-    p(\phi, \psi | D) \simeq q(\phi, \psi)
+    p(\phi | D) \simeq q(\phi)
 \end{equation}
 
-For a better convergence, we first run inference with ($\sum_\theta p(D, \phi, \psi)$, $q(\phi, \psi \setminus \theta)$) pair where $\theta$ is marginalized out. The variational distribution $q(\phi, \psi \setminus \theta)$ has the following factorization:
+For a better convergence, we first run inference with ($\sum_\theta p(D, \phi)$, $q(\phi \setminus \theta)$) pair where $\theta$ is marginalized out in the model \cite{Obermeyer2019-xt}. The variational distribution $q(\phi \setminus \theta)$ has the following factorization:
 %
 \begin{equation}
 \begin{aligned}
@@ -174,7 +170,7 @@ For a better convergence, we first run inference with ($\sum_\theta p(D, \phi, \
 \end{aligned}
 \end{equation}
 
-To obtain $q(\theta)$ we then run inference with ($p(D, \phi, \psi)$, $q(\phi, \psi)$) pair while blocking SVI from updating already learned good variational parameters.
+To obtain $q(\theta)$ we then run inference with full model using ($p(D, \phi)$, $q(\phi)$) pair with already learned good variational parameters being fixed. $q(\phi)$ has the following factorization:
 
 \begin{equation}
 \begin{aligned}
@@ -185,61 +181,41 @@ To obtain $q(\theta)$ we then run inference with ($p(D, \phi, \psi)$, $q(\phi, \
 
 \subsubsection*{Variational distribution specification}
 
-In order to apply variational inference, we must specify the parametric form of the variational distribution $q(\phi, \psi)$
-that we use as an approximation to the true posterior distribution $p(\phi, \psi | D)$.
+In order to apply variational inference, we must specify the parametric form of the variational distribution $q(\phi)$
+that we use as an approximation to the true posterior distribution $p(\phi | D)$.
 
 Below we list variational distributions, variational parameters and the domains of variational parameters. Variational inference procedure is prone to get stuck in local maxima and is heavily affected by initial values of variational parameters. Below we also provide the initial values of variational parameters that worked well in our analysis.
 
 \input{guide}
 
-
-
 \subsection*{Implementation}
 
-The model and variational inference method outlined above are implemented as a probabilistic program, Tapqir, in the Python-based probabilistic programming language (PPL) Pyro \cite{Foerster2018-kd,Bingham2019-qy,Obermeyer2019-xt}.
-
-\subsubsection*{Optimization}
-
-In all of our analysis at each fitting iteration we use random subsample of AOIs as mini-batches where the size of the mini-batch is typically limited by the GPU memory available (Tapqir has a routine for finding maximum possible mini-batch size). We use PyTorch's Adam optimizer with the learning rate of $5\times 10^{-3}$ and keep other parameters at their default values. As a stopping criteria we use a heuristic rule
-
-\begin{subequations}
-\begin{align}
-    \dfrac{\mathrm{std}_\mathsf{iteration}(\mathrm{param}_{\mathsf{iteration}(-10000:0:100)})}{\mathrm{std}_\mathsf{iteration}(\mathrm{param}_{\mathsf{iteration}(-5000:0:100)})} < 1.05
-\end{align}
-\end{subequations}
-
-\noindent where $\mathrm{param} = \{ \mathrm{ELBO}, g_\mathrm{mean}, \sigma^{xy}_\mathrm{mean}, \pi_\mathrm{mean}, \lambda_\mathrm{mean} \}$
+The model and variational inference method outlined above are implemented as a probabilistic program in the Python-based probabilistic programming language (PPL) Pyro \cite{Foerster2018-kd,Bingham2019-qy,Obermeyer2019-xt}. The objective that is being optimized is the evidence lower bound (ELBO) estimator that provides unbiased gradient estimates upon differentiation. At each iteration of inference procedure we choose random subset of AOIs as a mini-batch, compute differentiable ELBO estimate based on this mini-batch and update the variational parameters via automatic differentiation. We use PyTorch's Adam optimizer with the learning rate of $5\times 10^{-3}$ and keep other parameters at their default values. 
 
 \subsection*{Data simulation}
 
-For each simulation, the size of the dataset ($D=14$, $N$, $F$, $N_c$, $F_c$) was fixed and a subset of parameters ($K=2$, $\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) were set to desired values.  The remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) were produced using Tapqir's generative model. Chosen parameter values and dataset sizes are provided in Supplementary Data.
+Simulated data were produced using the generative model (Algorithm 1). Each simulation has the size of the data set ($D=14$, $N$, $F$, $N_c$, $F_c$) as an input and a subset of parameters ($K=2$, $\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) being set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. Fixed parameter values and data set sizes are provided in Supplementary Data.
 
-For kinetic simulations, $\theta$ was modeled using a discrete Markov process. For $K=2$, $\theta$ has three states, with $\theta = 0, 1, 2$ corresponding to no specifically bound spot being present, spot 1 being specifically bound, and spot 2 being specifically bound, respectively. When a specifically bound molecule is present (i.e., $\theta = 1, 2$), the probability is equally split between those indices. We assume that the Markov process is at equilibrium and initialized the chain with the equilibrium probabilities.
-
-% The probability that $\theta = 0$ is equal to the probability of no specifically bound spot being present (i.e., $1-\pi$). Since spot indices are arbitrarily assigned,   (i.e., $\frac{\pi}{K}$).
-
+For kinetic simulations, $\theta$ was modeled using a discrete Markov process with initial probability of each state given by $\mathsf{init} \in \Delta_K$ and the transition probability matrix is given by $\mathsf{trans} \in (\Delta_K)^K$ where $\Delta_K$ denotes $K-1$-dimensional probability simplex. We assume that the Markov process is at equilibrium and initialized the chain with the equilibrium probabilities:
+%
 \begin{subequations}
 \begin{align}
-    \mathsf{init} &\in [0, 1]^{\theta[K+1]} \quad \sum_{\theta} \mathsf{init} = 1 \\
     \mathsf{init} &= \begin{pmatrix} \frac{k_\mathrm{off}}{k_\mathrm{on} + k_\mathrm{off}} & \frac{k_\mathrm{on}}{2\left( k_\mathrm{on} + k_\mathrm{off} \right)} & \frac{k_\mathrm{on}}{2\left( k_\mathrm{on} + k_\mathrm{off} \right)} \end{pmatrix} \\
-    \mathsf{trans} &\in [0, 1]^{\theta^\prime[K+1] \times \theta[K+1]} \quad \sum_{\theta} \mathsf{trans} = 1 \\
-    \mathsf{trans} &= \begin{pmatrix} 1 - k_\mathrm{on} & k_\mathrm{on}/2 & k_\mathrm{on}/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \end{pmatrix} \\
-    \theta_{\mathsf{frame}(1)} &\sim \mathrm{Categorical(\mathsf{init})} \\
-    \theta_{\mathsf{frame}(t)} &\sim \mathrm{Categorical(\mathsf{trans}_{\theta^\prime( \theta_{\mathsf{frame}(t-1)})})}
+    \mathsf{trans} &= \begin{pmatrix} 1 - k_\mathrm{on} & k_\mathrm{on}/2 & k_\mathrm{on}/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \end{pmatrix}
 \end{align}
 \end{subequations}
 
 \noindent
-where $\mathsf{init}$ is a vector of equilibrium probabilities for $\theta$, $\mathsf{trans}$ is the transition probability matrix, and $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$ are the apparent first-order binding and dissociation rate constants in units of $\mathrm{s}^{-1}$, respectively, assuming 1 s/frame.
+where $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$ are the apparent first-order binding and dissociation rate constants in units of $\mathrm{s}^{-1}$, respectively, assuming 1 s/frame.
 
 For posterior predictive checking, simulated images were produced ($D^\mathrm{rep}$) using Tapqir's generative model where model parameters were sampled from the posterior distribution $p(\psi|D)$ which is approximated by the variational distribution $q(\psi)$. % reference Figure S3 (sampling from posterior of simulated data)
 
 \begin{equation}
-    D^\mathrm{rep} | D \sim p(I^\mathrm{rep} | \psi) p(\delta^\mathrm{rep}) p(\psi | D)
+    D^\mathrm{rep} | D \sim p(I^\mathrm{rep} | \phi) p(\delta^\mathrm{rep}) p(\psi | D)
 \end{equation}
 
 \subsection*{Classification accuracy statistics}
-The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image is calculated as.
+The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image is calculated as:
 
 \begin{equation}
     p(\mathsf{specific}) = p(\theta > 0)
@@ -264,45 +240,44 @@ where TP is true positives, TN is true negatives, FP is false positives, and FN 
 
 \subsubsection*{SNR}
 
-We define SNR as
+We define SNR as:
 
 \begin{equation}
-    \mathrm{SNR} = \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}}
+    \mathrm{SNR} = \mathsf{mean} \left( \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}} \right)
 \end{equation}
 
 where $\mathsf{signal}$ designates spot signal above background, $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, and $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity.
 
-Spot signal is calculated as weighted average of total signal minus mean background and mean offset signals
+Spot signal is calculated as weighted average of total signal minus mean background and mean offset signals:
 
 \begin{subequations}
 \begin{align}
     \mathsf{weight} &= \dfrac{1}{2 \pi \cdot w^2} \exp{\left( -\dfrac{(i-x)^2 + (j-y)^2}{2 \cdot w^2} \right)} \\
-    \mathsf{signal}_{\mathsf{spot}(k)} &=  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} D \cdot \mathsf{weight}_{\mathsf{spot}(k)} - b_{\mathrm{mean}} - \delta_\mathrm{mean} \quad \textrm{for } p(\theta = k) > 0.5
+    \mathsf{signal}_{\mathsf{spot}(k)} &=  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} D \cdot \mathsf{weight}_{\mathsf{spot}(k)} - b_{\mathrm{mean}} - \delta_\mathrm{mean}
 \end{align}
 \end{subequations}
 
 For simulated data theoretical signal can be directly calculated as
 
 \begin{equation}
-    \mathsf{signal}_{\mathsf{spot}(k)} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} h \cdot \mathsf{weight}_{\mathsf{spot}(k)}^2 \quad \textrm{for } k = \theta
+    \mathsf{signal}_{\mathsf{spot}(k)} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} h \cdot \mathsf{weight}_{\mathsf{spot}(k)}^2
 \end{equation}
 
 \subsection*{Kinetic analysis}
 
-Our procedure to estimate kinetic parameters is as follows (see Algorithm 2). For each iteration we sample binary data records $z$ from inferred $p(\mathsf{specific})$. Then we compute dwell time $\Delta t$ (binding-present -- $\Delta t_\mathrm{on}$, binding-absent -- $\Delta t_\mathrm{off}$, time-to-first binding -- $\Delta t_\mathrm{ttfb}$) and maximum-likelihood estimate of parameter $\hat{k}$ based on $\Delta t$. After completing 1000 iterations we compute mean and confidence interval from the distribution of $\hat{k}$.
+Our procedure to estimate kinetic parameters is as follows (see Algorithm 3). For each iteration we sample binary data records $z$ from inferred $p(\mathsf{specific})$. Then we compute dwell time $\Delta t$ (binding-present -- $\Delta t_\mathrm{on}$, binding-absent -- $\Delta t_\mathrm{off}$, time-to-first binding -- $\Delta t_\mathrm{ttfb}$) and maximum-likelihood estimate of parameter $\hat{k}$ based on $\Delta t$. After completing 1000 iterations we compute mean and confidence interval from the distribution of $\hat{k}$.
 
 For single-exponential kinetics used in all of our analyses maximum-likelihood estimate $\hat{k}$ is given by
 
 \begin{subequations}
 \begin{align}
     \Delta t &\in \mathbb{R}_{>0}^{\mathsf{event}[M]} \\
-    p(\Delta t | k) = \prod_\mathsf{event} k \exp (- k \Delta t) \\
+    p(\Delta t | k) &= \prod_\mathsf{event} k \exp (- k \Delta t) \\
     \hat{k} &= \dfrac{1}{\mathrm{mean}_{\mathsf{event}} \Delta t}
 \end{align}
 \end{subequations}
 
-\begin{algorithm}
-\caption{Monte Carlo sampling for parameter estimation}
+\paragraph{Algorithm 3.} Monte Carlo sampling for parameter estimation. \\
 \begin{algorithmic}[1]
 \For{$i = 1, 2, \dots, 1000 $}
     \State Sample binary $z$ from approximate posterior $p(\mathsf{specific})$
@@ -311,10 +286,6 @@ For single-exponential kinetics used in all of our analyses maximum-likelihood e
 \EndFor{}
 \State Calculate mean and CI from the distribution of $\hat{k}$
 \end{algorithmic}
-\end{algorithm}
 
 %section and table of  fixed parameter values
 
-%Typical half-width of fluorescence spots in experiments used in this work is 1-2 pixels and therefore we chose the size of an AOI to be $14\times14$ pixels
-
-% Note about marginalized model and list of model parameters
