@@ -1,4 +1,3 @@
-%\label{alg:pseudocode}
 \paragraph{Algorithm 1.} The Tapqir generative model. \\
 
 \begin{algorithmic}[1]
@@ -46,7 +45,7 @@
             \Comment{$y$-axis center}
             \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
             \State $\mu^{S}_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} =
-                        \dfrac{m \cdot h}{2 \pi w^2} \exp{\left ( -\dfrac{(i-x-x_c)^2 + (j-y-y_c)^2}{2w^2} \right)}$
+                        \dfrac{m \cdot h}{2 \pi w^2} \exp{\left ( -\dfrac{(i-x-x^\mathsf{target})^2 + (j-y-y^\mathsf{target})^2}{2w^2} \right)}$
             \Comment{2-D Gaussian spot}
             \EndFor
         \EndFor
