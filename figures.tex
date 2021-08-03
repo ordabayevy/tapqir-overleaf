@@ -25,7 +25,7 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figure3/figure3.png}
-\caption{\textbf{Tapqir analysis and inferred model parameters.} \textbf{a},\textbf{b}, Tapqir was applied to simulated data (lamda0.5 parameter set in Supplementary Data 1) (\textbf{a}) and to experimental data (Rpb1\textsuperscript{SNAP549} in Extended Data Table 1) (\textbf{b}). (\textbf{a}) and (\textbf{b}) each show a short extract from a single target location in the corresponding data set. The first row shows AOI images for the subset of frames indicated by gray shaded stripes in the plots. The second row shows the locations of spots determined by Tapqir. Only data for spots with a spot probability $p(m=1) > 0.5$ are shown. Spots predicted to be target-specific ($p(\theta=k)>0.5$ for spot $k$) are shown as filled circles. The graphs show the probability of there being any target-specific spot in a frame ($p(\mathsf{specific})$; green), spot intensity ($h$), location ($x$, $y$) of spot 1 (blue) and spot 2 (orange), and AOI background intensity ($b$). Error bars: 95\% CI.  }
+\caption{\textbf{Tapqir analysis and inferred model parameters.} \textbf{a},\textbf{b}, Tapqir was applied to simulated data (lamda0.5 parameter set in Supplementary Data 1) (\textbf{a}) and to experimental data (Rpb1\textsuperscript{SNAP549} in Extended Data Table 1) (\textbf{b}). (\textbf{a}) and (\textbf{b}) each show a short extract from a single target location in the corresponding data set. The first row shows AOI images for the subset of frames indicated by gray shaded stripes in the plots. The second row shows the locations of spots determined by Tapqir. Only data for spots with a spot probability $p(m=1) > 0.5$ are shown. Spots predicted to be target-specific ($p(\theta=k)>0.5$ for spot $k$) are shown as filled circles. The graphs show the probability of there being any target-specific spot in a frame ($p(\mathsf{specific})$; green), spot intensity ($h$), location ($x$, $y$) of spot 1 (blue) and spot 2 (orange), and AOI background intensity ($b$). Error bars: 95\% CI (credible interval).  }
 \label{fig:tapqir_analysis}
 \end{figure}
 
@@ -33,14 +33,11 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/figure4/figure4.png}
-\caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from datasets Rpb1\textsuperscript{SNAP549}-DNA\textsuperscript{488} (\textbf{a}: $\mathrm{SNR}=1.61$), $\sigma^{54}$RNAPCy3-597P255 (\textbf{b}: $\mathrm{SNR}=3.38$), and $\sigma^{54}$RNAPCy3-598P2993 (\textbf{c}: $\mathrm{SNR}=5.24$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images simulated by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
+\caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from datasets Rpb1\textsuperscript{SNAP549}-DNA\textsuperscript{488} (\textbf{a}: $\mathrm{SNR}=1.61$), $\sigma^{54}$RNAPCy3-597P255 (\textbf{b}: $\mathrm{SNR}=3.38$), $\sigma^{54}$RNAPCy3-598P2993 (\textbf{c}: $\mathrm{SNR}=5.24$), and GreB (\textbf{d}: $\mathrm{SNR}=4.84$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images simulated by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
 \label{fig:posterior_samples}
 \end{figure}
-% add GreB data set
 
 % figure 5
-% add triangle brackets to pspecific
-% credible region abbreviation
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{figures/figure5/figure5.png}
@@ -49,10 +46,6 @@
 \end{figure}
 
 % figure 6
-% make target . binder closer (remove extra space)
-% simulated target ...
-% Tapqir p(specific)
-% posterior samples from p(specific)
 \begin{figure}[h]
 \centering
 \includegraphics[width=89mm]{figures/figure6/figure6.png}
@@ -63,8 +56,6 @@
 \caption{\textbf{Tapqir analysis of association/dissociation kinetics and thermodynamics.} \textbf{a} Chemical scheme for a one-step association/dissociation reaction at equilibrium with apparent first-order binding and dissociation rate constants $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$, respectively. \textbf{b}, A simulation of the reaction in (\textbf{a}) and scheme for kinetic analysis with Tapqir. Simulation used $\mathrm{SNR} = 3.76$, $k_\mathrm{on} = 0.02$ s$^{-1}$, $k_\mathrm{off} = 0.2$ s$^{-1}$, and a high target-nonspecific binding frequency $\lambda = 1$ (Supplementary Data 5, dataset kon0.02lambda1). Full dataset consists of 100 AOI locations and 1000 frames each for on-target data and off-target control data. Shown is a short extract of on-target data from a single location in the simulation.  Plots show simulated presence/absence of the target-specific spot (purple) and Tapqir-calculated estimate of corresponding target-specific spot probability $p(\mathsf{specific})$ (green). One thousand binary traces (e.g., black records) were sampled from the $p(\mathsf{specific})$ posterior distribution and used to infer $k_\mathrm{on}$ and $k_\mathrm{off}$ using a two-state hidden Markov model (HMM) (see Methods). Each sample trace contains well-defined time intervals corresponding to target-specific spot presence and absence (e.g., $\Delta t_\mathrm{on}$ and $\Delta t_\mathrm{off}$). \textbf{c,d,e}, Kinetic and equilibrium constants from simulations (Supplementary Data 5) using a range of $k_\mathrm{on}$ values and  target-nonspecific spot frequencies $\lambda$, with constant $k_\mathrm{off} = 0.2$ s$^{-1}$. \textbf{c} Values of $k_{\mathrm{on}}$ used in simulations (blue) and mean values (and 95\% CIs, black) inferred by HMM analysis from the 1000 posterior samples. \textbf{d}, Same as (\textbf{c}) but for $k_{\mathrm{off}}$. \textbf{e},  Binding equilibrium constants $K_{\mathrm{eq}} = k_{\mathrm{on}} / k_{\mathrm{off}}$ used in simulation (blue) and inferred from Tapqir-calculated $\pi$ as $K_{\mathrm{eq}} = \pi / (1 - \pi)$ (black). }
 \label{fig:kinetic_analysis}
 \end{figure}
-% "fit" --> inferred from Tapqir analysis
-% fix paging
 % do 2000 simulations
 \clearpage
 \pagebreak
