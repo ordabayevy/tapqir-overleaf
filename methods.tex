@@ -4,7 +4,9 @@
 
 Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 2. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
-\paragraph{CoSMoS data.} Tapqir models observed CoSMoS image data $D$ that consists of a set of $P \times P$ grayscale pixel intensity values as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. Images are centered with pixel resolution at drift-corrected locations ($x^\mathsf{target}$, $y^\mathsf{target}$) of target molecules which are obtained from the image preprocessing step or raw data $D^\mathsf{raw}$ and target molecule positions in raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$). While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
+% Start with Draw. Preprocessing big images to extract AOIs paragraph. Refer to Fig 1b
+
+\paragraph{Tapqir data.} Tapqir models observed CoSMoS image data $D$ consisting of a set of $P \times P$ grayscale pixel intensity values (as measured by the camera in arbitrary units), collected at $N$ number of AOI sites for a range of $F$ number of frames. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. Images are centered with pixel resolution at drift-corrected locations ($x^\mathsf{target}$, $y^\mathsf{target}$) of target molecules, which are obtained from preprocessing of raw data $D^\mathsf{raw}$ and target molecule positions in raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$) (Algorithm 1). While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
 
 \input{preprocessing}
 
@@ -105,13 +107,13 @@ The optimal width $w$ of fluorescence spots in CoSMoS experiments is typically i
     w \sim \mathbf{Uniform}(0.75, 2.25)
 \end{equation}
 
-Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x_c$, $y_c$), and a standard deviation parameterized as proximity $\sigma^{xy} \in \mathbb{R}_{>0} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
+Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x^\mathsf{target}$, $y^\mathsf{target}$), and a standard deviation parameterized as proximity $\sigma^{xy} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{equation}
-    x_{\mathsf{spot}(k)} \sim
+    x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
     \begin{cases}
-        \mathbf{AffineBeta}\left( x^\mathsf{target}, \sigma^{xy}, x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
-        \mathbf{Uniform}\left(x^\mathsf{target}-\dfrac{P+1}{2}, x^\mathsf{target}+\dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
+        \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
+        \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)}
     \end{cases}
 \end{equation}
 
@@ -265,15 +267,13 @@ For simulated data theoretical signal can be directly calculated as
 
 \subsection*{Kinetic analysis}
 
-Our procedure to estimate kinetic parameters is as follows (see Algorithm 3). For each iteration we sample binary data records $z$ from inferred $p(\mathsf{specific})$. Then we compute dwell time $\Delta t$ (binding-present -- $\Delta t_\mathrm{on}$, binding-absent -- $\Delta t_\mathrm{off}$, time-to-first binding -- $\Delta t_\mathrm{ttfb}$) and maximum-likelihood estimate of parameter $\hat{k}$ based on $\Delta t$. After completing 1000 iterations we compute mean and confidence interval from the distribution of $\hat{k}$.
+Our procedure to estimate kinetic parameters is as follows (see Algorithm 3). For each iteration we sample binary data records $z$ from inferred $p(\mathsf{specific})$. Then we compute maximum-likelihood estimate of parameter $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$ using two-state hidden Markov model. After completing 2000 iterations we compute mean and credible interval (highest posterior density interval) from the distributions of $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$.
 
-For single-exponential kinetics used in all of our analyses maximum-likelihood estimate $\hat{k}$ is given by
+For two-state hidden Markov model the maximum-likelihood estimate $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$ are given by
 
 \begin{subequations}
 \begin{align}
-    \Delta t &\in \mathbb{R}_{>0}^{\mathsf{event}[M]} \\
-    p(\Delta t | k) &= \prod_\mathsf{event} k \exp (- k \Delta t) \\
-    \hat{k} &= \dfrac{1}{\mathrm{mean}_{\mathsf{event}} \Delta t}
+    \hat{k} &= ... \\
 \end{align}
 \end{subequations}
 
