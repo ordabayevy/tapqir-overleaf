@@ -3,12 +3,13 @@
 \section*{Figures and figure captions}
 \pagebreak
 
+\newgeometry{textheight=9in,textwidth=7.2in}
 \renewcommand{\figurename}{Fig.}
 
 % figure 1
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{figures/figure1/figure1.png}
+\includegraphics[width=145mm]{figures/figure1/figure1.png}
 \caption{\textbf{Example CoSMoS experiment.} Rpb1\textsuperscript{SNAP549} data set (Extended Data Table 1). \textbf{a}, Experiment schematic. DNA target molecules labeled with a blue-excited fluorescent dye (blue star) are tethered to the microscope slide surface. RNA polymerase II (RNApII) binder molecules labeled with a green-excited dye (green star) are present in solution. \textbf{b}, Data collection and preprocessing. After collecting a single image with blue excitation to identify the location of the DNA molecules, a time sequence of RNApII images were collected with green excitation.  Preprocessing of the images includes mapping of the corresponding points in target and binder channels, drift correction, and identification of two sets of areas of interest (AOIs).  One set corresponds to locations of target molecules (e.g., purple square); the other corresponds to locations where no target is present (e.g., yellow square). \textbf{c}, On-target data. Data are time sequences of $14 \times 14$ pixel AOI images centered at each target molecule. Frames show on-target (e.g., frame 630) and off-target (e.g., frame 645) binding of RNApII molecules. \textbf{d}, Off-target control data. Control data consists of images collected from randomly selected sites at which no target molecule is present. }
 \label{fig:cosmos_experiment}
 \end{figure}
@@ -33,9 +34,16 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/figure4/figure4.png}
+\end{figure}
+\clearpage
+\newpage
+
+\begin{figure}
 \caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from datasets Rpb1\textsuperscript{SNAP549}-DNA\textsuperscript{488} (\textbf{a}: $\mathrm{SNR}=1.61$), $\sigma^{54}$RNAPCy3-597P255 (\textbf{b}: $\mathrm{SNR}=3.38$), $\sigma^{54}$RNAPCy3-598P2993 (\textbf{c}: $\mathrm{SNR}=5.24$), and GreB (\textbf{d}: $\mathrm{SNR}=4.84$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images simulated by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
 \label{fig:posterior_samples}
 \end{figure}
+\clearpage
+\newpage
 
 % figure 5
 \begin{figure}[h]
@@ -48,7 +56,7 @@
 % figure 6
 \begin{figure}[h]
 \centering
-\includegraphics[width=183mm]{figures/figure6.png}
+\includegraphics[width=\textwidth]{figures/figure6.png}
 \caption{\textbf{Tapqir analysis of association/dissociation kinetics and thermodynamics.} \textbf{a} Chemical scheme for a one-step association/dissociation reaction at equilibrium with apparent first-order binding and dissociation rate constants $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$, respectively. \textbf{b}, A simulation of the reaction in (\textbf{a}) and scheme for kinetic analysis with Tapqir. Simulation used $\mathrm{SNR} = 3.76$, $k_\mathrm{on} = 0.02$ s$^{-1}$, $k_\mathrm{off} = 0.2$ s$^{-1}$, and a high target-nonspecific binding frequency $\lambda = 1$ (Supplementary Data 5, dataset kon0.02lambda1). Full dataset consists of 100 AOI locations and 1000 frames each for on-target data and off-target control data. Shown is a short extract of on-target data from a single location in the simulation.  Plots show simulated presence/absence of the target-specific spot (purple) and Tapqir-calculated estimate of corresponding target-specific spot probability $p(\mathsf{specific})$ (green). One thousand binary traces (e.g., black records) were sampled from the $p(\mathsf{specific})$ posterior distribution and used to infer $k_\mathrm{on}$ and $k_\mathrm{off}$ using a two-state hidden Markov model (HMM) (see Methods). Each sample trace contains well-defined time intervals corresponding to target-specific spot presence and absence (e.g., $\Delta t_\mathrm{on}$ and $\Delta t_\mathrm{off}$). \textbf{c,d,e}, Kinetic and equilibrium constants from simulations (Supplementary Data 5) using a range of $k_\mathrm{on}$ values and  target-nonspecific spot frequencies $\lambda$, with constant $k_\mathrm{off} = 0.2$ s$^{-1}$. \textbf{c} Values of $k_{\mathrm{on}}$ used in simulations (blue) and mean values (and 95\% CIs, black) inferred by HMM analysis from the 1000 posterior samples. \textbf{d}, Same as (\textbf{c}) but for $k_{\mathrm{off}}$. \textbf{e},  Binding equilibrium constants $K_{\mathrm{eq}} = k_{\mathrm{on}} / k_{\mathrm{off}}$ used in simulation (blue) and inferred from Tapqir-calculated $\pi$ as $K_{\mathrm{eq}} = \pi / (1 - \pi)$ (black). }
 \label{fig:kinetic_analysis}
 \end{figure}
@@ -59,7 +67,7 @@
 % figure 7
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{figures/figure7/figure7.png}
+\includegraphics[width=\textwidth]{figures/figure7.png}
 \caption{\textbf{Kinetic analysis of experimental data.} Data set: $\sigma^{54}$RNAPCy3-597P255 in Extended Data Table 1.  \textbf{a}, Probabilistic rastergram representation of Tapqir-calculated target-specific spot  probabilities $p(\mathsf{specific})$ (color scale). AOIs were ordered by decreasing times-to-first-binding. For clarity, only every 13\textsuperscript{th} frame is shown. \textbf{b,c}, Determining the association kinetic parameters [95\% CI] by  time-to-first-binding analysis using Tapqir (\textbf{b}) and an empirical spot-picker method \cite{Friedman2013-sf}(\textbf{c}).   Cumulative fraction of target sites that exhibited one or more binding events by the indicated frame number (blue) and fit curve (black) yielding best-fit values for $k_\mathrm{a}$, $k_\mathrm{ns}$, and $A_\mathrm{f}$. Shading indicates 95\% CI. Fitting protocol is different for the two methods; the spot-picker method fits both the target sites and off-target control data (orange) whereas Tapqir incorporates the control data in its $p(\mathsf{specific})$ calculation. \textbf{d}, Fit parameters.
 }
 \label{fig:experimental_data}
