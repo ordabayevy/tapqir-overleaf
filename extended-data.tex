@@ -76,24 +76,30 @@
 \caption{\label{tab:datasets} \textbf{Experimental datasets.}}
 \resizebox{\textwidth}{!}{%
 % Use "S" column identifier to align on decimal point 
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{rrrrrr}
 \toprule
-Dataset & size & SNR & $\pi$ & $\lambda$ & $g$ & $\sigma^{xy}$ \\
+\multicolumn{6}{l}{Data set} \\
 \midrule
-Rpb1\textsuperscript{SNAP549}-DNA\textsuperscript{488} & \begin{tabular}[x]{@{}r@{}}$N = 331$, $F = 790$\\$N_c = 526$, $F_c = 790$\end{tabular} & $1.61$ &
+size & SNR & $\pi$ & $\lambda$ & $g$ & $\sigma^{xy}$ \\
+\midrule
+\multicolumn{6}{l}{\parbox{\textwidth}{Data set A: Single molecule experiment measuring the binding rate of Rpb1\textsuperscript{SNAP549} to DNA\textsuperscript{488} \cite{Rosen2020-zn}.}} \\
+\midrule
+\begin{tabular}[x]{@{}r@{}}$N = 331$, $F = 790$\\$N_c = 526$, $F_c = 790$\end{tabular} & $1.61$ &
 $0.107$ & $0.29$ & $6.64$ & $0.56$ \\
-\multicolumn{7}{l}{\footnotesize{\parbox{\textwidth}{(Single molecule experiment measuring the binding rate of Rpb1\textsuperscript{SNAP549} to DNA\textsuperscript{488} \cite{Rosen2020-zn})}}} \rule{0pt}{3ex} \\
 \midrule
-$\sigma^{54}$RNAPCy3-598P2993 & \begin{tabular}[x]{@{}r@{}}$N = 122$, $F = 3855$\\$N_c = 157$, $F_c = 3855$\end{tabular} & $5.24$ & $0.026$ & $0.084$ & $16.8$ & $0.33$ \\
-\multicolumn{7}{l}{\footnotesize{\parbox{\textwidth}{(Single molecule experiment measuring the binding rate of $\sigma^{54}$RNAP labeled with Cy3 to 598P2993 DNA (Fig. 3D) in \cite{Friedman2013-sf})}}} \rule{0pt}{3ex} \\
+\multicolumn{6}{l}{\parbox{\textwidth}{Data set B: Single molecule experiment measuring the binding rate of $\sigma^{54}$RNAP labeled with Cy3 to 598P2993 DNA (Fig. 3D) in \cite{Friedman2013-sf}.}} \\
 \midrule
-$\sigma^{54}$RNAPCy3-597P255 & \begin{tabular}[x]{@{}r@{}}$N = 102$, $F = 4407$\\$N_c = 127$, $F_c = 4407$\end{tabular} & $3.87$ & $0.087$ & $0.12$ & $12.1$ & $0.44$ \\
-\multicolumn{7}{l}{\footnotesize{\parbox{\textwidth}{(Single molecule experiment measuring the binding rate of $\sigma^{54}$RNAP labeled with Cy3 to 597P255 DNA (Fig. 1E) \cite{Friedman2013-sf})}}} \rule{0pt}{3ex} \\
+\begin{tabular}[x]{@{}r@{}}$N = 122$, $F = 3855$\\$N_c = 157$, $F_c = 3855$\end{tabular} & $5.24$ & $0.026$ & $0.084$ & $16.8$ & $0.33$ \\
 \midrule
-GreB & \begin{tabular}[x]{@{}r@{}}$N = 100$, $F = 5622$\\$N_c = 100$, $F_c = 5622$\end{tabular} & $4.84$ & $0.00297$ & $0.0404$ & $16.97$ & $0.295$ \\
-\multicolumn{7}{l}{\footnotesize{\parbox{\textwidth}{(GreB experiment \cite{Tetone2017-za})}}} \rule{0pt}{3ex} \\
+\multicolumn{6}{l}{\parbox{\textwidth}{Data set C: Single molecule experiment measuring the binding rate of $\sigma^{54}$RNAP labeled with Cy3 to 597P255 DNA (Fig. 1E) \cite{Friedman2013-sf}.}} \\
+\midrule
+\begin{tabular}[x]{@{}r@{}}$N = 102$, $F = 4407$\\$N_c = 127$, $F_c = 4407$\end{tabular} & $3.87$ & $0.087$ & $0.12$ & $12.1$ & $0.44$ \\
+\midrule
+\multicolumn{6}{l}{\parbox{\textwidth}{Data set D: GreB experiment \cite{Tetone2017-za}.}} \\
+\midrule
+\begin{tabular}[x]{@{}r@{}}$N = 100$, $F = 5622$\\$N_c = 100$, $F_c = 5622$\end{tabular} & $4.84$ & $0.00297$ & $0.0404$ & $16.97$ & $0.295$ \\
 \bottomrule
-\multicolumn{7}{l}{\footnotesize{\parbox{\textwidth}{$N$ - number of on-target AOIs, $F$ - number of frames for on-target AOIs, $N_c$ - number of control off-target AOIs, $F_c$ - number of frames for off-target AOIs.}}} \rule{0pt}{3ex} \\
+\multicolumn{6}{l}{\footnotesize{\parbox{\textwidth}{$N$ - number of on-target AOIs, $F$ - number of frames for on-target AOIs, $N_c$ - number of control off-target AOIs, $F_c$ - number of frames for off-target AOIs.}}} \rule{0pt}{3ex} \\
 \end{tabular}}
 \end{table}
 \clearpage
