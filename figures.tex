@@ -26,6 +26,8 @@
 \end{figure}
 
 % figure 3
+% remove units
+% remove b tick labels and make a and b closer
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figure3.png}
@@ -37,7 +39,7 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figure4.png}
-\caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from datasets Rpb1\textsuperscript{SNAP549}-DNA\textsuperscript{488} (\textbf{a}: $\mathrm{SNR}=1.61$), $\sigma^{54}$RNAPCy3-597P255 (\textbf{b}: $\mathrm{SNR}=3.38$), $\sigma^{54}$RNAPCy3-598P2993 (\textbf{c}: $\mathrm{SNR}=5.24$), and GreB (\textbf{d}: $\mathrm{SNR}=4.84$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images simulated by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
+\caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from Data set A  (\textbf{a}: $\mathrm{SNR}=1.63$), Data set B (\textbf{b}: $\mathrm{SNR}=3.43$), Data set C (\textbf{c}: $\mathrm{SNR}=4.18$), and Data set D (\textbf{d}: $\mathrm{SNR}=4.85$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images simulated by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
 \label{fig:posterior_samples}
 \end{figure}
 \clearpage
@@ -52,6 +54,7 @@
 \end{figure}
 
 % figure 6
+% move dots in between sample1 2
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figure6.png}
@@ -62,10 +65,17 @@
 \pagebreak
 
 % figure 7
+% change color in b to green
+% in (d) put Tapqir first
+% plot ka and kns on the same scale
+% in (d) use other color (gray)
+% add to Methods how CI is calculated
+% in (b) and (c) add Tapqir and spot-picker labels
+% in (b) use purple and dark yellow as in fig1
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/figure7.png}
-\caption{\textbf{Extraction of target-binder association kinetics from example experimental data.} Data are from Data set B (see Extended Data Table 1).  \textbf{a}, Probabilistic rastergram representation of Tapqir-calculated target-specific spot  probabilities $p(\mathsf{specific})$ (color scale). AOIs were ordered by decreasing times-to-first-binding. For clarity, only a random sample of 100 AOIs is shown and only  every thirteenth frame is plotted. \textbf{b,c}, Association kinetic parameters [95\% CI] from   time-to-first-binding analysis using Tapqir (\textbf{b}) and an empirical spot-picker method \cite{Friedman2013-sf} (\textbf{c}). Plots show the cumulative fraction of target sites that exhibited one or more binding events by the indicated frame number (blue) and fit curve (black). Shading indicates 95\% CI. The spot-picker method sequentially fits first the off-target control AOIs (orange) and then the on-target AOIs, whereas Tapqir jointly incorporates both kinds data in its $p(\mathsf{specific})$ calculation. \textbf{d}, Values of kinetic parameters  $k_\mathrm{a}$, $k_\mathrm{ns}$, and $A_\mathrm{f}$ (see text) derived from fits in \textbf{b} and \textbf{c}. Error bars represent 95\% credible interval for Tapqir and 95\% confidence interval for spot-picker.
+\caption{\textbf{Extraction of target-binder association kinetics from example experimental data.} Data are from Data set B (see Extended Data Table 1).  \textbf{a}, Probabilistic rastergram representation of Tapqir-calculated target-specific spot  probabilities $p(\mathsf{specific})$ (color scale). AOIs were ordered by decreasing times-to-first-binding. For clarity, only every thirteenth frame is plotted. \textbf{b}, Time-to-first-binding distribution using Tapqir. Plot shows the cumulative fraction of AOIs that exhibited one or more target-specific binding events by the indicated frame number (green) and fit curve (black). Shading indicates uncertainty. \textbf{c} Time-to-first-binding distribution using an empirical spot-picker method \cite{Friedman2013-sf}. The spot-picker method jointly fits first spots observed in off-target control AOIs (orange) and in on-target AOIs (blue) with fit curves (black). \textbf{d}, Values of kinetic parameters  $k_\mathrm{a}$, $k_\mathrm{ns}$, and $A_\mathrm{f}$ (see text) derived from fits in \textbf{b} and \textbf{c}. Uncertainties reported in (\textbf{b, c, d}) represent 95\% credible intervals for Tapqir and 95\% confidence intervals for spot-picker (see Methods).
 }
 \label{fig:experimental_data}
 \end{figure}
