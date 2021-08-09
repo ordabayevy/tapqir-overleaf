@@ -4,27 +4,23 @@
 
 Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 2. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
-% Start with Draw. Preprocessing big images to extract AOIs paragraph. Refer to Fig 1b
-
-\paragraph{Tapqir data.} Raw input data from microscopy imaging consists of $W \times H$ images for each frame.  Tapqir models observed CoSMoS image data $D$ consisting of a set of $P \times P$ grayscale pixel intensity values (as measured by the camera in arbitrary units), collected at $N$ number of AOI sites for a range of $F$ number of frames. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. Images are centered with pixel resolution at drift-corrected locations ($x^\mathsf{target}$, $y^\mathsf{target}$) of target molecules, which are obtained from preprocessing of raw data $D^\mathsf{raw}$ and target molecule positions in raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$) (Algorithm 1). While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
+\paragraph{Tapqir data.} Raw input data into Tapqir consists of $W \times H$ binder channel images ($D^\mathsf{raw}$) for each time frame (Fig. 1b, right) and the list of drift-corrected locations of target molecules within the raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$). Tapqir selects $P \times P$ area around each target molecule (AOI) and returns the new data set $D$ consisting of a set of $P \times P$ grayscale images, collected at $N$ number of AOI sites for a range of $F$ number of frames (Fig.1 c,d) (Algorithm 1). Images are centered with pixel resolution at new locations of target molecules ($x^\mathsf{target}$, $y^\mathsf{target}$) where $x^\mathsf{target}$ and $y^\mathsf{target}$ are both within the $(P/2-1,P/2)$ central range of the image. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
 
 \input{preprocessing}
 
-%Microscope image preprocessing gives a list of drift-corrected locations of the target molecules in each frame with sub-pixel accuracy. Based on this information, we select $P \times P$-pixel AOIs centered with pixel resolution at the target location. The observed data ($D$) thus consists of a set of $P \times P$ grayscale values of pixel intensity as measured by the camera in arbitrary units, collected at $N$ number of AOI sites for a range of $F$ number of frames $D \in \mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$. where $x_c$ and $y_c$ are the coordinates of the target molecule relative to the center of the AOI. While experimental intensity measurements are integers we treat them as continuous values in our analysis.
-
-\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta$ introduced by the camera and the noisy photon-dependent pixel intensity values $I$.
+\paragraph{Image likelihood.} We model the image data $D$ as the sum of a photon-independent offset $\delta$ introduced by the camera and the noisy photon-dependent pixel intensity values $I$:
 %
 \begin{equation}
     D = \delta + I
 \end{equation}
 
-In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity $\mu^I$ of that pixel multiplied by the gain $g$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution
+In our model, each pixel in the photon-dependent image $I$ has a  variance which is equal to  the mean intensity $\mu^I$ of that pixel multiplied by the gain $g$. This formulation accounts for both photon shot noise and additional noise introduced by EMCCD camera amplification \cite{Van_Vliet1998-jk} and is expressed using a continuous Gamma distribution:
 %
 \begin{equation}
     I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})
 \end{equation}
 
-The Gamma distribution here is parameterized by its mean and standard deviation. The parameterization of the Gamma distribution and all other distributions we use in this work is given in Extended Data Table 2.
+The Gamma distribution here is parameterized by its mean and standard deviation. The parameterization of the Gamma distribution and all other distributions we use in this work is given in Extended Data Table 3.
 
 \paragraph{Image model.} The idealized noise-free image $\mu^I$ is represented  as the sum of a background intensity $b$ and the intensities from fluorescence spots modeled as  2-D Gaussians $\mu^S$:
 %
@@ -45,7 +41,7 @@ The intensities for a 2-D Gaussian spot at each pixel coordinate ($i$, $j$) is g
 with spot parameters total integrated intensity $h$, width $w$, and center ($x$, $y$) relative to the target molecule located at ($x^\mathsf{target}$, $y^\mathsf{target}$). 
 %
 
-To discriminate between spots from target-specific and target-nonspecific binding, we use parameter $\theta \in \{ 0, 1, \dots, K \}^{ \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ to specify the index of the target-specific spot when it is present and use zero when no target-specific spot is present.
+To discriminate between spots from target-specific and target-nonspecific binding, we use the index parameter $\theta$ which ranges from $0$ to $K$. $\theta$ specifies the index of the target-specific spot when it is present with zero meaning no target-specific spot is present. For off-target control data $\theta$ is always set to zero.
 %
 
 \paragraph{Prior distributions.} The prior distributions for the model parameters are detailed below and illustrated in Extended Data Fig. 1a. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
@@ -273,7 +269,9 @@ For two-state hidden Markov model the maximum-likelihood estimate $\hat{k}_\math
 
 \begin{subequations}
 \begin{align}
-    \hat{k} &= ... \\
+    \hat{k} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1}(1 - z_{n,f-1})z_{n,f}}{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1} (1 - z_{n, f-1})} \\
+    \hat{k}_\mathsf{on} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1}\left( 1 - z_{\mathsf{AOI}(n),\mathsf{Frame}(f-1)} \right) z_{\mathsf{AOI}(n),\mathsf{Frame}(f)}}{\sum_{n^\prime=0}^{N-1} \sum_{f^\prime=1}^{F-1} \left(1 - z_{\mathsf{AOI} (n^\prime), \mathsf{Frame}( f^\prime-1)} \right)} \\
+    \hat{k}_\mathsf{off} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1} z_{\mathsf{AOI}(n),\mathsf{Frame}(f)} \left( 1 - z_{\mathsf{AOI}(n),\mathsf{Frame}(f+1)} \right) }{\sum_{n^\prime=0}^{N-1} \sum_{f^\prime=1}^{F-1} z_{\mathsf{AOI} (n^\prime), \mathsf{Frame}( f^\prime)} }
 \end{align}
 \end{subequations}
 
