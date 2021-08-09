@@ -1,12 +1,13 @@
-%\label{alg:pseudocode}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
 \paragraph{Algorithm 1.} Extraction of AOI images from raw images. \\
 
 \begin{algorithmic}[1]
-\State \textbf{Input:} $D^\mathsf{raw}$, $x^{\mathsf{target},\mathsf{raw}}$, $y^{\mathsf{target},\mathsf{raw}}$
+\State \textbf{input:} $D^\mathsf{raw}$, $x^{\mathsf{target},\mathsf{raw}}$, $y^{\mathsf{target},\mathsf{raw}}$
 \ForAll{$\mathsf{frame}[F]$}
     \ForAll{$\mathsf{AOI}[N]$}
-        \State \textbackslash\textbackslash~$(P-1)/2$ is an AOI image center
-        \State \textbackslash\textbackslash~$\mathsf{round}$ function rounds to the closest integer
+        \LineComment{$(P-1)/2$ is an AOI image center}
+        \LineComment{$\mathsf{round}$ function rounds to the closest integer}
         \State $\mathsf{shiftX} = \mathsf{round} \left( x^{\mathsf{target},\mathsf{raw}} - (P - 1) / 2 \right) $
         \State $\mathsf{shiftY} = \mathsf{round} \left( y^{\mathsf{target},\mathsf{raw}} - (P - 1) / 2 \right) $
         \State $x^\mathsf{target} = x^{\mathsf{target}, \mathsf{raw}} - \mathsf{shiftX}$
@@ -15,4 +16,5 @@
         %\State $D_{\mathsf{AOI}(n), \mathsf{frame}(f), \mathsf{pixelX}(i), \mathsf{pixelY}(j)} = D^{\mathsf{raw}}_{\mathsf{frame}(f), \mathsf{pixelX}(i+\mathsf{shiftX}_{\mathsf{AOI}(n), \mathsf{frame}(f)}), \mathsf{pixelY}(j+\mathsf{shiftY}_{\mathsf{AOI}(n), \mathsf{frame}(f)})}$
     \EndFor
 \EndFor
+\Return $D$, $x^\mathsf{target}$, $y^\mathsf{target}$
 \end{algorithmic}
