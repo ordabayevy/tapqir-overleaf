@@ -75,8 +75,8 @@ ax = fig.add_subplot(gsa[0, 1])
 ax.set_xlim(-0.5, 0.5)
 ax.set_ylim(-0.5, 0.5)
 ax.arrow(
-    0.,
-    0.,
+    0.0,
+    0.0,
     0.5,
     0,
     length_includes_head=True,
@@ -84,11 +84,11 @@ ax.arrow(
     head_width=0.03,
     head_length=0.1,
     color="k",
-    clip_on=False
+    clip_on=False,
 )
 ax.arrow(
-    0.,
-    0.,
+    0.0,
+    0.0,
     -0.5,
     0,
     length_includes_head=True,
@@ -96,7 +96,7 @@ ax.arrow(
     head_width=0.03,
     head_length=0.1,
     color="k",
-    clip_on=False
+    clip_on=False,
 )
 ax.axis("off")
 
