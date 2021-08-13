@@ -588,10 +588,10 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
         right=True,
     )
     ax.set_xticks([0, 0.5, 1])
-    ax.set_yticks([0, 0.075, 0.15])
+    ax.set_yticks([0, 0.08, 0.16])
     ax.set_xticklabels([r"$0$", r"$0.5$", r"$1$"])
     if i == 0:
-        ax.set_yticklabels([r"$0$", r"$0.075$", r"$0.15$"])
+        ax.set_yticklabels([r"$0$", r"$0.08$", r"$0.16$"])
         ax.set_ylabel(r"$K_\mathrm{eq}$")
         ax.text(-0.7, 1.05 * 0.2, r"\textbf{e}")
     else:
