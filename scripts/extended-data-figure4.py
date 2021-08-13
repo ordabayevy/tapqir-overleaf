@@ -34,7 +34,7 @@ gs = fig.add_gridspec(
 # panel a
 ax = fig.add_subplot(gs[0, :])
 ax.text(
-    -30,
+    -40,
     -10,
     r"\textbf{a}",
 )
@@ -60,7 +60,7 @@ gsb = gs[1, 0].subgridspec(1, 2, wspace=0.4)
 # panel b (Tapqir)
 ax = fig.add_subplot(gsb[0, 0])
 ax.text(
-    -300,
+    -0.38 * model.data.ontarget.F,
     1.1,
     r"\textbf{b}",
 )
@@ -140,7 +140,7 @@ ax.set_ylim(-0.05, 1.05)
 # panel c (Spotpicker)
 ax = fig.add_subplot(gsb[0, 1])
 ax.text(
-    -300,
+    -0.38 * model.data.ontarget.F,
     1.1,
     r"\textbf{c}",
 )
@@ -258,7 +258,7 @@ gsd = gs[1, 1].subgridspec(3, 1, hspace=1.5)
 # ka
 ax = fig.add_subplot(gsd[0])
 ax.text(
-    -0.0023,
+    -0.38 * 0.006,
     2,
     r"\textbf{d}",
 )

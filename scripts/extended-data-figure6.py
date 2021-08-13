@@ -14,7 +14,7 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # load model & parameters
-path_data = Path("/shared/centaur/final/sigma54RNAPCy3-597P255")
+path_data = Path("/shared/centaur/paper/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -34,7 +34,7 @@ gs = fig.add_gridspec(
 # panel a
 ax = fig.add_subplot(gs[0, :])
 ax.text(
-    -30,
+    -35,
     -10,
     r"\textbf{a}",
 )
@@ -71,7 +71,7 @@ ax.text(
     horizontalalignment="right",
 )
 
-results = pd.read_csv("scripts/fig7.csv", index_col=0)
+results = pd.read_csv("scripts/edfig6.csv", index_col=0)
 # prepare data
 Tmax = model.data.ontarget.F
 torch.manual_seed(0)
@@ -130,7 +130,7 @@ ax.tick_params(
     left=True,
     right=True,
 )
-ax.set_xticks([0, 1500, 3000])
+ax.set_xticks([0, 2000, 4000])
 ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$", r"$0.6$", r"$0.8$", r"$1$"])
 ax.set_xlabel("Time (frame)")
@@ -246,7 +246,7 @@ ax.tick_params(
     left=True,
     right=True,
 )
-ax.set_xticks([0, 1500, 3000])
+ax.set_xticks([0, 2000, 4000])
 ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$", r"$0.6$", r"$0.8$", r"$1$"])
 ax.set_xlabel("Time (frame)")
@@ -258,7 +258,7 @@ gsd = gs[1, 1].subgridspec(3, 1, hspace=1.5)
 # ka
 ax = fig.add_subplot(gsd[0])
 ax.text(
-    -0.38 * 0.008,
+    -0.38 * 0.002,
     2,
     r"\textbf{d}",
 )
@@ -292,10 +292,10 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 3e-3, 6e-3])
-ax.set_xticklabels([r"$0$", r"$3 \times 10^{-3}$", r"$6 \times 10^{-3}$"])
+ax.set_xticks([0, 8e-4, 1.6e-3])
+ax.set_xticklabels([r"$0$", r"$0.8 \times 10^{-3}$", r"$1.6 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{a}$ (s$^{-1}$)")
-ax.set_xlim(0, 8e-3)
+ax.set_xlim(0, 2e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # kns
@@ -332,10 +332,10 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 3e-3, 6e-3])
-ax.set_xticklabels([r"$0$", r"$3 \times 10^{-3}$", r"$6 \times 10^{-3}$"])
+ax.set_xticks([0, 8e-4, 1.6e-3])
+ax.set_xticklabels([r"$0$", r"$0.8 \times 10^{-3}$", r"$1.6 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{ns}$ (s$^{-1}$)")
-ax.set_xlim(0, 8e-3)
+ax.set_xlim(0, 2e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # Af
@@ -377,4 +377,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("figures/figure7.png", dpi=600)
+plt.savefig("extended-data/figure6.png", dpi=600)

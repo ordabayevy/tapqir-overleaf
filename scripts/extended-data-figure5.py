@@ -14,7 +14,7 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # load model & parameters
-path_data = Path("/shared/centaur/final/sigma54RNAPCy3-597P255")
+path_data = Path("/shared/centaur/final/sigma54RNAPCy3-598P2993")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -46,7 +46,7 @@ sdx = torch.argsort(ttfb, descending=True)
 
 norm = mpl.colors.Normalize(vmin=0, vmax=1)
 im = ax.imshow(
-    model.params["p(specific)"][sdx][:, ::13],
+    model.params["p(specific)"][sdx][:, ::10],
     norm=norm,
     aspect="equal",
     interpolation="none",
@@ -71,7 +71,7 @@ ax.text(
     horizontalalignment="right",
 )
 
-results = pd.read_csv("scripts/fig7.csv", index_col=0)
+results = pd.read_csv("scripts/edfig5.csv", index_col=0)
 # prepare data
 Tmax = model.data.ontarget.F
 torch.manual_seed(0)
@@ -258,7 +258,7 @@ gsd = gs[1, 1].subgridspec(3, 1, hspace=1.5)
 # ka
 ax = fig.add_subplot(gsd[0])
 ax.text(
-    -0.38 * 0.008,
+    -0.38 * 0.006,
     2,
     r"\textbf{d}",
 )
@@ -292,10 +292,10 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 3e-3, 6e-3])
-ax.set_xticklabels([r"$0$", r"$3 \times 10^{-3}$", r"$6 \times 10^{-3}$"])
+ax.set_xticks([0, 2.5e-3, 5e-3])
+ax.set_xticklabels([r"$0$", r"$2.5 \times 10^{-3}$", r"$5 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{a}$ (s$^{-1}$)")
-ax.set_xlim(0, 8e-3)
+ax.set_xlim(0, 6e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # kns
@@ -332,10 +332,10 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 3e-3, 6e-3])
-ax.set_xticklabels([r"$0$", r"$3 \times 10^{-3}$", r"$6 \times 10^{-3}$"])
+ax.set_xticks([0, 2.5e-3, 5e-3])
+ax.set_xticklabels([r"$0$", r"$2.5 \times 10^{-3}$", r"$5 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{ns}$ (s$^{-1}$)")
-ax.set_xlim(0, 8e-3)
+ax.set_xlim(0, 6e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # Af
@@ -377,4 +377,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("figures/figure7.png", dpi=600)
+plt.savefig("extended-data/figure5.png", dpi=600)
