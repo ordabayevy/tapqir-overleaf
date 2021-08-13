@@ -593,7 +593,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.075$", r"$0.15$"])
         ax.set_ylabel(r"$K_\mathrm{eq}$")
-        ax.text(-0.7, 1.05 * 0.25, r"\textbf{e}")
+        ax.text(-0.7, 1.05 * 0.2, r"\textbf{e}")
     else:
         ax.set_yticklabels([])
     if i == 1:
