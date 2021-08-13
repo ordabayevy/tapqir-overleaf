@@ -91,13 +91,13 @@ ax.text(
 ax.text(
     0.5,
     0.7,
-    r"$k_\mathrm{on}$",
+    r"$k_\mathsf{on}$",
     horizontalalignment="center",
 )
 ax.text(
     0.5,
     0.28,
-    r"$k_\mathrm{off}$",
+    r"$k_\mathsf{off}$",
     horizontalalignment="center",
 )
 ax.arrow(
@@ -355,7 +355,7 @@ ax.arrow(
 ax.text(
     70,
     0.65,
-    r"$\Delta t_\mathrm{on}$",
+    r"$\Delta t_\mathsf{on}$",
     horizontalalignment="center",
 )
 ax.arrow(
@@ -383,7 +383,7 @@ ax.arrow(
 ax.text(
     220,
     0.65,
-    r"$\Delta t_\mathrm{off}$",
+    r"$\Delta t_\mathsf{off}$",
     horizontalalignment="center",
 )
 ax.text(
@@ -470,7 +470,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     ax.set_xticklabels([])
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.02$", r"$0.04$"])
-        ax.set_ylabel(r"$k_\mathrm{on}$ (s$^{-1}$)")
+        ax.set_ylabel(r"$k_\mathsf{on}$ (s$^{-1}$)")
         ax.text(-0.7, 1.05 * 0.05, r"\textbf{c}")
         ax.legend(bbox_to_anchor=(0, 1.25), loc="upper left", frameon=False, ncol=2)
     else:
@@ -533,7 +533,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     ax.set_xticklabels([])
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$"])
-        ax.set_ylabel(r"$k_\mathrm{off}$ (s$^{-1}$)")
+        ax.set_ylabel(r"$k_\mathsf{off}$ (s$^{-1}$)")
         ax.text(-0.7, 1.05 * 0.5, r"\textbf{d}")
     else:
         ax.set_yticklabels([])
@@ -592,7 +592,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     ax.set_xticklabels([r"$0$", r"$0.5$", r"$1$"])
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.08$", r"$0.16$"])
-        ax.set_ylabel(r"$K_\mathrm{eq}$")
+        ax.set_ylabel(r"$K_\mathsf{eq}$")
         ax.text(-0.7, 1.05 * 0.2, r"\textbf{e}")
     else:
         ax.set_yticklabels([])
