@@ -218,18 +218,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="218.69802"
-     inkscape:cy="296.98485"
+     inkscape:zoom="1.4"
+     inkscape:cx="234.64286"
+     inkscape:cy="216.78571"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1117"
-     inkscape:window-height="1391"
-     inkscape:window-x="3343"
-     inkscape:window-y="29"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
      fit-margin-top="1"
      fit-margin-left="1"
      fit-margin-bottom="1"
@@ -244,7 +244,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1125,7 +1124,7 @@
          id="tspan1759">AOI selection</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-79.600876"
        y="59.778893"
        id="text2189"><tspan
@@ -1133,10 +1132,10 @@
          id="tspan2187"
          x="-79.600876"
          y="59.778893"
-         style="font-weight:bold;font-size:4.23333px;stroke-width:0.264583">a</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">a</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-79.850639"
        y="83.682701"
        id="text2189-3"><tspan
@@ -1144,10 +1143,10 @@
          id="tspan2187-6"
          x="-79.850639"
          y="83.682701"
-         style="font-weight:bold;font-size:4.23333px;stroke-width:0.264583">b</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">b</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-79.406143"
        y="127.40186"
        id="text2189-3-7"><tspan
@@ -1155,7 +1154,7 @@
          id="tspan2187-6-5"
          x="-79.406143"
          y="127.40186"
-         style="font-weight:bold;font-size:4.23333px;stroke-width:0.264583">c</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">c</tspan></text>
     <g
        id="g2521"
        transform="translate(0,-4.2333335)">
@@ -1535,7 +1534,7 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-79.181778"
        y="158.79634"
        id="text2189-3-7-3"><tspan
@@ -1543,7 +1542,7 @@
          id="tspan2187-6-5-6"
          x="-79.181778"
          y="158.79634"
-         style="font-weight:bold;font-size:4.23333px;stroke-width:0.264583">d</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">d</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
