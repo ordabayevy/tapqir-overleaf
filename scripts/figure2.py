@@ -80,9 +80,9 @@ ax.arrow(
     0.5,
     0,
     length_includes_head=True,
-    width=0.01,
+    width=0.005,
     head_width=0.03,
-    head_length=0.1,
+    head_length=0.15,
     color="k",
     clip_on=False,
 )
@@ -92,9 +92,9 @@ ax.arrow(
     -0.5,
     0,
     length_includes_head=True,
-    width=0.01,
+    width=0.005,
     head_width=0.03,
-    head_length=0.1,
+    head_length=0.15,
     color="k",
     clip_on=False,
 )
@@ -265,3 +265,4 @@ ax.axis("off")
 ax.text(-0.1, 0.95, r"\textbf{d}")
 
 plt.savefig("figures/figure2.svg", dpi=600)
+plt.savefig("figures/figure2.png", dpi=600)
