@@ -10,20 +10,21 @@
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{extended-data/figure1/figure1.png}
+\includegraphics[width=\textwidth]{extended-data/figure1.png}
 \label{fig:full_model}
 \end{figure}
 
 %\addtocounter{figure}{-1}
 \begin{figure} [t]
-\caption{\textbf{Extended graphical representation of the generative probabilistic model and the prior distributions for $x$ and $y$ spot position parameters.} \textbf{a}, Directed factor graph representation \cite{Bishop2006-oa} of model parameters and parameter distributions. Model parameters are depicted as circles, parameter distributions as small filled squares, and deterministic functions as diamonds. Names of the probability distributions are written next to the squares. Input parameters and output parameters are connected by lines, with an arrow pointing towards the dependent parameter. Observed image ($D$) is the sum of the noisy photon-dependent image ($I$) and the photon-independent camera offset ($\delta$). Plates (rounded rectangles) contain nodes that are repeated for the number of instances displayed at the bottom-right corner: number of AOIs ($N$), frame count ($F$), maximum number of spots in a single image ($K$), and number of image pixels ($P \times P$). \textbf{b}, Prior distributions of $x$ and $y$ for specific and non-specific binding. Probability densities for $x$ and $y$ are defined in the range $\left[ -(P+1)/2, (P+1)/2 \right] $ relative to the target molecule and are conditional on the identity of the spot (specific or non-specific).  Probability densities for $x$ and $y$ parameters are identical. }
+\caption{\textbf{Extended graphical representation of the generative probabilistic model and the prior distributions for $x$ and $y$ spot position parameters.} \textbf{a}, Directed factor graph representation \cite{Bishop2006-oa} of model parameters and parameter distributions. Model parameters are depicted as circles, parameter distributions as small filled squares, and deterministic functions as diamonds. Names of the probability distributions are written next to the squares. Input parameters and output parameters are connected by lines, with an arrow pointing towards the dependent parameter. Observed image ($D$) is the sum of the noisy photon-dependent image ($I$) and the photon-independent camera offset ($\delta$). Plates (rounded rectangles) contain nodes that are repeated for the number of instances displayed at the bottom-right corner: number of AOIs ($N+N_\mathsf{c}$), frame count ($F$), maximum number of spots in a single image ($K$), and number of image pixels ($P \times P$). \textbf{b}, Prior distributions of $x$ and $y$ for specific and non-specific binding. Probability densities for $x$ and $y$ are defined in the range $\left[ -(P+1)/2, (P+1)/2 \right] $ relative to the target molecule and are conditional on the identity of the spot (specific or non-specific).  Probability densities for $x$ and $y$ parameters are identical. }
 \end{figure}
 \clearpage
 
+% extended figure 2
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure2.png}
-\caption{\textbf{Tapqir analysis and inferred spot probabilities.} The first two rows and $p(\mathsf{specific})$ graph are as in Fig. 3. The new graphs show the probability of a spot being target-specific ($p(\theta=k)$ for  $k^\mathrm{th}$ spot) and the probability of spot presence ($p(m=1)$) of spot 1 (blue) and spot 2 (orange).  }
+\caption{\textbf{Tapqir analysis and inferred spot probabilities.} The first two rows and $p(\mathsf{specific})$ graph are as in Fig. 3. The new graphs show the probability of a spot being target-specific ($p(\theta=k)$ for spot $k$) and the probability of spot presence ($p(m=1)$) of spot 1 (blue) and spot 2 (orange).  }
 \end{figure}
 \pagebreak
 
@@ -31,7 +32,7 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure3.png}
-\caption{\textbf{Tapqir analysis of image data simulated using a broad range of global parameters.} Simulations (see Methods) consist of 16 datasets where values of global parameters ($\pi$, $\lambda$, $\sigma^{xy}$, and $g$) where randomly generated for each dataset (Supplementary Data 2). Simulated data were fit with Tapqir, and parameter values from the fit (with 95\% CI) are plotted against the true parameter values. To guide the eye, dashed lines  indicate identical true and fit values. \textbf{a}, Average specific binding probability $\pi$. \textbf{b}, Nonspecific binding rate $\lambda$. \textbf{c}, Proximity parameter $\sigma^{xy}$. \textbf{d}, Gain of the camera $g$. }
+\caption{\textbf{Tapqir analysis of image data simulated using a broad range of global parameters.} Simulations (see Methods) consist of 16 datasets where values of global parameters ($\pi$, $\lambda$, $\sigma^{xy}$, and $g$) where randomly generated for each dataset (Supplementary Data 2). Simulated data were fit with Tapqir, and parameter values from the fit (with 95\% credible interval) are plotted against the true parameter values. To guide the eye, dashed lines  indicate identical true and fit values. \textbf{a}, Gain of the camera $g$. \textbf{b}, Average specific binding probability $\pi$. \textbf{c}, Nonspecific binding rate $\lambda$. \textbf{d}, Proximity parameter $\sigma^{xy}$. }
 \label{fig:tapqir_global}
 \end{figure}
 \pagebreak
@@ -40,7 +41,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure4.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in \textbf{a}.}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
 \label{fig:rpb1snap549}
 \end{figure}
 \pagebreak
@@ -49,7 +50,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure5.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $10^\mathrm{th}$ AOI is shown in \textbf{a}.}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $10^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:sigma54_298P2993}
 \end{figure}
 \clearpage
@@ -60,7 +61,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure6.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $13^\mathrm{th}$ AOI is shown in \textbf{a}.}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $13^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:greb}
 \end{figure}
 \clearpage
