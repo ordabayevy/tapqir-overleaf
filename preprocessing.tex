@@ -5,7 +5,7 @@
 \begin{algorithmic}[1]
 \State \textbf{input:} $D^\mathsf{raw}$, $x^{\mathsf{target},\mathsf{raw}}$, $y^{\mathsf{target},\mathsf{raw}}$
 \ForAll{$\mathsf{frame}[F]$}
-    \ForAll{$\mathsf{AOI}[N]$}
+    \ForAll{$\mathsf{AOI}[N+N_\mathsf{c}]$}
         \LineComment{$(P-1)/2$ is an AOI image center}
         \LineComment{$\mathsf{round}$ function rounds to the closest integer}
         \State $\mathsf{shiftX} = \mathsf{round} \left( x^{\mathsf{target},\mathsf{raw}} - (P - 1) / 2 \right) $

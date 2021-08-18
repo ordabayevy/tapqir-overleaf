@@ -1,4 +1,4 @@
-\paragraph{Algorithm 2.} The Tapqir generative model. \\
+\paragraph{Algorithm 2.} The Tapqir generative model is a stochastic function that describes a properly normalized distribution. \\
 
 \begin{algorithmic}[1]
 \State $g \sim \mathbf{HalfNormal}(50)$
@@ -9,7 +9,7 @@
 \Comment{average specific binding probability}
 \State $\lambda \sim \mathbf{Exponential}(1)$
 \Comment{non-specific binding rate}
-\ForAll{$\mathsf{AOI}[N]$}
+\ForAll{$\mathsf{AOI}[N+N_\mathsf{c}]$}
     \State $\mu^b \sim \mathbf{HalfNormal}(1000)$
     \Comment{mean background intensity}
     \State $\sigma^b \sim \mathbf{HalfNormal}(100)$
@@ -17,9 +17,12 @@
     \ForAll{$\mathsf{frame}[F]$}
         \State $b \sim \mathbf{Gamma}(\mu^b, \sigma^b)$
         \Comment{background intensity}
-        \State $\theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)$
-        \Comment{target-specific spot index}
-        
+        \If{on-target AOI}
+            \State $\theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)$
+            \Comment{target-specific spot index}
+        \ElsIf{off-target AOI}
+            \State $\theta = 0$
+        \EndIf
         \ForAll{$\mathsf{spot}[K]$}
             \State $ m_{\mathsf{spot}(k)} \sim
                 \begin{cases}
@@ -51,9 +54,9 @@
         \EndFor
             
         \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
-            \State $\delta \sim \mathbf{Empirical}( \delta_\mathrm{samples}, \delta_\mathrm{weights})$
+            \State $\delta \sim \mathbf{Empirical}( \delta_\mathsf{samples}, \delta_\mathsf{weights})$
             \Comment{offset signal}
-            \State $\mu^I = b + \sum_{\mathsf{spot}[K]} \mu^S$
+            \State $\mu^I = b + \sum_{\mathsf{spot}} \mu^S$
             \Comment{mean pixel intensity w/o offset}
             \State $I \sim \mathbf{Gamma} (\mu^I, \sqrt{\mu^I \cdot g})$
             \Comment{pixel intensity w/o offset}

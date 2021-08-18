@@ -4,7 +4,7 @@
 
 Our intent is to model CoSMoS image data by accounting for the most significant physical aspects of the image generation process, such as a realistic description of photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. An extended version of the graphical representation of the model for CoSMoS data that includes probability distributions is shown in Extended Data Fig. 1a. The corresponding generative model represented as pseudocode is shown in Algorithm 2. All variables with short description and their domain are listed in Extended Data Table 2. Below we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
-\paragraph{Tapqir data.} Raw input data into Tapqir consists of $W \times H$ binder channel images ($D^\mathsf{raw}$) for each time frame (Fig. 1b, right) and the list of drift-corrected locations of target molecules within the raw images ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$). Tapqir selects $P \times P$ area around each target molecule (AOI) and returns the new data set $D$ consisting of a set of $P \times P$ grayscale images, collected at $N$ number of AOI sites for a range of $F$ number of frames (Fig.1 c,d) (Algorithm 1). Images are centered with pixel resolution at new locations of target molecules ($x^\mathsf{target}$, $y^\mathsf{target}$) where $x^\mathsf{target}$ and $y^\mathsf{target}$ are both within the $(P/2-1,P/2)$ central range of the image. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
+\paragraph{Tapqir data.} Raw input data into Tapqir consists of $W \times H$ binder channel images ($D^\mathsf{raw}$) for each time frame (Fig. 1b, right) where $W$ is the width and $H$ is the height of the images in pixels and the list of drift-corrected locations ($x^{\mathsf{target}, \mathsf{raw}}$, $y^{\mathsf{target}, \mathsf{raw}}$) of target molecules within the raw images. Tapqir extracts $P \times P$ area around each target molecule (AOI) and returns the new data set $D$ consisting of a set of $P \times P$ grayscale images, collected at $N$ number of on-target AOI sites and $N_\mathsf{c}$ number of off-target AOI sites for a range of $F$ number of frames (Fig.1 c,d) (Algorithm 1). Images in $D$ are centered with pixel resolution at new locations of target molecules ($x^\mathsf{target}$, $y^\mathsf{target}$) meaning that $x^\mathsf{target}$ and $y^\mathsf{target}$ are both within the $(P/2-1,P/2)$ central range of the image. Cartesian pixel indices ($i$, $j$) represent the center point of a pixel on the image plane. While experimental intensity measurements are integers, we treat them as continuous values in our analysis.
 
 \input{preprocessing}
 
@@ -41,7 +41,7 @@ The intensities for a 2-D Gaussian spot at each pixel coordinate ($i$, $j$) is g
 with spot parameters total integrated intensity $h$, width $w$, and center ($x$, $y$) relative to the target molecule located at ($x^\mathsf{target}$, $y^\mathsf{target}$). 
 %
 
-To discriminate between spots from target-specific and target-nonspecific binding, we use the index parameter $\theta$ which ranges from $0$ to $K$. $\theta$ specifies the index of the target-specific spot when it is present with zero meaning no target-specific spot is present. For off-target control data $\theta$ is always set to zero.
+To discriminate between spots from target-specific and target-nonspecific binding, we use the index parameter $\theta$ which ranges from $0$ to $K$. $\theta$ specifies the index of the target-specific spot when it is present with zero meaning no target-specific spot is present. For example a combination $\{ m_{\mathsf{spot}(1)}=1, m_{\mathsf{spot}(2)}=1, \theta=2 \}$ means that both spots are present and spot 2 is target-specific. A combination like $\{ m_{\mathsf{spot}(1)}=0, m_{\mathsf{spot}(2)}=1, \theta=1 \}$ has zero probability since spot 1 cannot be absent and target-specific at the same time. For off-target control data $\theta$ is always set to zero.
 %
 
 \paragraph{Prior distributions.} The prior distributions for the model parameters are detailed below and illustrated in Extended Data Fig. 1a. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). Parameters of prior distributions can be changed if necessary.
@@ -62,13 +62,13 @@ where the mean $\mu^b \in \mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ and standard deviat
 \end{align}
 \end{subequations}
 %
-The prior distribution for the index of the target-specific spot $\theta$ is modeled hierarchically in terms of the average specific binding probability $\pi \in [0, 1] $. The probability that $\theta = 0$ is equal to the probability of no specifically bound spot being present (i.e., $1-\pi$). Since spot indices are arbitrarily assigned, the probability that the specifically bound molecule is present is equally split between those indices (i.e., $\frac{\pi}{K}$). We represent the prior for $\theta$ as a Categorical distribution of the following form
+The prior distribution for the index of the target-specific spot $\theta$ is modeled hierarchically in terms of the average specific binding probability $\pi \in [0, 1] $. The probability that $\theta = 0$ is equal to the probability of no specifically bound spot being present (i.e., $1-\pi$). Since spot indices are arbitrarily assigned, the probability that the specifically bound molecule is present is equally split between those indices (i.e., $\frac{\pi}{K}$). We represent the prior for $\theta$ as a Categorical distribution of the following form:
 %
 \begin{equation}
     \theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)
 \end{equation}
 
-The average target-specific binding probability $\pi$ has an uninformative Jeffreys prior given by a Beta distribution
+The average target-specific binding probability $\pi$ has an uninformative Jeffreys prior given by a Beta distribution:
 %
 \begin{equation}
     \pi \sim \mathbf{Beta}(1/2, 1/2)
@@ -103,7 +103,7 @@ The optimal width $w$ of fluorescence spots in CoSMoS experiments is typically i
     w \sim \mathbf{Uniform}(0.75, 2.25)
 \end{equation}
 
-Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x^\mathsf{target}$, $y^\mathsf{target}$), and a standard deviation parameterized as proximity $\sigma^{xy} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue).  The range for ($x$, $y$) is constrained to one-half pixel beyond the image region allowing the center of off-target spots to fall up to one-half pixel beyond the AOI boundary. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
+Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule with accuracy $\sigma^{xy}$ that is generally less than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x^\mathsf{target}$, $y^\mathsf{target}$), and a standard deviation parameterized as proximity $\sigma^{xy} $ (Extended Data Fig. 1b, orange). On the other hand, non-specific binding can occur anywhere within the image and therefore has a uniform distribution (Extended Data Fig. 1b, blue). Affine-Beta is a continuous distribution defined on a bounded interval. Note, that the Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{equation}
     x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
@@ -125,13 +125,11 @@ Gain $g$ depends on the settings of the amplifier and electron multiplier (if pr
     g \sim \mathbf{HalfNormal}(50)
 \end{equation}
 
-The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values $\delta_\mathrm{samples}$ and their weights $\delta_\mathrm{weights}$ are used to construct an Empirical prior:
+The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of $1$. Bin values $\delta_\mathsf{samples}$ and their weights $\delta_\mathsf{weights}$ are used to construct an Empirical prior:
 %
 \begin{equation}
-    \delta \sim \mathbf{Empirical}(\delta_\mathrm{samples}, \delta_\mathrm{weights})
+    \delta \sim \mathbf{Empirical}(\delta_\mathsf{samples}, \delta_\mathsf{weights})
 \end{equation}
-
-\input{model}
 
 \subsection*{Joint distribution}
 
@@ -143,6 +141,8 @@ Let $\phi$ be the set of all model parameters. The joint distribution is factori
     &\prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} p(m | \theta, \lambda) p(h) p(w) p(x | \sigma^{xy}, \theta) p(y | \sigma^{xy}, \theta) \right] \left. \left. \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} p(\delta) p(D | \mu^I, g, \delta) \right] \right]
 \end{aligned}
 \end{equation}
+
+\input{model}
 
 \subsection*{Inference}
 
@@ -159,16 +159,8 @@ Note that the integral in the denominator of this expression is necessary to cal
     p(\phi | D) \simeq q(\phi)
 \end{equation}
 
-For a better convergence, we first run inference with ($\sum_\theta p(D, \phi)$, $q(\phi \setminus \theta)$) pair where $\theta$ is marginalized out in the model \cite{Obermeyer2019-xt}. The variational distribution $q(\phi \setminus \theta)$ has the following factorization:
-%
-\begin{equation}
-\begin{aligned}
-    q(\phi \setminus \theta) =~&q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \cdot \\
-    &\prod_{\mathsf{AOI}} \left[ q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}} \left[ \vphantom{\prod_{F}} q(b) \prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} q(m) q(h | m) q(w | m) q(x | m) q(y | m) \right] \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} q(\delta) \right] \right]
-\end{aligned}
-\end{equation}
-
-To obtain $q(\theta)$ we then run inference with full model using ($p(D, \phi)$, $q(\phi)$) pair with already learned good variational parameters being fixed. $q(\phi)$ has the following factorization:
+%To obtain $q(\theta)$ we then run inference with full model using ($p(D, \phi)$, $q(\phi)$) pair with already learned good variational parameters being fixed.
+$q(\phi)$ is specified in Algorithm 3 and has the following factorization:
 
 \begin{equation}
 \begin{aligned}
@@ -177,14 +169,22 @@ To obtain $q(\theta)$ we then run inference with full model using ($p(D, \phi)$,
 \end{aligned}
 \end{equation}
 
-\subsubsection*{Variational distribution specification}
-
-In order to apply variational inference, we must specify the parametric form of the variational distribution $q(\phi)$
-that we use as an approximation to the true posterior distribution $p(\phi | D)$.
-
-Below we list variational distributions, variational parameters and the domains of variational parameters. Variational inference procedure is prone to get stuck in local maxima and is heavily affected by initial values of variational parameters. Below we also provide the initial values of variational parameters that worked well in our analysis.
-
 \input{guide}
+
+For a better convergence, we first run inference with a model  where $\theta$ is marginalized out $\left( \sum_\theta p(D, \phi) \right)$ and use a variational distribution $q(\phi \setminus \theta)$) without $\theta$:
+%
+\begin{equation}
+\begin{aligned}
+    q(\phi \setminus \theta) =~&q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \cdot \\
+    &\prod_{\mathsf{AOI}} \left[ q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}} \left[ \vphantom{\prod_{F}} q(b) \prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} q(m) q(h | m) q(w | m) q(x | m) q(y | m) \right] \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} q(\delta) \right] \right]
+\end{aligned}
+\end{equation}
+
+Then we run inference with the full model $p(D, \phi)$ and guide $q(\phi)$ pair where already learned good values of variational parameters from $q(\phi \setminus \theta)$ are held fixed. In order to be able to reuse the same variational parameters $m_\mathsf{prob}$ and $\theta_\mathsf{prob}$ later in $q(\phi)$ we calculate Bernoulli probabilities in $q(m)$ in $q(\phi \setminus \theta)$ as $\sum_\mathsf{target} m_\mathsf{prob} \theta_\mathsf{prob}$.
+
+% \subsubsection*{Variational distribution specification}
+
+% In order to apply variational inference, we must specify the parametric form of the variational distribution $q(\phi)$ that we use as an approximation to the true posterior distribution $p(\phi | D)$.
 
 \subsection*{Implementation}
 
@@ -192,31 +192,58 @@ The model and variational inference method outlined above are implemented as a p
 
 \subsection*{Data simulation}
 
-Simulated data were produced using the generative model (Algorithm 1). Each simulation has the size of the data set ($D=14$, $N$, $F$, $N_c$, $F_c$) as an input and a subset of parameters ($K=2$, $\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) being set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. Fixed parameter values and data set sizes are provided in Supplementary Data.
+Simulated data were produced using the generative model (Algorithm 2). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. Fixed parameter values and data set sizes are provided in Supplementary Data.
 
-For kinetic simulations, $\theta$ was modeled using a discrete Markov process with initial probability of each state given by $\mathsf{init} \in \Delta_K$ and the transition probability matrix is given by $\mathsf{trans} \in (\Delta_K)^K$ where $\Delta_K$ denotes $K-1$-dimensional probability simplex. We assume that the Markov process is at equilibrium and initialized the chain with the equilibrium probabilities:
+For kinetic simulations (Fig. 6, Supplementary Data 5), $\theta$ was modeled using a discrete Markov process with initial probability $\theta_\mathsf{init}$ of each state and the transition probability matrix $\theta_\mathsf{trans}$:
 %
 \begin{subequations}
 \begin{align}
-    \mathsf{init} &= \begin{pmatrix} \frac{k_\mathrm{off}}{k_\mathrm{on} + k_\mathrm{off}} & \frac{k_\mathrm{on}}{2\left( k_\mathrm{on} + k_\mathrm{off} \right)} & \frac{k_\mathrm{on}}{2\left( k_\mathrm{on} + k_\mathrm{off} \right)} \end{pmatrix} \\
-    \mathsf{trans} &= \begin{pmatrix} 1 - k_\mathrm{on} & k_\mathrm{on}/2 & k_\mathrm{on}/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \\ k_\mathrm{off} & (1 - k_\mathrm{off})/2 & (1 - k_\mathrm{off})/2 \end{pmatrix}
+    \theta_\mathsf{init} &= \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{2\left( k_\mathsf{on} + k_\mathsf{off} \right)} & \frac{k_\mathsf{on}}{2\left( k_\mathsf{on} + k_\mathsf{off} \right)} \end{bmatrix} \\
+    \theta_\mathsf{trans} &= \begin{bmatrix} 1 - k_\mathsf{on} & k_\mathsf{on}/2 & k_\mathsf{on}/2 \\ k_\mathsf{off} & (1 - k_\mathsf{off})/2 & (1 - k_\mathsf{off})/2 \\ k_\mathsf{off} & (1 - k_\mathsf{off})/2 & (1 - k_\mathsf{off})/2 \end{bmatrix}
 \end{align}
 \end{subequations}
 
 \noindent
-where $k_{\mathrm{on}}$ and $k_{\mathrm{off}}$ are the apparent first-order binding and dissociation rate constants in units of $\mathrm{s}^{-1}$, respectively, assuming 1 s/frame.
+where $k_{\mathsf{on}}$ and $k_{\mathsf{off}}$ are the apparent first-order binding and dissociation rate constants in units of $\mathsf{s}^{-1}$, respectively, assuming 1 s/frame. We assume that the Markov process is at equilibrium and initialized the chain with the equilibrium probabilities.
 
-For posterior predictive checking, simulated images were produced ($D^\mathrm{rep}$) using Tapqir's generative model where model parameters were sampled from the posterior distribution $p(\psi|D)$ which is approximated by the variational distribution $q(\psi)$. % reference Figure S3 (sampling from posterior of simulated data)
+\subsection*{Posterior predictive sampling}
+
+For posterior predictive checking, sampled images ($\widetilde{D}$) were produced using Tapqir's generative model where model parameters were sampled from the posterior distribution $p(\phi|D)$ which is approximated by the variational distribution $q(\phi)$:
 
 \begin{equation}
-    D^\mathrm{rep} | D \sim p(I^\mathrm{rep} | \phi) p(\delta^\mathrm{rep}) p(\psi | D)
+    \widetilde{D} \sim p(\widetilde{D} | D) = \int_\phi p(\widetilde{D} | \phi) q(\phi) d\phi
+\end{equation}
+
+\subsubsection*{SNR}
+
+We define SNR as:
+
+\begin{equation}
+    \mathsf{SNR} = \mathsf{mean} \left( \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}} \right)
+\end{equation}
+
+where $\mathsf{signal}$ designates spot signal above background, $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, and $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity.
+
+Spot signal is calculated as weighted average of total signal minus mean background and mean offset signals:
+
+\begin{subequations}
+\begin{align}
+    \mathsf{weight} &= \dfrac{1}{2 \pi \cdot w^2} \exp{\left( -\dfrac{(i-x-x^\mathsf{target})^2 + (j-y-y^\mathsf{target})^2}{2 \cdot w^2} \right)} \\
+    \mathsf{signal} &=  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} \left( D - b_{\mathsf{mean}} - \delta_\mathsf{mean} \right)  \mathsf{weight}
+\end{align}
+\end{subequations}
+
+For simulated data theoretical signal is directly calculated as:
+
+\begin{equation}
+    \mathsf{signal} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} h \cdot \mathsf{weight}^2
 \end{equation}
 
 \subsection*{Classification accuracy statistics}
 The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image is calculated as:
 
 \begin{equation}
-    p(\mathsf{specific}) = p(\theta > 0)
+    p(\mathsf{specific}) = p(\theta > 0) = p(\theta = 1) + p(\theta = 2)
 \end{equation}
 As a metric of classification accuracy we use three commonly used statistics -- recall, precision, and Matthews Correlation Coefficient \cite{Matthews1975-rw}
 \begin{equation}
@@ -234,56 +261,36 @@ As a metric of classification accuracy we use three commonly used statistics -- 
 \end{equation}
 
 \noindent
-where TP is true positives, TN is true negatives, FP is false positives, and FN is false negatives (ref).
+where TP is true positives, TN is true negatives, FP is false positives, and FN is false negatives.
 
-\subsubsection*{SNR}
+\subsection*{Kinetic and thermodynamic analysis}
 
-We define SNR as:
+Our procedure to estimate kinetic parameters (Fig. 6c,d) is as follows. We sample binary time record $z$ from inferred $p(\mathsf{specific})$. For two-state hidden Markov model the maximum-likelihood estimates of $k_\mathsf{on}$ and $k_\mathsf{off}$ are given by:
+
 
 \begin{equation}
-    \mathrm{SNR} = \mathsf{mean} \left( \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}} \right)
+    \hat{k}_\mathsf{on}, \hat{k}_\mathsf{off} = \argmax_{k_\mathsf{on}, k_\mathsf{off}} \prod_\mathsf{AOI} \left[ p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) \prod_{f=1}^{F-1} p(z_{\mathsf{frame}(f)} | z_{\mathsf{frame}(f-1)}, k_\mathsf{on}, k_\mathsf{off}) \right]
 \end{equation}
 
-where $\mathsf{signal}$ designates spot signal above background, $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, and $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity.
-
-Spot signal is calculated as weighted average of total signal minus mean background and mean offset signals:
+where:
 
 \begin{subequations}
 \begin{align}
-    \mathsf{weight} &= \dfrac{1}{2 \pi \cdot w^2} \exp{\left( -\dfrac{(i-x)^2 + (j-y)^2}{2 \cdot w^2} \right)} \\
-    \mathsf{signal}_{\mathsf{spot}(k)} &=  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} D \cdot \mathsf{weight}_{\mathsf{spot}(k)} - b_{\mathrm{mean}} - \delta_\mathrm{mean}
+    p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) &= \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{\left( k_\mathsf{on} + k_\mathsf{off} \right)} \end{bmatrix} \\
+    p(z_{\mathsf{frame}(f)} | z_{\mathsf{frame}(f-1)}, k_\mathsf{on}, k_\mathsf{off}) &= \begin{bmatrix} 1 - k_\mathsf{on} & k_\mathsf{on} \\ k_\mathsf{off} & 1 - k_\mathsf{off} \end{bmatrix}
 \end{align}
 \end{subequations}
 
-For simulated data theoretical signal can be directly calculated as
+Repeating this procedure 2000 times gives the distributions of $k_\mathsf{on}$ and $k_\mathsf{off}$ from which we compute mean and 95\% credible interval (as the highest posterior density interval).
+
+Similarly, to estimate mean and 95\% of $K_\mathsf{eq}$ (Fig. 6e) we sampled $\pi$ from $q(\pi)$ and for each sampled value of $\pi$ calculated $K_\mathsf{eq}$ as:
 
 \begin{equation}
-    \mathsf{signal}_{\mathsf{spot}(k)} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} h \cdot \mathsf{weight}_{\mathsf{spot}(k)}^2
+    K_\mathsf{eq} = \dfrac{\pi}{1 - \pi}
 \end{equation}
 
-\subsection*{Kinetic analysis}
+For time-to-first binding analysis of Tapqir-derived $p(\mathsf{specific})$ (Fig. 7b, Extended Data Figs. 4b,5b, and 6b) 2000 binary time records $z$ were sampled from $p(\mathsf{specific})$. For each time record initial absent intervals were measured and analyzed using Eq. (7) in \cite{Friedman2015-nx} yielding distributions of $k_\mathsf{a}$, $k_\mathsf{ns}$, and $A_\mathsf{f}$. Mean value and 95\% credible intervals (highest posterior density interval) were calculated from these distributions. Initial absent intervals from ``spot-picker'' analysis (Fig. 7c, Extended Data Figs. 4c,5c, and 6c) were analyzed as described in \cite{Friedman2015-nx} with the only difference that on-target and off-target data were analyzed jointly instead of being analyzed sequentially to first to determine $k_\mathsf{ns}$ from off-target data and then fitting on-target data to obtain $k_\mathsf{a}$ and $A_\mathsf{f}$ while holding $k_\mathsf{ns}$ constant.
 
-Our procedure to estimate kinetic parameters is as follows (see Algorithm 3). For each iteration we sample binary data records $z$ from inferred $p(\mathsf{specific})$. Then we compute maximum-likelihood estimate of parameter $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$ using two-state hidden Markov model. After completing 2000 iterations we compute mean and credible interval (highest posterior density interval) from the distributions of $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$.
-
-For two-state hidden Markov model the maximum-likelihood estimate $\hat{k}_\mathrm{on}$ and $\hat{k}_\mathrm{off}$ are given by
-
-\begin{subequations}
-\begin{align}
-    \hat{k} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1}(1 - z_{n,f-1})z_{n,f}}{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1} (1 - z_{n, f-1})} \\
-    \hat{k}_\mathsf{on} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1}\left( 1 - z_{\mathsf{AOI}(n),\mathsf{Frame}(f-1)} \right) z_{\mathsf{AOI}(n),\mathsf{Frame}(f)}}{\sum_{n^\prime=0}^{N-1} \sum_{f^\prime=1}^{F-1} \left(1 - z_{\mathsf{AOI} (n^\prime), \mathsf{Frame}( f^\prime-1)} \right)} \\
-    \hat{k}_\mathsf{off} &= \dfrac{\sum_{n=0}^{N-1} \sum_{f=1}^{F-1} z_{\mathsf{AOI}(n),\mathsf{Frame}(f)} \left( 1 - z_{\mathsf{AOI}(n),\mathsf{Frame}(f+1)} \right) }{\sum_{n^\prime=0}^{N-1} \sum_{f^\prime=1}^{F-1} z_{\mathsf{AOI} (n^\prime), \mathsf{Frame}( f^\prime)} }
-\end{align}
-\end{subequations}
-
-\paragraph{Algorithm 3.} Monte Carlo sampling for parameter estimation. \\
-\begin{algorithmic}[1]
-\For{$i = 1, 2, \dots, 1000 $}
-    \State Sample binary $z$ from approximate posterior $p(\mathsf{specific})$
-    \State Calculate $\Delta t$ from $z$
-    \State Calculate $\hat{k}_i$ from $\Delta t$
-\EndFor{}
-\State Calculate mean and CI from the distribution of $\hat{k}$
-\end{algorithmic}
 
 %section and table of  fixed parameter values
 
