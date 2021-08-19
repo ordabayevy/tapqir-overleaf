@@ -8,7 +8,7 @@ from tapqir.utils.imscroll import association_rate, dissociation_rate
 from utils import description, resize_columns
 
 # path to simulated data
-SIMULATIONS_DIR = Path("/home/ordabayev/repos/tapqir/notebooks/simulations")
+SIMULATIONS_DIR = Path("simulations")
 
 truth = {}
 fit = {}

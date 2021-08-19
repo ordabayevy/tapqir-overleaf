@@ -26,7 +26,7 @@ gs = fig.add_gridspec(
 # panel a
 gsa = gs[0, 0].subgridspec(1, 3, width_ratios=[2, 1, 3])
 
-path_data = Path("/shared/centaur/final/Rpb1SNAP549")
+path_data = Path("experimental/Rpb1SNAP549")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 

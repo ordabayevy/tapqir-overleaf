@@ -23,7 +23,7 @@ gs = fig.add_gridspec(
 )
 
 # panel a
-path_data = Path("/shared/centaur/paper/Rpb1SNAP549")
+path_data = Path("experimental/Rpb1SNAP549")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -124,7 +124,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel b
-path_data = Path("/shared/centaur/paper/sigma54RNAPCy3-597P255")
+path_data = Path("experimental/sigma54RNAPCy3-597P255")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -231,7 +231,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel c
-path_data = Path("/shared/centaur/paper/sigma54RNAPCy3-598P2993")
+path_data = Path("experimental/sigma54RNAPCy3-598P2993")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -332,7 +332,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel d
-path_data = Path("/shared/centaur/paper/GreB")
+path_data = Path("experimental/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 

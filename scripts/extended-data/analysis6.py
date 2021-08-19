@@ -10,7 +10,7 @@ from tapqir.utils.imscroll import time_to_first_binding
 from tapqir.utils.mle_analysis import train, ttfb_guide, ttfb_model
 
 # load model & parameters
-path_data = Path("/shared/centaur/paper/GreB")
+path_data = Path("experimental/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 

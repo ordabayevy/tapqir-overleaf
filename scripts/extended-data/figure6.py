@@ -14,7 +14,7 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # load model & parameters
-path_data = Path("/shared/centaur/paper/GreB")
+path_data = Path("experimental/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 

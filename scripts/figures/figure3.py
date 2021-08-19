@@ -12,7 +12,7 @@ mpl.rcParams.update({"font.size": 8})
 fig = plt.figure(figsize=(7.2, 5.4), constrained_layout=False)
 
 # panel a
-path_data = "/home/ordabayev/repos/tapqir/notebooks/simulations/lamda0.5"
+path_data = "simulations/lamda0.5"
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -367,7 +367,7 @@ for i, f in enumerate(frames):
     )
 
 # panel b
-path_data = Path("/shared/centaur/final/Rpb1SNAP549")
+path_data = Path("experimental/Rpb1SNAP549")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
