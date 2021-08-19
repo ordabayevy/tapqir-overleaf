@@ -20,7 +20,7 @@ gs = fig.add_gridspec(
 )
 
 # path to simulated data
-SIMULATIONS_DIR = Path("/home/ordabayev/repos/tapqir/notebooks/simulations")
+SIMULATIONS_DIR = Path("simulations")
 
 truth = {}
 fit = {}

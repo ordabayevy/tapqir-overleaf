@@ -14,7 +14,7 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # path to simulated data
-SIMULATIONS_DIR = Path("/home/ordabayev/repos/tapqir/notebooks/simulations")
+SIMULATIONS_DIR = Path("simulations")
 
 truth = {}
 fit = {}
