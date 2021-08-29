@@ -16,7 +16,7 @@
 
 %\addtocounter{figure}{-1}
 \begin{figure} [t]
-\caption{\textbf{Extended graphical representation of the generative probabilistic model and the prior distributions for $x$ and $y$ spot position parameters.} \textbf{a}, Directed factor graph representation \cite{Bishop2006-oa} of model parameters and parameter distributions. Model parameters are depicted as circles, parameter distributions as small filled squares, and deterministic functions as diamonds. Names of the probability distributions are written next to the squares. Input parameters and output parameters are connected by lines, with an arrow pointing towards the dependent parameter. Observed image ($D$) is the sum of the noisy photon-dependent image ($I$) and the photon-independent camera offset ($\delta$). Plates (rounded rectangles) contain nodes that are repeated for the number of instances displayed at the bottom-right corner: number of AOIs ($N+N_\mathsf{c}$), frame count ($F$), maximum number of spots in a single image ($K$), and number of image pixels ($P \times P$). \textbf{b}, Prior distributions of $x$ and $y$ for specific and non-specific binding. Probability densities for $x$ and $y$ are defined in the range $\left[ -(P+1)/2, (P+1)/2 \right] $ relative to the target molecule and are conditional on the identity of the spot (specific or non-specific).  Probability densities for $x$ and $y$ parameters are identical. }
+\caption{\textbf{Extended graphical representation of the generative probabilistic model and the prior distributions for $x$ and $y$ spot position parameters.} \textbf{a}, Directed factor graph representation \cite{Bishop2006-oa} of model parameters and parameter distributions. This diagram is a more complete version of the graphical model shown in Fig. 2d; it includes additional parameters ($\mu^b$, $\sigma^b$, $\delta$) and explicitly specifies the relevant probability distributions.  Model parameters are depicted as circles, parameter distributions as small filled squares, and deterministic functions as diamonds. Names of the probability distributions are written next to the squares. Input parameters and output parameters are connected by lines, with an arrow pointing towards the dependent parameter. Observed image ($D$) is the sum of the noisy photon-dependent image ($I$) and the photon-independent camera offset ($\delta$). Plates (rounded rectangles) contain nodes that are repeated for the number of instances displayed at the bottom-right corner: number of AOIs ($N+N_\mathsf{c}$), frame count ($F$), maximum number of spots in a single image ($K$), and number of image pixels ($P \times P$). \textbf{b}, Prior distributions of $x$ and $y$ for specific and non-specific binding. Probability densities for $x$ and $y$ are defined in the range $\left[ -(P+1)/2, (P+1)/2 \right] $ relative to the target molecule and are conditional on the identity of the spot (specific or non-specific).  Probability densities for $x$ and $y$ parameters are identical. }
 \end{figure}
 \clearpage
 
@@ -41,7 +41,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure4.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A ($\mathrm{SNR} = 1.63$, $\lambda = 0.2958$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
 \label{fig:rpb1snap549}
 \end{figure}
 \pagebreak
@@ -50,7 +50,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure5.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $10^\mathrm{th}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C ($\textrm{SNR} = 4.18$, $\lambda = 0.0716$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $10^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:sigma54_298P2993}
 \end{figure}
 \clearpage
@@ -61,7 +61,7 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure6.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D (see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $13^\mathrm{th}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D ($\textrm{SNR} = 4.85$, $\lambda = 0.0404$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $13^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:greb}
 \end{figure}
 \clearpage
@@ -94,7 +94,7 @@ $0.1022\:[0.1009, 0.1035]$ & $0.2958\:[0.294, 0.2970]$ & $6.507\:[6.505, 6.509]$
 \bottomrule
 \multicolumn{7}{l}{\footnotesize{\parbox{1.2\textwidth}{\textsuperscript{a}$N$ - number of on-target AOIs, $N_\mathsf{c}$ - number of control off-target AOIs, $F$ - number of frames.
 
-\textsuperscript{b}Time to complete calculation on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU.}}} \rule{0pt}{3ex} \\
+\textsuperscript{b}Unattended calculation time on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU.}}} \rule{0pt}{3ex} \\
 \end{tabular}}
 \end{table}
 \clearpage
@@ -133,6 +133,8 @@ $x^\mathsf{target}$ & target molecule position on the $x$-axis & $[P/2-1, P/2]^{
 $y^\mathsf{target}$ & target molecule position on the $y$-axis & $[P/2-1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
 $i$ & pixel index on the $x$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
 $j$ & pixel index on the $y$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
+$W$ & width of the raw microscope images in pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$H$ & height of the raw microscope image in pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
 $D^\mathsf{raw}$ & raw microscope images & $\mathbb{R}_{>0}^{\mathsf{frame}[F] \times \mathsf{pixelX}[H] \times \mathsf{pixelY}[W]}$ \rule{0pt}{3ex} \\
 $x^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $x$-axis & $[-0.5, H-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
 $y^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $y$-axis & $[-0.5, W-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
