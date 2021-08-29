@@ -218,9 +218,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="234.64286"
-     inkscape:cy="216.78571"
+     inkscape:zoom="2.8"
+     inkscape:cx="140.17857"
+     inkscape:cy="343.39286"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -923,15 +923,19 @@
          x="-53.440887"
          y="138.45914"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#aa3377;fill-opacity:1;stroke-width:0.264583"
-         id="tspan2999">On-target AOIs, n ∈ {1,...,N}</tspan><tspan
+         id="tspan2999"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmmi10;-inkscape-font-specification:cmmi10"
+   id="tspan9350">N</tspan> on-target AOIs</tspan><tspan
          sodipodi:role="line"
          x="-53.440887"
-         y="141.98691"
+         y="142.11583"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#aa3377;fill-opacity:1;stroke-width:0.264583"
-         id="tspan6983">Frames, f ∈ {1,...,F}</tspan><tspan
+         id="tspan6983"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmmi10;-inkscape-font-specification:cmmi10"
+   id="tspan5940">F</tspan>  frames</tspan><tspan
          sodipodi:role="line"
          x="-53.440887"
-         y="145.51469"
+         y="145.6436"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#aa3377;fill-opacity:1;stroke-width:0.264583"
          id="tspan2398">14 x 14 pixel images</tspan></text>
     <text
@@ -944,19 +948,21 @@
          x="-53.512852"
          y="163.13562"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#999933;fill-opacity:1;stroke-width:0.264583"
-         id="tspan3001">Off-target control AOIs, n ∈ {1,...,N<tspan
+         id="tspan3001"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmmi10;-inkscape-font-specification:cmmi10"
+   id="tspan17492">N</tspan><tspan
    style="font-size:65%;baseline-shift:sub"
-   id="tspan1743">c</tspan>}</tspan><tspan
+   id="tspan18112">c</tspan> off-target control AOIs</tspan><tspan
          sodipodi:role="line"
          x="-53.512852"
-         y="166.66339"
+         y="166.79231"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#999933;fill-opacity:1;stroke-width:0.264583"
-         id="tspan2405">Frames, f ∈ {1,...,F<tspan
-   style="font-size:65%;baseline-shift:sub"
-   id="tspan1745">c</tspan>}</tspan><tspan
+         id="tspan2405"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmmi10;-inkscape-font-specification:cmmi10"
+   id="tspan21744">F</tspan>  frames</tspan><tspan
          sodipodi:role="line"
          x="-53.512852"
-         y="170.19118"
+         y="170.32008"
          style="font-size:2.82222px;text-align:center;text-anchor:middle;fill:#999933;fill-opacity:1;stroke-width:0.264583"
          id="tspan2407">14 x 14 pixel images</tspan></text>
     <g
@@ -1646,5 +1652,35 @@
          x="-121.02351"
          y="135.16835" />
     </g>
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#c600c6;stroke-width:0.0631345;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 71.160512,183.11777 10e-7,-5.68605 5.603189,-0.005 5.60319,-0.005 v 5.6912 5.69119 h -5.60319 -5.60319 z m 10.039552,4.5203 0.03623,-0.0293 0.001,-4.49408 10e-4,-4.49407 -0.03736,-0.0302 c -0.03665,-0.0297 -0.121405,-0.0302 -4.446476,-0.0262 -4.208612,0.004 -4.410393,0.005 -4.437296,0.0322 -0.02693,0.0269 -0.02818,0.22951 -0.02818,4.53443 0,3.98837 0.0027,4.50796 0.02368,4.5212 0.01478,0.009 1.683055,0.0151 4.437399,0.0152 4.278382,2.3e-4 4.414833,-6.6e-4 4.449948,-0.0291 z"
+       id="path36513"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#d01cb4;stroke-width:0.126269;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 261.05341,218.16882 -0.98648,-0.008 v -5.60274 -5.60274 h 5.60319 5.60319 v 5.61593 5.61593 l -4.61671,-0.005 c -2.5392,-0.003 -5.06063,-0.009 -5.60319,-0.0132 z m 9.01245,-1.13219 0.071,-0.019 v -4.44393 c 0,-4.02316 -0.005,-4.44574 -0.0499,-4.46308 -0.0275,-0.0105 -2.02157,-0.0192 -4.43134,-0.0192 -3.65035,0 -4.38733,0.007 -4.41695,0.0428 -0.026,0.0314 -0.0334,1.22142 -0.0275,4.45888 l 0.008,4.41605 0.12626,0.0192 c 0.1651,0.0251 8.62772,0.0331 8.72046,0.008 z"
+       id="path36552"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#d01cb4;stroke-width:0.252538;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 315.89364,202.21991 v -5.61897 h 5.58741 5.5874 v 5.61897 5.61898 h -5.5874 -5.58741 z m 10.02303,-0.0158 0.0162,-4.46677 h -4.45141 -4.45141 v 4.48298 4.48298 l 4.4352,-0.0162 4.43521,-0.0162 z"
+       id="path38149"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#d01cb4;stroke-width:0.252538;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 371.70457,191.86585 v -5.61897 h 5.58741 5.5874 v 5.61897 5.61897 h -5.5874 -5.58741 z m 10.02303,-0.0158 0.0162,-4.46677 h -4.45141 -4.45141 v 4.48298 4.48297 l 4.4352,-0.0162 4.4352,-0.0162 z"
+       id="path38188"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#d01cb4;stroke-width:0.252538;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 427.84695,187.08011 -0.33145,-0.0191 -0.002,-2.09593 c -8.8e-4,-1.15276 -0.004,-3.23234 -0.007,-4.6213 -0.003,-1.38896 -0.002,-2.95865 0.002,-3.48819 l 0.007,-0.9628 h 5.5874 5.58741 v 5.62332 5.62332 l -5.25595,-0.0201 c -2.89077,-0.0111 -5.4051,-0.0287 -5.58741,-0.0392 z m 9.60707,-1.12409 c 0.0898,-0.0344 0.0999,-0.48828 0.0999,-4.48298 v -4.44465 l -4.46677,0.0162 -4.46677,0.0162 v 4.35628 c 0,2.39596 0.0223,4.40601 0.0496,4.46677 0.0465,0.10367 0.31614,0.11049 4.36691,0.11049 2.37453,0 4.36227,-0.0172 4.41719,-0.0383 z"
+       id="path38227"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
+    <path
+       style="fill:#ff00ff;fill-opacity:0.446066;fill-rule:evenodd;stroke:#d01cb4;stroke-width:0.252538;stroke-opacity:1;paint-order:markers fill stroke"
+       d="m 483.2675,171.12615 8.5e-4,-5.5874 h 5.61644 5.61645 v 5.5874 5.58741 h -5.61729 -5.6173 z m 9.89213,4.46927 0.20519,-0.0323 v -4.44438 -4.44439 l -4.46677,0.0162 -4.46677,0.0162 -0.0162,4.38085 c -0.0119,3.20902 0.003,4.40407 0.0558,4.46763 0.0599,0.0722 0.78083,0.0856 4.27779,0.0797 2.31319,-0.004 4.29813,-0.0217 4.41098,-0.0395 z"
+       id="path38266"
+       transform="matrix(0.26458333,0,0,0.26458333,-80.051577,54.604152)" />
   </g>
 </svg>
