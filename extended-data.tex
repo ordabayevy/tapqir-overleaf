@@ -31,37 +31,47 @@
 % extended figure 3
 \begin{figure}[h]
 \centering
+\includegraphics[width=\textwidth]{figures/figure4.png}
+\caption{\textbf{Reproduction of experimental data by posterior predictive sampling.} Example frames are shown from Data set A  (\textbf{a}: $\mathrm{SNR}=1.63$), Data set B (\textbf{b}: $\mathrm{SNR}=3.43$), Data set C (\textbf{c}: $\mathrm{SNR}=4.18$), and Data set D (\textbf{d}: $\mathrm{SNR}=4.85$) in Extended Data Table 1. In each panel the top row shows AOI images selected from the experimental data and middle row shows corresponding images obtained by sampling from the posterior distributions. The bottom row shows pixel intensity distributions from the experimental and posterior prediction images shown. }
+\label{fig:posterior_samples}
+\end{figure}
+\clearpage
+\newpage
+
+% extended figure 4
+\begin{figure}[h]
+\centering
 \includegraphics[width=\textwidth]{extended-data/figure3.png}
 \caption{\textbf{Tapqir analysis of image data simulated using a broad range of global parameters.} Simulations (see Methods) consist of 16 datasets where values of global parameters ($\pi$, $\lambda$, $\sigma^{xy}$, and $g$) where randomly generated for each dataset (Supplementary Data 2). Simulated data were fit with Tapqir, and parameter values from the fit (with 95\% credible interval) are plotted against the true parameter values. To guide the eye, dashed lines  indicate identical true and fit values. \textbf{a}, Gain of the camera $g$. \textbf{b}, Average specific binding probability $\pi$. \textbf{c}, Nonspecific binding rate $\lambda$. \textbf{d}, Proximity parameter $\sigma^{xy}$. }
 \label{fig:tapqir_global}
 \end{figure}
 \pagebreak
 
-% extended figure 4
+% extended figure 5
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure4.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A ($\mathrm{SNR} = 1.63$, $\lambda = 0.2958$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A ($\mathrm{SNR} = 1.63$, $\lambda = 0.2958$; see Extended Data Table 1).  Results are plotted as in Fig. 6, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
 \label{fig:rpb1snap549}
 \end{figure}
 \pagebreak
 
-% extended figure 5
+% extended figure 6
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure5.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C ($\textrm{SNR} = 4.18$, $\lambda = 0.0716$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $10^\mathrm{th}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set C ($\textrm{SNR} = 4.18$, $\lambda = 0.0716$; see Extended Data Table 1).  Results are plotted as in Fig. 6, except that for clarity only every $10^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:sigma54_298P2993}
 \end{figure}
 \clearpage
 \pagebreak
 
 
-% extended figure 6
+% extended figure 7
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure6.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D ($\textrm{SNR} = 4.85$, $\lambda = 0.0404$; see Extended Data Table 1).  Results are plotted as in Fig. 7, except that for clarity only every $13^\mathrm{th}$ AOI is shown in (\textbf{a}).}
+\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set D ($\textrm{SNR} = 4.85$, $\lambda = 0.0404$; see Extended Data Table 1).  Results are plotted as in Fig. 6, except that for clarity only every $13^\mathrm{th}$ AOI is shown in (\textbf{a}).}
 \label{fig:greb}
 \end{figure}
 \clearpage
@@ -94,14 +104,14 @@ $0.1022\:[0.1009, 0.1035]$ & $0.2958\:[0.294, 0.2970]$ & $6.507\:[6.505, 6.509]$
 \bottomrule
 \multicolumn{7}{l}{\footnotesize{\parbox{1.2\textwidth}{\textsuperscript{a}$N$ - number of on-target AOIs, $N_\mathsf{c}$ - number of control off-target AOIs, $F$ - number of frames.
 
-\textsuperscript{b}Unattended calculation time on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU.}}} \rule{0pt}{3ex} \\
+\textsuperscript{b}Unattended calculation time on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU and CUDA version 11.4 installed.}}} \rule{0pt}{3ex} \\
 \end{tabular}}
 \end{table}
 \clearpage
 \pagebreak
 
 \begin{table}[h]
-\caption{\label{tab:parameters} \textbf{Mathematical notation.}}
+\caption{\label{tab:parameters} \textbf{Variables used in the Tapqir model.}}
 \begin{tabular}{l l l}
 \toprule
 Symbol & Meaning & Domain \\
@@ -159,6 +169,8 @@ $x \sim \mathbf{Beta}(\alpha, \beta)$ &
     $\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{\text{B}(\alpha, \beta)}$ \\
 $x \sim \mathbf{Categorical}_{\{z_i\}^k_{i=1}}(\mathbf{p})$ &
     $\prod_{i=1}^k p_i^{[x=z_i]}$ \\
+$x \sim \mathbf{Exponential}(\lambda)$ &
+    $\lambda e^{-\lambda x}$ \rule{0pt}{3ex} \\
 $x \sim \mathbf{Gamma}(\mu, \sigma)$ &
     $\dfrac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1} e^{-\beta x}$
     where $\alpha = \dfrac{\mu^2}{\sigma^2}$ and $\beta = \dfrac{\mu}{\sigma^2}$ \\
