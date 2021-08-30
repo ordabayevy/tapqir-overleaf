@@ -47,7 +47,7 @@ truth_df = pd.concat(truth.values(), axis=1).T.astype(float).drop(columns=["Fc"]
 truth_df["Keq"] = truth_df["kon"] / truth_df["koff"]
 truth_df = truth_df.sort_values(by=["kon", "lamda"])
 description.name = (
-    "Supplemental Data 5: Kinetic simulation parameters and correposnding fit values"
+    "Supplemental Data 5: Kinetic simulation parameters and corresponding fit values"
 )
 
 with pd.ExcelWriter(
@@ -59,7 +59,7 @@ with pd.ExcelWriter(
     worksheet.set_column(0, 0, 15)
     worksheet.set_column(1, 1, 150)
 
-    truth_df.to_excel(writer, float_format="%.4f", sheet_name="Simulation inputs")
+    truth_df.drop(columns="SNR").to_excel(writer, float_format="%.4f", sheet_name="Simulation inputs")
     resize_columns(writer, truth_df, "Simulation inputs")
 
     for key in truth_df.index:

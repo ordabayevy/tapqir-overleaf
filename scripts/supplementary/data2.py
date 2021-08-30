@@ -32,7 +32,7 @@ truth_df = (
 truth_df = truth_df.drop(columns=["seed"])
 description.name = (
     "Supplemental Data 2: Randomized simulation parameters "
-    "and correposnding fit values"
+    "and corresponding fit values"
 )
 
 with pd.ExcelWriter(
@@ -44,7 +44,7 @@ with pd.ExcelWriter(
     worksheet.set_column(0, 0, 15)
     worksheet.set_column(1, 1, 90)
 
-    truth_df.to_excel(writer, float_format="%.4f", sheet_name="Simulation inputs")
+    truth_df.drop(columns="SNR").to_excel(writer, float_format="%.4f", sheet_name="Simulation inputs")
     resize_columns(writer, truth_df, "Simulation inputs")
 
     for key in truth_df.index:
