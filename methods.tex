@@ -137,7 +137,7 @@ The prior distribution for the offset signal $\delta$ is empirically measured fr
     \delta \sim \mathbf{Empirical}(\delta_\mathsf{samples}, \delta_\mathsf{weights})
 \end{equation}
 
-All simulated and experimental data sets in this work were analyzed using the prior distributions and hyperparameter values given in this section, which are compatible with a broad range of experimental conditions.  We anticipate that these will work with images taken with a broad range of microscope hardware, although it is possible that highly atypical microscope designs (e.g., those with effective magnifications that are sub-optimal for CoSMoS) might require adjustment of some fixed hyperparameters (those in Eqs. 6a, 6b, 10, 11, 12, 14, and 15).
+All simulated and experimental data sets in this work were analyzed using the prior distributions and hyperparameter values given in this section, which are compatible with a broad range of experimental conditions (Extended Data Table 1). We anticipate that these will work with images taken on variety of microscope hardware, although it is possible that highly atypical microscope designs (e.g., those with effective magnifications that are sub-optimal for CoSMoS) might require adjustment of some fixed hyperparameters (those in Eqs. 6a, 6b, 10, 11, 12, 14, and 15).
 
 \subsection*{Joint distribution}
 
@@ -207,9 +207,9 @@ Credible intervals were calculated from posterior distribution samples as the hi
 
 \subsection*{Data simulation}
 
-Simulated data were produced using the generative model (Algorithm 2). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplementary Data 1-5.
+Simulated data were produced using the generative model (Algorithm 2). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--5.
 
-For kinetic simulations (Fig. 5, Supplementary Data 5), $\theta$ was modeled using a discrete Markov process with initial probability $\theta_\mathsf{init}$ of each state and the transition probability matrix $\theta_\mathsf{trans}$:
+For kinetic simulations (Fig. 5, Supplemental Data 5), $\theta$ was modeled using a discrete Markov process with initial probability $\theta_\mathsf{init}$ of each state and the transition probability matrix $\theta_\mathsf{trans}$:
 %
 \begin{subequations}
 \begin{align}
@@ -256,7 +256,7 @@ We define SNR as:
     \mathsf{SNR} = \mathsf{mean} \left( \dfrac{\mathsf{signal}}{\sqrt{\sigma^2_{\mathsf{offset}} + \sigma^2_{\mathsf{background}}}} \right)
 \end{equation}
 
-where $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity, and the mean is taken over all target-specific spots.  For experimental data, signal is calculated as
+where $\sigma^2_{\mathsf{background}} = b \cdot g$ the variance of the background intensity, $\sigma^2_{\mathsf{offset}}$ the variance of the offset intensity, and the mean is taken over all target-specific spots.  For experimental data, $\mathsf{signal}$ is calculated as
 
 \begin{equation}
     \mathsf{signal} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} \left( D - b_{\mathsf{mean}} - \delta_\mathsf{mean} \right)  \mathsf{weight}
@@ -268,7 +268,7 @@ where $\mathsf{weight}$ is
     \mathsf{weight} = \dfrac{1}{2 \pi \cdot w^2} \exp{\left( -\dfrac{(i-x-x^\mathsf{target})^2 + (j-y-y^\mathsf{target})^2}{2 \cdot w^2} \right)}
 \end{equation}
 
-For simulated data theoretical signal is directly calculated as:
+For simulated data theoretical $\mathsf{signal}$ is directly calculated as:
 
 \begin{equation}
     \mathsf{signal} =  \sum_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} h \cdot \mathsf{weight}^2
@@ -320,4 +320,4 @@ Similarly, to estimate mean and 95\% CI of $K_\mathsf{eq}$ (Fig. 5e) we sampled 
     K_\mathsf{eq} = \dfrac{\pi}{1 - \pi}
 \end{equation}
 
-To calculate  time-to-first binding kinetics from Tapqir-derived $p(\mathsf{specific})$ (Fig. 6b, Extended Data Figs. 5b,6b, and 7b), 2,000 binary time records $z$ were sampled from $p(\mathsf{specific})$. For each time record initial absent intervals were measured and analyzed using Eq. (7) in \cite{Friedman2015-nx}, yielding distributions of $k_\mathsf{a}$, $k_\mathsf{ns}$, and $A_\mathsf{f}$. Mean value and 95\% credible intervals (highest posterior density interval) were calculated from these distributions. Initial absent intervals from ``spot-picker'' analysis (Fig. 6c, Extended Data Figs. 5c, 6c, and 7c) were analyzed as described in \cite{Friedman2015-nx} with the only difference being that on-target and off-target data were here analyzed jointly instead of being analyzed sequentially \cite{Friedman2015-nx}.  Note that the $k_\mathsf{ns}$ values determined using the two methods are not directly comparable for several reasons, including that the non-specific binding frequencies are effectively measured over different areas. For Tapqir the target area is approximately $ \pi \left( \sigma^{xy} \right) ^2 (\textrm{which is between } 0.3 \textrm{ and } 0.8 \textrm{ pixels$^2$ in the different experimental data sets}$) and for spot-picker the area is subjectively chosen as $\pi \cdot 1.5^2 = 7$ pixels$^2$.
+To calculate  time-to-first binding kinetics from Tapqir-derived $p(\mathsf{specific})$ (Fig. 6b, Extended Data Figs. 5b, 6b, and 7b), 2,000 binary time records $z$ were sampled from $p(\mathsf{specific})$. For each time record initial absent intervals were measured and analyzed using Eq. (7) in \cite{Friedman2015-nx}, yielding distributions of $k_\mathsf{a}$, $k_\mathsf{ns}$, and $A_\mathsf{f}$. Mean value and 95\% credible intervals were calculated from these distributions. Initial absent intervals from ``spot-picker'' analysis (Fig. 6c, Extended Data Figs. 5c, 6c, and 7c) were analyzed as described in \cite{Friedman2015-nx} with the only difference being that on-target and off-target data were here analyzed jointly instead of being analyzed sequentially \cite{Friedman2015-nx}.  Note that the $k_\mathsf{ns}$ values determined using the two methods are not directly comparable for several reasons, including that the non-specific binding frequencies are effectively measured over different areas. For Tapqir the target area is approximately $ \pi \left( \sigma^{xy} \right) ^2 (\textrm{which is between } 0.3 \textrm{ and } 0.8 \textrm{ pixels$^2$ in the different experimental data sets}$) and for spot-picker the area is subjectively chosen as $\pi \cdot 1.5^2 = 7$ pixels$^2$.
