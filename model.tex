@@ -27,8 +27,8 @@
             \State $ m_{\mathsf{spot}(k)} \sim
                 \begin{cases}
                     \mathbf{Bernoulli}(1) & \text{$\theta = k$} \\
-                    \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \\
-                    \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise}
+                    \mathbf{Bernoulli} \left( \sum_{l=1}^K \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K)}{K} \right) & \text{$\theta = 0$} \rule{0pt}{4ex} \\
+                    \mathbf{Bernoulli} \left( \sum_{l=1}^{K-1} \dfrac{l \cdot \mathbf{TruncPoisson}(l; \lambda, K-1)}{K-1} \right) & \text{otherwise} \rule{0pt}{4ex}
                 \end{cases} $
             \Comment{spot presence}
             \State $h \sim \mathbf{HalfNormal}(10000)$
@@ -38,13 +38,12 @@
             \State $ x_{\mathsf{spot}(k)} \sim
                 \begin{cases}
                 \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k \\
-                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \end{cases} $
+                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \rule{0pt}{4ex} \end{cases} $
             \Comment{$x$-axis center}
             \State $ y_{\mathsf{spot}(k)} \sim
                 \begin{cases}
                 \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k \\
-                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \end{cases}
-                $
+                \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k \rule{0pt}{4ex} \end{cases} $
             \Comment{$y$-axis center}
             \ForAll{$\mathsf{pixelX}[P] \times \mathsf{pixelY}[P]$}
             \State $\mu^{S}_{\mathsf{pixelX}(i), \mathsf{pixelY}(j)} =
