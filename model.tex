@@ -1,19 +1,19 @@
-\paragraph{Algorithm 2.} The Tapqir generative model is a stochastic function that describes a properly normalized joint distribution for the data and all parameters. In Pyro this is called ``the model''. \\
+\paragraph{Algorithm 2.} Pseudocode representation of Tapqir model. \\
 
 \begin{algorithmic}[1]
 \State $g \sim \mathbf{HalfNormal}(50)$
 \Comment{camera gain}
 \State $\sigma^{xy} \sim \mathbf{Exponential}(1)$
-\Comment{std of on-target spot position (pixels)}
+\Comment{standard deviation of on-target spot position (pixels)}
 \State $\pi \sim \mathbf{Beta}(1/2, 1/2)$
-\Comment{average specific binding probability}
+\Comment{mean specific binding probability}
 \State $\lambda \sim \mathbf{Exponential}(1)$
 \Comment{non-specific binding rate}
 \ForAll{$\mathsf{AOI}[N+N_\mathsf{c}]$}
     \State $\mu^b \sim \mathbf{HalfNormal}(1000)$
     \Comment{mean background intensity}
     \State $\sigma^b \sim \mathbf{HalfNormal}(100)$
-    \Comment{std of background intensity}
+    \Comment{standard deviation of background intensity}
     \ForAll{$\mathsf{frame}[F]$}
         \State $b \sim \mathbf{Gamma}(\mu^b, \sigma^b)$
         \Comment{background intensity}

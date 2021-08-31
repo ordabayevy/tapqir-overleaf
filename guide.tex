@@ -1,5 +1,5 @@
 %\label{alg:pseudocode}
-\paragraph{Algorithm 3.} The variational distribution is provided as pseudocode for a generative stochastic function. In Pyro this is called ``the guide'' and is required to have the same structure as the model. Variational inference is prone to get stuck in local maxima and is sensitive to initial values of variational parameters. Below we provide the initial values of variational parameters that worked well in our analysis.
+\paragraph{Algorithm 3.} Pseudocode representation of Tapqir guide.
 
 \algnewcommand{\Initialize}[1]{%
   \State \textbf{Variational parameter initializations} $\{ \mathrm{initial\:value}, \quad \mathrm{constraint} \}$:
