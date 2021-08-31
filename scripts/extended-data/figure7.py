@@ -71,7 +71,7 @@ ax.text(
     horizontalalignment="right",
 )
 
-results = pd.read_csv("scripts/extended-data/figure5.csv", index_col=0)
+results = pd.read_csv("scripts/extended-data/figure7.csv", index_col=0)
 # prepare data
 Tmax = model.data.ontarget.F
 torch.manual_seed(0)
@@ -377,4 +377,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("extended-data/figure5.png", dpi=600)
+plt.savefig("extended-data/figure7.png", dpi=600)
