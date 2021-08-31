@@ -10,7 +10,7 @@ from tapqir.utils.imscroll import time_to_first_binding
 from tapqir.utils.mle_analysis import train, ttfb_guide, ttfb_model
 
 # load model & parameters
-path_data = Path("experimental/Rpb1SNAP549")
+path_data = Path("experimental/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -100,4 +100,4 @@ results.loc["Af_sp", "Mean"] = pyro.param("Af").mean().item()
 ll, ul = hpdi(pyro.param("Af").data.squeeze(), 0.95, dim=0)
 results.loc["Af_sp", "95% LL"], results.loc["Af_sp", "95% UL"] = ll.item(), ul.item()
 
-results.to_csv("scripts/extended-data/figure4.csv")
+results.to_csv("scripts/extended-data/figure6.csv")

@@ -14,7 +14,7 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # load model & parameters
-path_data = Path("experimental/Rpb1SNAP549")
+path_data = Path("experimental/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -34,7 +34,7 @@ gs = fig.add_gridspec(
 # panel a
 ax = fig.add_subplot(gs[0, :])
 ax.text(
-    -40,
+    -35,
     -10,
     r"\textbf{a}",
 )
@@ -46,7 +46,7 @@ sdx = torch.argsort(ttfb, descending=True)
 
 norm = mpl.colors.Normalize(vmin=0, vmax=1)
 im = ax.imshow(
-    model.params["p(specific)"][sdx][::3, ::2],
+    model.params["p(specific)"][sdx][:, ::13],
     norm=norm,
     aspect="equal",
     interpolation="none",
@@ -71,7 +71,7 @@ ax.text(
     horizontalalignment="right",
 )
 
-results = pd.read_csv("scripts/extended-data/figure4.csv", index_col=0)
+results = pd.read_csv("scripts/extended-data/figure6.csv", index_col=0)
 # prepare data
 Tmax = model.data.ontarget.F
 torch.manual_seed(0)
@@ -130,7 +130,7 @@ ax.tick_params(
     left=True,
     right=True,
 )
-ax.set_xticks([0, 300, 600])
+ax.set_xticks([0, 2000, 4000])
 ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$", r"$0.6$", r"$0.8$", r"$1$"])
 ax.set_xlabel("Time (frame)")
@@ -246,7 +246,7 @@ ax.tick_params(
     left=True,
     right=True,
 )
-ax.set_xticks([0, 300, 600])
+ax.set_xticks([0, 2000, 4000])
 ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1])
 ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$", r"$0.6$", r"$0.8$", r"$1$"])
 ax.set_xlabel("Time (frame)")
@@ -258,20 +258,18 @@ gsd = gs[1, 1].subgridspec(3, 1, hspace=1.5)
 # ka
 ax = fig.add_subplot(gsd[0])
 ax.text(
-    -0.38 * 0.006,
+    -0.38 * 0.002,
     2,
     r"\textbf{d}",
 )
 ax.barh(
     [0, 1],
-    width=results.loc[["ka_sp", "ka"], "Mean"] / 2.997,
+    width=results.loc[["ka_sp", "ka"], "Mean"],
     height=0.6,
     tick_label=["Spot-picker", "Tapqir"],
     xerr=(
-        (results.loc[["ka_sp", "ka"], "Mean"] - results.loc[["ka_sp", "ka"], "95% LL"])
-        / 2.997,
-        (results.loc[["ka_sp", "ka"], "95% UL"] - results.loc[["ka_sp", "ka"], "Mean"])
-        / 2.997,
+        results.loc[["ka_sp", "ka"], "Mean"] - results.loc[["ka_sp", "ka"], "95% LL"],
+        results.loc[["ka_sp", "ka"], "95% UL"] - results.loc[["ka_sp", "ka"], "Mean"],
     ),
     color="gray",
 )
@@ -294,30 +292,24 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 2.5e-3, 5e-3])
-ax.set_xticklabels([r"$0$", r"$2.5 \times 10^{-3}$", r"$5 \times 10^{-3}$"])
+ax.set_xticks([0, 8e-4, 1.6e-3])
+ax.set_xticklabels([r"$0$", r"$0.8 \times 10^{-3}$", r"$1.6 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{a}$ (s$^{-1}$)")
-ax.set_xlim(0, 6e-3)
+ax.set_xlim(0, 2e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # kns
 ax = fig.add_subplot(gsd[1])
 ax.barh(
     [0, 1],
-    width=results.loc[["kns_sp", "kns"], "Mean"] / 2.997,
+    width=results.loc[["kns_sp", "kns"], "Mean"],
     height=0.6,
     tick_label=["Spot-picker", "Tapqir"],
     xerr=(
-        (
-            results.loc[["kns_sp", "kns"], "Mean"]
-            - results.loc[["kns_sp", "kns"], "95% LL"]
-        )
-        / 2.997,
-        (
-            results.loc[["kns_sp", "kns"], "95% UL"]
-            - results.loc[["kns_sp", "kns"], "Mean"]
-        )
-        / 2.997,
+        results.loc[["kns_sp", "kns"], "Mean"]
+        - results.loc[["kns_sp", "kns"], "95% LL"],
+        results.loc[["kns_sp", "kns"], "95% UL"]
+        - results.loc[["kns_sp", "kns"], "Mean"],
     ),
     color="gray",
 )
@@ -340,23 +332,23 @@ ax.tick_params(
     left=False,
     right=False,
 )
-ax.set_xticks([0, 2.5e-3, 5e-3])
-ax.set_xticklabels([r"$0$", r"$2.5 \times 10^{-3}$", r"$5 \times 10^{-3}$"])
+ax.set_xticks([0, 8e-4, 1.6e-3])
+ax.set_xticklabels([r"$0$", r"$0.8 \times 10^{-3}$", r"$1.6 \times 10^{-3}$"])
 ax.set_xlabel(r"$k_\mathsf{ns}$ (s$^{-1}$)")
-ax.set_xlim(0, 6e-3)
+ax.set_xlim(0, 2e-3)
 ax.set_ylim(-0.6, 1.6)
 
 # Af
 ax = fig.add_subplot(gsd[2])
 ax.barh(
     [0, 1],
-    width=results.loc[["Af", "Af_sp"], "Mean"],
+    width=results.loc[["Af_sp", "Af"], "Mean"],
     height=0.6,
     align="center",
     tick_label=["Spot-picker", "Tapqir"],
     xerr=(
-        results.loc[["Af", "Af_sp"], "Mean"] - results.loc[["Af", "Af_sp"], "95% LL"],
-        results.loc[["Af", "Af_sp"], "95% UL"] - results.loc[["Af", "Af_sp"], "Mean"],
+        results.loc[["Af_sp", "Af"], "Mean"] - results.loc[["Af_sp", "Af"], "95% LL"],
+        results.loc[["Af_sp", "Af"], "95% UL"] - results.loc[["Af_sp", "Af"], "Mean"],
     ),
     color="gray",
 )
@@ -385,4 +377,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("extended-data/figure4.png", dpi=600)
+plt.savefig("extended-data/figure6.png", dpi=600)
