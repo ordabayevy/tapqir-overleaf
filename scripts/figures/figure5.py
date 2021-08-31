@@ -5,6 +5,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
 import torch
+from matplotlib.patches import Circle
+from scipy.io import loadmat
 from tapqir.models import Cosmos
 from tapqir.utils.dataset import load
 
@@ -42,12 +44,12 @@ for data_path in SIMULATIONS_DIR.iterdir():
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="height")
 
-fig = plt.figure(figsize=(7.2, 5.9), constrained_layout=False)
+fig = plt.figure(figsize=(7.2, 7.2), constrained_layout=False)
 gsa = fig.add_gridspec(
     nrows=1,
     ncols=8,
-    top=0.94,
-    bottom=0.87,
+    top=0.95,
+    bottom=0.89,
     left=0.2,
     right=0.8,
     wspace=0.03,
@@ -74,20 +76,18 @@ for i, name in enumerate(truth_df.index):
         )
 
 gs = fig.add_gridspec(
-    nrows=3,
+    nrows=1,
     ncols=3,
-    top=0.83,
-    bottom=0.08,
+    top=0.86,
+    bottom=0.7,
     left=0.08,
     right=0.98,
     wspace=0.35,
-    hspace=0.47,
     width_ratios=[1, 3, 1],
-    height_ratios=[1, 1, 1],
 )
 
 # panel b
-ax = fig.add_subplot(gs[0, 0])
+ax = fig.add_subplot(gs[0])
 ax.text(
     -2,
     1.1,
@@ -141,7 +141,7 @@ ax.set_xlabel("SNR")
 ax.set_ylabel(r"$\langle p(\mathsf{specific}) \rangle $")
 
 # panel c
-gsc = gs[0, 1].subgridspec(1, 3, wspace=0.03)
+gsc = gs[1].subgridspec(1, 3, wspace=0.03)
 for i, name in enumerate(["height300", "height750", "height3000"]):
     ax = fig.add_subplot(gsc[0, i])
     ax.hist(
@@ -217,7 +217,7 @@ for i, name in enumerate(["height300", "height750", "height3000"]):
         )
 
 # panel d
-ax = fig.add_subplot(gs[0, 2])
+ax = fig.add_subplot(gs[2])
 ax.text(
     -2,
     1.1,
@@ -301,8 +301,19 @@ for data_path in SIMULATIONS_DIR.iterdir():
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="lamda")
 
+gs = fig.add_gridspec(
+    nrows=1,
+    ncols=3,
+    top=0.63,
+    bottom=0.47,
+    left=0.08,
+    right=0.98,
+    wspace=0.35,
+    width_ratios=[1, 3, 1],
+)
+
 # panel e
-ax = fig.add_subplot(gs[1, 0])
+ax = fig.add_subplot(gs[0])
 ax.text(
     -0.5,
     1.1,
@@ -357,7 +368,7 @@ ax.set_xlabel(r"$\lambda$")
 ax.set_ylabel(r"$\langle p(\mathsf{specific}) \rangle $")
 
 # panel f
-gsg = gs[1, 1].subgridspec(1, 3, wspace=0.03)
+gsg = gs[1].subgridspec(1, 3, wspace=0.03)
 for i, name in enumerate(["lamda0.01", "lamda0.15", "lamda1"]):
     ax = fig.add_subplot(gsg[0, i])
     ax.hist(
@@ -433,7 +444,7 @@ for i, name in enumerate(["lamda0.01", "lamda0.15", "lamda1"]):
         )
 
 # panel g
-ax = fig.add_subplot(gs[1, 2])
+ax = fig.add_subplot(gs[2])
 ax.text(
     -0.5,
     1.1,
@@ -493,6 +504,70 @@ ax.set_ylabel(r"$\langle p(\mathsf{specific}) \rangle $")
 ax.set_ylabel("Accuracy")
 ax.legend(bbox_to_anchor=(1.08, 0.0), loc="lower right", frameon=False, ncol=1)
 
+# panel h
+gs = fig.add_gridspec(
+    nrows=2,
+    ncols=12,
+    top=0.4,
+    bottom=0.26,
+    left=0.12,
+    right=0.98,
+)
+
+
+# load data
+model = Cosmos()
+model.load("simulations/lamda1", data_only=False)
+
+spotpicker = loadmat("simulations/spotpicker_result.mat")
+
+aois = [0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4]
+frames = [166, 333, 476, 59, 163, 440, 157, 321, 34, 386, 60, 191]
+
+for i, (n, f) in enumerate(zip(aois, frames)):
+    ax = fig.add_subplot(gs[0, i])
+    ax.imshow(model.data.ontarget.images[n, f], cmap="gray")
+    ax.axis("off")
+    if i == 0:
+        ax.text(-20, -4, r"\textbf{h}")
+        ax.text(
+            -11,
+            10,
+            "AOI\nimages",
+            horizontalalignment="center",
+        )
+
+    ax = fig.add_subplot(gs[1, i])
+    ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
+    # add patch
+    for k in range(2):
+        if model.params["d/m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+            ax.add_patch(
+                Circle(
+                    (
+                        model.data.ontarget.x[n, f]
+                        + model.params["d/x"]["Mean"][k, n, f].item(),
+                        model.data.ontarget.y[n, f]
+                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                    ),
+                    1.5,
+                    color=f"C{k}",
+                    fill=fill,
+                )
+            )
+        for axis in ["top", "bottom", "left", "right"]:
+            ax.spines[axis].set_linewidth(1.2)
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False)
+    if i == 0:
+        ax.text(
+            -11,
+            10,
+            "Spot\ndetection",
+            horizontalalignment="center",
+        )
+
 # load results
 truth = {}
 fit = {}
@@ -519,8 +594,19 @@ for data_path in SIMULATIONS_DIR.iterdir():
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="lamda")
 
-# panel h
-gsi = gs[2, 1].subgridspec(1, 3, wspace=0.03)
+# panel i
+gs = fig.add_gridspec(
+    nrows=1,
+    ncols=3,
+    top=0.22,
+    bottom=0.06,
+    left=0.08,
+    right=0.98,
+    wspace=0.35,
+    hspace=0.47,
+    width_ratios=[1, 3, 1],
+)
+gsi = gs[1].subgridspec(1, 3, wspace=0.03)
 for i, name in enumerate(["negative0.01", "negative0.15", "negative1"]):
     ax = fig.add_subplot(gsi[0, i])
     ax.hist(
@@ -572,7 +658,7 @@ for i, name in enumerate(["negative0.01", "negative0.15", "negative1"]):
         ax.text(
             -0.6,
             7e3,
-            r"\textbf{h}",
+            r"\textbf{i}",
         )
         ax.text(
             0.3,
