@@ -59,7 +59,9 @@ with pd.ExcelWriter(
     worksheet.set_column(0, 0, 15)
     worksheet.set_column(1, 1, 150)
 
-    truth_df.drop(columns="SNR").to_excel(writer, float_format="%.4f", sheet_name="Simulation inputs")
+    truth_df.drop(columns="SNR").to_excel(
+        writer, float_format="%.4f", sheet_name="Simulation inputs"
+    )
     resize_columns(writer, truth_df, "Simulation inputs")
 
     for key in truth_df.index:

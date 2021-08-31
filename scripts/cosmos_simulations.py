@@ -10,7 +10,6 @@ import pandas as pd
 import torch
 from pyroapi import distributions as dist
 from pyroapi import pyro, pyro_backend
-
 from tapqir.models import Cosmos, CosmosMarginal
 from tapqir.utils.dataset import save
 from tapqir.utils.simulate import simulate
