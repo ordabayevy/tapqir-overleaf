@@ -33,7 +33,6 @@
   pages    = "58--69",
   month    =  jan,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -61,7 +60,6 @@
                    issues or pull requests on this repository.",
   month         =  feb,
   year          =  2021,
-  keywords      = "Pyro;Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "cs.LG",
   eprint        = "2102.13196"
@@ -92,16 +90,17 @@
                    of Adam based on the infinity norm.",
   month         =  dec,
   year          =  2014,
-  keywords      = "Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "cs.LG",
   eprint        = "1412.6980"
 }
 
-@ARTICLE{Van_Vliet1998-jk,
+@INCOLLECTION{Van_Vliet1998-jk,
   title     = "Digital fluorescence imaging using cooled {CCD} array cameras
                invisible",
+  booktitle = "Cell Biology",
   author    = "van Vliet, L J and Sudar, D and Young, I T",
+  editor    = "Celis, J E",
   abstract  = "The progress in solid state technologies has led to a range of
                CCD cameras from inexpensive video cameras to expensive
                scientific digital camera systems. The best choice (best value
@@ -111,50 +110,48 @@
                readout and quantization) are examined to help you understand
                some specific operating conditions such as cooling and the
                choice of readout rates.",
-  journal   = "Cell Biol",
-  publisher = "Citeseer",
+  publisher = "Academic Press",
+  volume    =  3,
+  pages     = "109–120",
   year      =  1998,
-  keywords  = "Brandeis"
+  address   = "New York"
 }
 
 @ARTICLE{Stallinga2010-yi,
-  title     = "Accuracy of the Gaussian Point Spread Function model in {2D}
+  title     = "Accuracy of the gaussian point spread function model in {2D}
                localization microscopy",
   author    = "Stallinga, Sjoerd and Rieger, Bernd",
-  abstract  = "The Gaussian function is simple and easy to implement as Point
+  abstract  = "The gaussian function is simple and easy to implement as Point
                Spread Function (PSF) model for fitting the position of
                fluorescent emitters in localization microscopy. Despite its
-               attractiveness the appropriateness of the Gaussian is
+               attractiveness the appropriateness of the gaussian is
                questionable as it is not based on the laws of optics. Here we
                study the effect of emission dipole orientation in conjunction
                with optical aberrations on the localization accuracy of
-               position estimators based on a Gaussian model PSF. Simulated
+               position estimators based on a gaussian model PSF. Simulated
                image spots, calculated with all effects of high numerical
                aperture, interfaces between media, polarization, dipole
                orientation and aberrations taken into account, were fitted with
-               a Gaussian PSF based Maximum Likelihood Estimator. For freely
-               rotating dipole emitters it is found that the Gaussian works
+               a gaussian PSF based Maximum Likelihood Estimator. For freely
+               rotating dipole emitters it is found that the gaussian works
                fine. The same, theoretically optimum, localization accuracy is
-               found as if the true PSF were a Gaussian, even for aberrations
+               found as if the true PSF were a gaussian, even for aberrations
                within the usual tolerance limit of high-end optical imaging
                systems such as microscopes (Marechal's diffraction limit). For
                emitters with a fixed dipole orientation this is not the case.
                Localization errors are found that reach up to 40 nm for typical
                system parameters and aberration levels at the diffraction
                limit. These are systematic errors that are independent of the
-               total photon count in the image. The Gaussian function is
+               total photon count in the image. The gaussian function is
                therefore inappropriate, and more sophisticated PSF models are a
                practical necessity.",
-  journal   = "Opt. Express, OE",
+  journal   = "Opt. Express",
   publisher = "Optical Society of America",
   volume    =  18,
   number    =  24,
   pages     = "24461--24476",
   month     =  nov,
   year      =  2010,
-  keywords  = "Diffraction limit;High numerical aperture optics;Optical
-               aberrations;Optical design;Point spread function;Total internal
-               reflection;;Brandeis",
   language  = "en"
 }
 
@@ -199,7 +196,6 @@
   pages     = "6948--6955",
   month     =  sep,
   year      =  2011,
-  keywords  = "Brandeis",
   language  = "en"
 }
 
@@ -219,54 +215,78 @@
               a large number of shorter simulations instead of a single long
               simulation. This paper presents a new Bayesian method for the
               construction of Markov models from simulation data. A Markov
-              model is specified by ($\tau$,P,T), where $\tau$ is the
-              mesoscopic time step, P is a partition of configuration space
-              into mesostates, and T is an N(P)$\times$N(P) transition rate
-              matrix for transitions between the mesostates in one mesoscopic
-              time step, where N(P) is the number of mesostates in P. The
-              method presented here is different from previous Bayesian methods
-              in several ways. (1) The method uses Bayesian analysis to
-              determine the partition as well as the transition probabilities.
-              (2) The method allows the construction of a Markov model for any
-              chosen mesoscopic time-scale $\tau$. (3) It constructs Markov
-              models for which the diagonal elements of T are all equal to or
-              greater than 0.5. Such a model will be called a ``consistent
-              mesoscopic Markov model'' (CMMM). Such models have important
-              advantages for providing an understanding of the dynamics on a
-              mesoscopic time-scale. The Bayesian method uses simulation data
-              to find a posterior probability distribution for (P,T) for any
-              chosen $\tau$. This distribution can be regarded as the Bayesian
-              probability that the kinetics observed in the atomistic
-              simulation data on the mesoscopic time-scale $\tau$ was generated
-              by the CMMM specified by (P,T). An optimization algorithm is used
-              to find the most probable CMMM for the chosen mesoscopic time
-              step. We applied this method of Markov model construction to
-              several toy systems (random walks in one and two dimensions) as
-              well as the dynamics of alanine dipeptide in water. The resulting
-              Markov state models were indeed successful in capturing the
-              dynamics of our test systems on a variety of mesoscopic
-              time-scales.",
+              model is specified by (τ,P,T), where τ is the mesoscopic time
+              step, P is a partition of configuration space into mesostates,
+              and T is an N(P)×N(P) transition rate matrix for transitions
+              between the mesostates in one mesoscopic time step, where N(P) is
+              the number of mesostates in P. The method presented here is
+              different from previous Bayesian methods in several ways. (1) The
+              method uses Bayesian analysis to determine the partition as well
+              as the transition probabilities. (2) The method allows the
+              construction of a Markov model for any chosen mesoscopic
+              time-scale τ. (3) It constructs Markov models for which the
+              diagonal elements of T are all equal to or greater than 0.5. Such
+              a model will be called a ``consistent mesoscopic Markov model''
+              (CMMM). Such models have important advantages for providing an
+              understanding of the dynamics on a mesoscopic time-scale. The
+              Bayesian method uses simulation data to find a posterior
+              probability distribution for (P,T) for any chosen τ. This
+              distribution can be regarded as the Bayesian probability that the
+              kinetics observed in the atomistic simulation data on the
+              mesoscopic time-scale τ was generated by the CMMM specified by
+              (P,T). An optimization algorithm is used to find the most
+              probable CMMM for the chosen mesoscopic time step. We applied
+              this method of Markov model construction to several toy systems
+              (random walks in one and two dimensions) as well as the dynamics
+              of alanine dipeptide in water. The resulting Markov state models
+              were indeed successful in capturing the dynamics of our test
+              systems on a variety of mesoscopic time-scales.",
   journal  = "J. Chem. Phys.",
   volume   =  133,
   number   =  14,
   pages    = "144113",
   month    =  oct,
   year     =  2010,
-  keywords = "Brandeis/HMM;Brandeis",
   language = "en"
 }
 
 @BOOK{Gelman2013-ro,
-  title     = "Bayesian Data Analysis",
+  title     = "Bayesian Data Analysis, Third Edition",
   author    = "Gelman, Andrew and Carlin, John B and Stern, Hal S and Dunson,
                David B and Vehtari, Aki and Rubin, Donald B",
-  publisher = "Chapman \& Hall/CRC",
+  abstract  = "Now in its third edition, this classic book is widely considered
+               the leading text on Bayesian methods, lauded for its accessible,
+               practical approach to analyzing data and solving research
+               problems. Bayesian Data Analysis, Third Edition continues to
+               take an applied approach to analysis using up-to-date Bayesian
+               methods. The authors—all leaders in the statistics
+               community—introduce basic concepts from a data-analytic
+               perspective before presenting advanced methods. Throughout the
+               text, numerous worked examples drawn from real applications and
+               research emphasize the use of Bayesian inference in practice.
+               New to the Third Edition Four new chapters on nonparametric
+               modeling Coverage of weakly informative priors and
+               boundary-avoiding priors Updated discussion of cross-validation
+               and predictive information criteria Improved convergence
+               monitoring and effective sample size calculations for iterative
+               simulation Presentations of Hamiltonian Monte Carlo, variational
+               Bayes, and expectation propagation New and revised software code
+               The book can be used in three different ways. For undergraduate
+               students, it introduces Bayesian inference starting from first
+               principles. For graduate students, the text presents effective
+               current approaches to Bayesian modeling and computation in
+               statistics and related fields. For researchers, it provides an
+               assortment of Bayesian methods in applied statistics. Additional
+               materials, including data sets used in the examples, solutions
+               to selected exercises, and software instructions, are available
+               on the book's web page.",
+  publisher = "CRC Press",
   series    = "Chapman \& Hall/CRC Texts in Statistical Science",
   edition   =  3,
   month     =  nov,
   year      =  2013,
   address   = "Philadelphia, PA",
-  keywords  = "Textbooks;Brandeis/HMM;Brandeis"
+  language  = "en"
 }
 
 @ARTICLE{Quan2011-px,
@@ -295,13 +315,12 @@
   pages    = "16963--16974",
   month    =  aug,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
 @ARTICLE{Kubitscheck2000-gt,
   title    = "Imaging and tracking of single {GFP} molecules in solution",
-  author   = "Kubitscheck, U and K{\"u}ckmann, O and Kues, T and Peters, R",
+  author   = "Kubitscheck, U and Kückmann, O and Kues, T and Peters, R",
   abstract = "Visualization and tracking of single fluorescent molecules is a
               recent development in optical microscopy holding great promise
               for the study of cell biological processes. However, all
@@ -333,7 +352,6 @@
   pages    = "2170--2179",
   month    =  apr,
   year     =  2000,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -377,14 +395,13 @@
   pages    = "32348--32357",
   month    =  dec,
   year     =  2020,
-  keywords = "CoSMoS; Gal4-VP16; Saccharomyces cerevisiae;Brandeis",
   language = "en"
 }
 
 @ARTICLE{Kilic2021-qf,
   title    = "Generalizing {HMMs} to Continuous Time for Fast Kinetics: Hidden
               Markov Jump Processes",
-  author   = "Kilic, Zeliha and Sgouralis, Ioannis and Press{\'e}, Steve",
+  author   = "Kilic, Zeliha and Sgouralis, Ioannis and Pressé, Steve",
   abstract = "The hidden Markov model (HMM) is a framework for time series
               analysis widely applied to single-molecule experiments. Although
               initially developed for applications outside the natural
@@ -421,38 +438,35 @@
   pages    = "409--423",
   month    =  feb,
   year     =  2021,
-  keywords = "Brandeis/HMM;Brandeis",
   language = "en"
 }
 
 @ARTICLE{Bartesaghi2015-al,
-  title    = "2.2 {\AA} resolution {cryo-EM} structure of $\beta$-galactosidase
-              in complex with a cell-permeant inhibitor",
+  title    = "2.2 Å resolution {cryo-EM} structure of β-galactosidase in
+              complex with a cell-permeant inhibitor",
   author   = "Bartesaghi, Alberto and Merk, Alan and Banerjee, Soojay and
               Matthies, Doreen and Wu, Xiongwu and Milne, Jacqueline L S and
               Subramaniam, Sriram",
   abstract = "Cryo-electron microscopy (cryo-EM) is rapidly emerging as a
               powerful tool for protein structure determination at high
               resolution. Here we report the structure of a complex between
-              Escherichia coli $\beta$-galactosidase and the cell-permeant
-              inhibitor phenylethyl $\beta$-D-thiogalactopyranoside (PETG),
-              determined by cryo-EM at an average resolution of ~2.2 angstroms
-              ({\AA}). Besides the PETG ligand, we identified densities in the
-              map for ~800 water molecules and for magnesium and sodium ions.
-              Although it is likely that continued advances in detector
-              technology may further enhance resolution, our findings
-              demonstrate that preparation of specimens of adequate quality and
-              intrinsic protein flexibility, rather than imaging or
-              image-processing technologies, now represent the major
-              bottlenecks to routinely achieving resolutions close to 2 {\AA}
-              using single-particle cryo-EM.",
+              Escherichia coli β-galactosidase and the cell-permeant inhibitor
+              phenylethyl β-D-thiogalactopyranoside (PETG), determined by
+              cryo-EM at an average resolution of ~2.2 angstroms (Å). Besides
+              the PETG ligand, we identified densities in the map for ~800
+              water molecules and for magnesium and sodium ions. Although it is
+              likely that continued advances in detector technology may further
+              enhance resolution, our findings demonstrate that preparation of
+              specimens of adequate quality and intrinsic protein flexibility,
+              rather than imaging or image-processing technologies, now
+              represent the major bottlenecks to routinely achieving
+              resolutions close to 2 Å using single-particle cryo-EM.",
   journal  = "Science",
   volume   =  348,
   number   =  6239,
   pages    = "1147--1151",
   month    =  jun,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -483,46 +497,42 @@
   pages    = "1289--1295",
   month    =  mar,
   year     =  2011,
-  keywords = "Brandeis;Applications/Gelles",
   language = "en"
 }
 
 @ARTICLE{Van_de_Meent2013-zc,
-  title         = "Hierarchically-coupled hidden Markov models for learning
-                   kinetic rates from single-molecule data",
-  author        = "van de Meent, Jan-Willem and Bronson, Jonathan E and Wood,
-                   Frank and Gonzalez, Jr., Ruben L and Wiggins, Chris H",
-  abstract      = "We address the problem of analyzing sets of noisy
-                   time-varying signals that all report on the same process but
-                   confound straightforward analyses due to complex
-                   inter-signal heterogeneities and measurement artifacts. In
-                   particular we consider single-molecule experiments which
-                   indirectly measure the distinct steps in a biomolecular
-                   process via observations of noisy time-dependent signals
-                   such as a fluorescence intensity or bead position.
-                   Straightforward hidden Markov model (HMM) analyses attempt
-                   to characterize such processes in terms of a set of
-                   conformational states, the transitions that can occur
-                   between these states, and the associated rates at which
-                   those transitions occur; but require ad-hoc post-processing
-                   steps to combine multiple signals. Here we develop a
-                   hierarchically coupled HMM that allows experimentalists to
-                   deal with inter-signal variability in a principled and
-                   automatic way. Our approach is a generalized expectation
-                   maximization hyperparameter point estimation procedure with
-                   variational Bayes at the level of individual time series
-                   that learns an single interpretable representation of the
-                   overall data generating process.",
-  journal       = "JMLR Workshop Conf. Proc.",
-  number        =  2,
-  pages         = "361--369",
-  month         =  may,
-  year          =  2013,
-  keywords      = "Brandeis;Thesis/Data analysis;Thesis/globalfit",
-  language      = "en",
-  archivePrefix = "arXiv",
-  primaryClass  = "stat.ML",
-  eprint        = "1305.3640"
+  title     = "Hierarchically-coupled hidden Markov models for learning kinetic
+               rates from single-molecule data",
+  author    = "van de Meent, Jan-Willem and Bronson, Jonathan E and Wood, Frank
+               and Gonzalez, Jr, Ruben L and Wiggins, Chris H",
+  abstract  = "We address the problem of analyzing sets of noisy time-varying
+               signals that all report on the same process but confound
+               straightforward analyses due to complex inter-signal
+               heterogeneities and measurement artifacts. In particular we
+               consider single-molecule experiments which indirectly measure
+               the distinct steps in a biomolecular process via observations of
+               noisy time-dependent signals such as a fluorescence intensity or
+               bead position. Straightforward hidden Markov model (HMM)
+               analyses attempt to characterize such processes in terms of a
+               set of conformational states, the transitions that can occur
+               between these states, and the associated rates at which those
+               transitions occur; but require ad-hoc post-processing steps to
+               combine multiple signals. Here we develop a hierarchically
+               coupled HMM that allows experimentalists to deal with
+               inter-signal variability in a principled and automatic way. Our
+               approach is a generalized expectation maximization
+               hyperparameter point estimation procedure with variational Bayes
+               at the level of individual time series that learns an single
+               interpretable representation of the overall data generating
+               process.",
+  journal   = "JMLR Workshop Conf. Proc.",
+  publisher = "jmlr.org",
+  volume    =  28,
+  number    =  2,
+  pages     = "361--369",
+  month     =  may,
+  year      =  2013,
+  language  = "en"
 }
 
 @ARTICLE{Van_de_Meent2018-mi,
@@ -565,7 +575,6 @@
                    intelligence applications.",
   month         =  sep,
   year          =  2018,
-  keywords      = "Pyro;Brandeis;Textbooks",
   archivePrefix = "arXiv",
   primaryClass  = "stat.ML",
   eprint        = "1809.10756"
@@ -573,8 +582,7 @@
 
 @ARTICLE{Sarkka2019-jw,
   title         = "Temporal Parallelization of Bayesian Smoothers",
-  author        = "S{\"a}rkk{\"a}, Simo and Garc{\'\i}a-Fern{\'a}ndez,
-                   {\'A}ngel F",
+  author        = "Särkkä, Simo and García-Fernández, Ángel F",
   abstract      = "This paper presents algorithms for temporal parallelization
                    of Bayesian smoothers. We define the elements and the
                    operators to pose these problems as the solutions to
@@ -587,17 +595,16 @@
                    algorithms with respect to time to logarithmic.",
   month         =  may,
   year          =  2019,
-  keywords      = "Pyro;Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "stat.CO",
   eprint        = "1905.13002"
 }
 
 @ARTICLE{Sgouralis2019-rt,
-  title    = "A Bayesian Nonparametric Approach to Single Molecule F{\"o}rster
+  title    = "A Bayesian Nonparametric Approach to Single Molecule Förster
               Resonance Energy Transfer",
   author   = "Sgouralis, Ioannis and Madaan, Shreya and Djutanta, Franky and
-              Kha, Rachael and Hariadi, Rizal F and Press{\'e}, Steve",
+              Kha, Rachael and Hariadi, Rizal F and Pressé, Steve",
   abstract = "We develop a Bayesian nonparametric framework to analyze single
               molecule FRET (smFRET) data. This framework, a variation on
               infinite hidden Markov models, goes beyond traditional hidden
@@ -624,7 +631,6 @@
   pages    = "675--688",
   month    =  jan,
   year     =  2019,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -652,7 +658,6 @@
   pages     = "507--516",
   month     =  jun,
   year      =  2008,
-  keywords  = "Brandeis",
   language  = "en"
 }
 
@@ -683,7 +688,6 @@
   pages    = "1819--1829",
   month    =  apr,
   year     =  2007,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -710,7 +714,6 @@
   pages    = "617--628",
   month    =  jan,
   year     =  2005,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -742,7 +745,6 @@
   pages    = "e30024",
   month    =  feb,
   year     =  2012,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -778,12 +780,9 @@
   pages    = "S2",
   month    =  oct,
   year     =  2010,
-  keywords = "Brandeis",
   language = "en"
 }
 
-% The entry below contains non-ASCII chars that could not be converted
-% to a LaTeX equivalent.
 @ARTICLE{Zhang2015-xn,
   title    = "Ultrahigh-throughput single-molecule spectroscopy and spectrally
               resolved super-resolution microscopy",
@@ -806,7 +805,6 @@
   pages    = "935--938",
   month    =  oct,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -826,7 +824,6 @@
   pages    = "429--430",
   month    =  apr,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -843,7 +840,6 @@
   pages    = "183--4, 186--7",
   month    =  oct,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -862,7 +858,6 @@
   pages    = "635--637",
   month    =  feb,
   year     =  2012,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -906,8 +901,6 @@
   pages    = "E1081--E1090",
   month    =  feb,
   year     =  2017,
-  keywords = "backtracking; secondary channel; total internal reflection
-              fluorescence; transcription elongation;Brandeis",
   language = "en"
 }
 
@@ -941,7 +934,6 @@
   pages    = "1285--1290",
   month    =  jan,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -974,7 +966,6 @@
   pages    = "170--179",
   month    =  jan,
   year     =  2008,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1005,9 +996,6 @@
   volume   =  540,
   pages    = "95--117",
   year     =  2014,
-  keywords = "Arp2/3 complex; Binding kinetics; Cofilin; Filament nucleation;
-              Formin; Polymerization; Severing; Total internal reflection
-              fluorescence;Brandeis",
   language = "en"
 }
 
@@ -1036,7 +1024,7 @@
                as a microscope objective) located on either side of the
                interface. These expressions are applied to several common cases
                of fluorophore spatial and orientational distributions at bare
-               glass--water and metal-film-coated glass-water interfaces. The
+               glass–water and metal-film-coated glass-water interfaces. The
                results suggest practical experimental approaches for measuring
                the spatial and orientational distribution of fluorophores
                adsorbed at a surface, utilizing the distance-dependent
@@ -1050,9 +1038,6 @@
   pages     = "337--350",
   month     =  mar,
   year      =  1987,
-  keywords  = "Electric fields;Electromagnetic theory;Energy transfer;High
-               numerical aperture optics;Local field effects;Total internal
-               reflection;;Brandeis",
   language  = "en"
 }
 
@@ -1085,26 +1070,37 @@
   pages    = "2317--2328",
   month    =  oct,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
 @ARTICLE{Rubin-Delanchy2015-qg,
   title    = "Bayesian cluster identification in single-molecule localization
               microscopy data",
-  author   = "Rubin-Delanchy, Patrick and Burn, Garth L and Griffi{\'e},
-              Juliette and Williamson, David J and Heard, Nicholas A and Cope,
-              Andrew P and Owen, Dylan M",
-  abstract = "This paper reports a Bayesian approach for the automatic
-              identification of the optimal clustering proposal in the analysis
-              of single-molecule localization-based super-resolution data.",
+  author   = "Rubin-Delanchy, Patrick and Burn, Garth L and Griffié, Juliette
+              and Williamson, David J and Heard, Nicholas A and Cope, Andrew P
+              and Owen, Dylan M",
+  abstract = "Single-molecule localization-based super-resolution microscopy
+              techniques such as photoactivated localization microscopy (PALM)
+              and stochastic optical reconstruction microscopy (STORM) produce
+              pointillist data sets of molecular coordinates. Although many
+              algorithms exist for the identification and localization of
+              molecules from raw image data, methods for analyzing the
+              resulting point patterns for properties such as clustering have
+              remained relatively under-studied. Here we present a model-based
+              Bayesian approach to evaluate molecular cluster assignment
+              proposals, generated in this study by analysis based on Ripley's
+              K function. The method takes full account of the individual
+              localization precisions calculated for each emitter. We validate
+              the approach using simulated data, as well as experimental data
+              on the clustering behavior of CD3ζ, a subunit of the CD3 T cell
+              receptor complex, in resting and activated primary human T cells.",
   journal  = "Nat. Methods",
   volume   =  12,
   number   =  11,
   pages    = "1072--1076",
   month    =  nov,
   year     =  2015,
-  keywords = "Brandeis"
+  language = "en"
 }
 
 @ARTICLE{Hocine2013-ux,
@@ -1125,7 +1121,6 @@
   pages    = "119--121",
   month    =  feb,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1152,8 +1147,6 @@
   pages    = "e00750",
   month    =  sep,
   year     =  2013,
-  keywords = "Human; fluorescence; gene expression; single-molecule;
-              transcription factors;Brandeis",
   language = "en"
 }
 
@@ -1177,7 +1170,6 @@
   pages    = "155--157",
   month    =  feb,
   year     =  2008,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1203,7 +1195,6 @@
   volume   =  475,
   pages    = "109--120",
   year     =  2010,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1231,7 +1222,6 @@
   pages    = "682--686",
   month    =  jan,
   year     =  2003,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1263,7 +1253,6 @@
   pages    = "6783--6788",
   month    =  apr,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1292,7 +1281,6 @@
   pages    = "1189--1200",
   month    =  feb,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1316,7 +1304,6 @@
   pages    = "9--22",
   month    =  jan,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1343,44 +1330,43 @@
   pages    = "30--37",
   month    =  jan,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
 @ARTICLE{Funatsu1995-wx,
   title    = "Imaging of single fluorescent molecules and individual {ATP}
               turnovers by single myosin molecules in aqueous solution",
-  author   = "Funatsu, Takashi and Harada, Yoshie and Tokunaga, Makio and
-              Saito, Kiwamu and Yanagida, Toshio",
-  abstract = "VISUALIZATION of single actin filaments by fluorescence
-              microscopy1led to the development of new in vitro assays for
-              analysing actomyosin-based motility at the molecular level2-5.
-              The ability to manipulate actin filaments with a microneedle6,7
-              or an optical trap8 combined with position-sensitive detectors
-              has enabled direct measurements of nanometre displacements and
+  author   = "Funatsu, T and Harada, Y and Tokunaga, M and Saito, K and
+              Yanagida, T",
+  abstract = "Visualization of single actin filaments by fluorescence
+              microscopy led to the development of new in vitro assays for
+              analysing actomyosin-based motility at the molecular level. The
+              ability to manipulate actin filaments with a microneedle or an
+              optical trap combined with position-sensitive detectors has
+              enabled direct measurements of nanometre displacements and
               piconewton forces exerted by individual myosin molecules. To
               elucidate how myosin generates movement, it is necessary to
               understand how ATP hydrolysis is coupled to mechanical work at
               the level of the single molecule. But the most sensitive
               microscopic ATPase assay available still requires over 1,000
-              myosins9. To enhance the sensitivity of such assays, we have
+              myosins. To enhance the sensitivity of such assays, we have
               refined epifluorescence and total internal reflection
               microscopies to visualize single fluorescent dye molecules. We
               report here that this approach can be used directly to image
               single fluorescently labelled myosin molecules and detect
               individual ATP turnover reactions. In contrast to previously
               reported single fluorescent molecule imaging methods, which used
-              specimens immobilized on an air-dried surface10-12, our method
-              allows video-rate imaging of single molecules in aqueous
-              solution, and hence can be applied to the study of many types of
-              enzymes and biomolecules.",
+              specimens immobilized on an air-dried surface, our method allows
+              video-rate imaging of single molecules in aqueous solution, and
+              hence can be applied to the study of many types of enzymes and
+              biomolecules.",
   journal  = "Nature",
   volume   =  374,
   number   =  6522,
   pages    = "555--559",
   month    =  apr,
   year     =  1995,
-  keywords = "Brandeis"
+  language = "en"
 }
 
 @ARTICLE{Qin2000-wq,
@@ -1418,7 +1404,6 @@
   pages    = "1928--1944",
   month    =  oct,
   year     =  2000,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1451,12 +1436,9 @@
   pages    = "1915--1927",
   month    =  oct,
   year     =  2000,
-  keywords = "Brandeis",
   language = "en"
 }
 
-% The entry below contains non-ASCII chars that could not be converted
-% to a LaTeX equivalent.
 @ARTICLE{Piasta2011-te,
   title    = "Potassium-selective block of barium permeation through single
               {KcsA} channels",
@@ -1474,19 +1456,18 @@
               determined the equilibrium dissociation constant of K(+) and of
               other monovalent cations at an extracellular site, presumably S1,
               to arrive at a selectivity sequence for binding at this site:
-              Rb(+) (3 µM) > Cs(+) (23 µM) > K(+) (29 µM) > NH(4)(+) (440 µM) >
-              Na(+) and Li(+) (>1 M). This represents an unusually high
-              selectivity for K(+) over Na(+), with |$\Delta$$\Delta$G(0)| of
-              at least 7 kcal mol(-1). These results fit well with other
-              kinetic measurements of selectivity as well as with the many
-              crystal structures of KcsA in various ionic conditions.",
+              Rb(+) (3 µM) > Cs(+) (23 µM) > K(+) (29 µM) > NH(4)(+) (440 µM)
+              >> Na(+) and Li(+) (>1 M). This represents an unusually high
+              selectivity for K(+) over Na(+), with |ΔΔG(0)| of at least 7 kcal
+              mol(-1). These results fit well with other kinetic measurements
+              of selectivity as well as with the many crystal structures of
+              KcsA in various ionic conditions.",
   journal  = "J. Gen. Physiol.",
   volume   =  138,
   number   =  4,
   pages    = "421--436",
   month    =  oct,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1520,7 +1501,6 @@
   pages    = "10888--10901",
   month    =  aug,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1553,7 +1533,6 @@
   pages    = "e232",
   month    =  sep,
   year     =  2008,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1586,7 +1565,6 @@
   pages    = "4932--4947",
   month    =  jun,
   year     =  2008,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1624,7 +1602,6 @@
   pages    = "1167--1186",
   month    =  oct,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1655,7 +1632,6 @@
   pages    = "195--200",
   month    =  dec,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1692,7 +1668,6 @@
   pages    = "4057--4062",
   month    =  nov,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1702,7 +1677,7 @@
   author   = "Grimm, Jonathan B and English, Brian P and Chen, Jiji and
               Slaughter, Joel P and Zhang, Zhengjian and Revyakin, Andrey and
               Patel, Ronak and Macklin, John J and Normanno, Davide and Singer,
-              Robert H and Lionnet, Timoth{\'e}e and Lavis, Luke D",
+              Robert H and Lionnet, Timothée and Lavis, Luke D",
   abstract = "Specific labeling of biomolecules with bright fluorophores is the
               keystone of fluorescence microscopy. Genetically encoded
               self-labeling tag proteins can be coupled to synthetic dyes
@@ -1727,7 +1702,6 @@
   pages    = "244--50, 3 p following 250",
   month    =  mar,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1758,7 +1732,6 @@
   pages    = "653--658",
   month    =  jul,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1786,7 +1759,6 @@
   pages    = "1164--1168",
   month    =  jun,
   year     =  2012,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1794,8 +1766,8 @@
   title    = "Three-color single molecule imaging shows {WASP} detachment from
               Arp2/3 complex triggers actin filament branch formation",
   author   = "Smith, Benjamin A and Padrick, Shae B and Doolittle, Lynda K and
-              Daugherty-Clarke, Karen and Corr{\^e}a, Jr, Ivan R and Xu,
-              Ming-Qun and Goode, Bruce L and Rosen, Michael K and Gelles, Jeff",
+              Daugherty-Clarke, Karen and Corrêa, Jr, Ivan R and Xu, Ming-Qun
+              and Goode, Bruce L and Rosen, Michael K and Gelles, Jeff",
   abstract = "During cell locomotion and endocytosis, membrane-tethered WASP
               proteins stimulate actin filament nucleation by the Arp2/3
               complex. This process generates highly branched arrays of
@@ -1819,8 +1791,6 @@
   pages    = "e01008",
   month    =  sep,
   year     =  2013,
-  keywords = "Human; S. cerevisiae; TIRF; WH2; Wiskott-Aldrich syndrome
-              protein; activation; nucleation; verprolin homology;Brandeis",
   language = "en"
 }
 
@@ -1849,20 +1819,16 @@
               sequence.",
   journal  = "Elife",
   volume   =  3,
+  pages    = "e04418",
   month    =  oct,
   year     =  2014,
-  keywords = "E. coli; biophysics; cell biology; protein targeting; ribosome
-              translation; signal recognition particle; single molecule
-              fluorescence; structural biology;Brandeis",
   language = "en"
 }
 
-% The entry below contains non-ASCII chars that could not be converted
-% to a LaTeX equivalent.
 @ARTICLE{OLeary2013-wo,
   title    = "Dynamic recognition of the {mRNA} cap by Saccharomyces cerevisiae
               {eIF4E}",
-  author   = "O'Leary, Se{\'a}n E and Petrov, Alexey and Chen, Jin and Puglisi,
+  author   = "O'Leary, Seán E and Petrov, Alexey and Chen, Jin and Puglisi,
               Joseph D",
   abstract = "Recognition of the mRNA 5' m⁷G(5')ppp(5')N cap is key to
               translation initiation for most eukaryotic mRNAs. The cap is
@@ -1886,7 +1852,6 @@
   pages    = "2197--2207",
   month    =  dec,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1917,7 +1882,6 @@
   pages    = "1521--1533",
   month    =  jun,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1948,7 +1912,6 @@
   pages    = "334--338",
   month    =  feb,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -1975,7 +1938,6 @@
   pages    = "1211--1218",
   month    =  aug,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2008,17 +1970,14 @@
   pages    = "1450--1457",
   month    =  dec,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
-% The entry below contains non-ASCII chars that could not be converted
-% to a LaTeX equivalent.
 @ARTICLE{Shcherbakova2013-bi,
   title    = "Alternative spliceosome assembly pathways revealed by
               single-molecule fluorescence microscopy",
   author   = "Shcherbakova, Inna and Hoskins, Aaron A and Friedman, Larry J and
-              Serebrov, Victor and Corr{\^e}a, Jr, Ivan R and Xu, Ming-Qun and
+              Serebrov, Victor and Corrêa, Jr, Ivan R and Xu, Ming-Qun and
               Gelles, Jeff and Moore, Melissa J",
   abstract = "Removal of introns from nascent transcripts (pre-mRNAs) by the
               spliceosome is an essential step in eukaryotic gene expression.
@@ -2044,7 +2003,6 @@
   pages    = "151--165",
   month    =  oct,
   year     =  2013,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2060,8 +2018,8 @@
               mediated by the Argonaute:guide complex, RISC. We find that both
               eukaryotic and prokaryotic Argonaute proteins reshape the
               fundamental properties of RNA:RNA, RNA:DNA, and DNA:DNA
-              hybridization---a small RNA or DNA bound to Argonaute as a guide
-              no longer follows the well-established rules by which
+              hybridization—a small RNA or DNA bound to Argonaute as a guide no
+              longer follows the well-established rules by which
               oligonucleotides find, bind, and dissociate from complementary
               nucleic acid sequences. Argonautes distinguish substrates from
               targets with similar complementarity. Mouse AGO2, for example,
@@ -2077,7 +2035,6 @@
   pages    = "84--95",
   month    =  jul,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2091,36 +2048,34 @@
               transcription factors) are hypothesized to reach promoter
               sequences by facilitated diffusion (FD). In FD, a protein first
               binds to nontarget DNA and then reaches the target by a 1D
-              sliding search. We tested whether Escherichia coli
-              $\sigma$(54)RNA polymerase reaches a promoter by FD using the
-              colocalization single-molecule spectroscopy (CoSMoS)
-              multiwavelength fluorescence microscopy technique. Experiments
-              directly compared the rates of initial polymerase binding to and
-              dissociation from promoter and nonpromoter DNAs measured in the
-              same sample under identical conditions. Binding to a nonpromoter
-              DNA was much slower than binding to a promoter-containing DNA of
-              the same length, indicating that the detected nonspecific binding
-              events are not on the pathway to promoter binding. Truncating one
-              of the DNA segments flanking the promoter to a length as short as
-              7 bp or lengthening it to ~3,000 bp did not alter the
+              sliding search. We tested whether Escherichia coli σ(54)RNA
+              polymerase reaches a promoter by FD using the colocalization
+              single-molecule spectroscopy (CoSMoS) multiwavelength
+              fluorescence microscopy technique. Experiments directly compared
+              the rates of initial polymerase binding to and dissociation from
+              promoter and nonpromoter DNAs measured in the same sample under
+              identical conditions. Binding to a nonpromoter DNA was much
+              slower than binding to a promoter-containing DNA of the same
+              length, indicating that the detected nonspecific binding events
+              are not on the pathway to promoter binding. Truncating one of the
+              DNA segments flanking the promoter to a length as short as 7 bp
+              or lengthening it to ~3,000 bp did not alter the
               promoter-specific binding rate. These results exclude FD over
               distances corresponding to the length of the promoter or longer
               from playing any significant role in accelerating promoter
               search. Instead, the data support a direct binding mechanism, in
-              which $\sigma$(54)RNA polymerase reaches the local vicinity of
-              promoters by 3D diffusion through solution, and suggest that
-              binding may be accelerated by atypical structural or dynamic
-              features of promoter DNA. Direct binding explains how polymerase
-              can quickly reach a promoter, despite occupancy of
-              promoter-flanking DNA by bound proteins that would impede FD.",
+              which σ(54)RNA polymerase reaches the local vicinity of promoters
+              by 3D diffusion through solution, and suggest that binding may be
+              accelerated by atypical structural or dynamic features of
+              promoter DNA. Direct binding explains how polymerase can quickly
+              reach a promoter, despite occupancy of promoter-flanking DNA by
+              bound proteins that would impede FD.",
   journal  = "Proc. Natl. Acad. Sci. U. S. A.",
   volume   =  110,
   number   =  24,
   pages    = "9740--9745",
   month    =  jun,
   year     =  2013,
-  keywords = "1D diffusion; total internal reflection fluorescence;
-              transcription initiation;Brandeis",
   language = "en"
 }
 
@@ -2134,27 +2089,25 @@
               of which can be obscured in bulk analysis. We used a
               multiwavelength single-molecule fluorescence colocalization
               approach, CoSMoS, to define the initiation pathway at an
-              activator-dependent bacterial $\sigma$(54) promoter that
-              recapitulates characteristic features of eukaryotic promoters
-              activated by enhancer binding proteins. The experiments
-              kinetically characterize all major steps of the initiation
-              process, revealing heretofore unknown features, including
-              reversible formation of two closed complexes with greatly
-              differing stabilities, multiple attempts for each successful
-              formation of an open complex, and efficient release of
-              $\sigma$(54) from the polymerase core at the start of transcript
-              synthesis. Open complexes are committed to transcription,
-              suggesting that regulation likely targets earlier steps in the
-              mechanism. CoSMoS is a powerful, generally applicable method to
-              elucidate the mechanisms of transcription and other multistep
-              biochemical processes.",
+              activator-dependent bacterial σ(54) promoter that recapitulates
+              characteristic features of eukaryotic promoters activated by
+              enhancer binding proteins. The experiments kinetically
+              characterize all major steps of the initiation process, revealing
+              heretofore unknown features, including reversible formation of
+              two closed complexes with greatly differing stabilities, multiple
+              attempts for each successful formation of an open complex, and
+              efficient release of σ(54) from the polymerase core at the start
+              of transcript synthesis. Open complexes are committed to
+              transcription, suggesting that regulation likely targets earlier
+              steps in the mechanism. CoSMoS is a powerful, generally
+              applicable method to elucidate the mechanisms of transcription
+              and other multistep biochemical processes.",
   journal  = "Cell",
   volume   =  148,
   number   =  4,
   pages    = "679--689",
   month    =  feb,
   year     =  2012,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2164,27 +2117,25 @@
               Ho, Mary X and Arnold, Eddy and Ebright, Richard H",
   abstract = "During transcription initiation, RNA polymerase (RNAP) binds and
               unwinds promoter DNA to form an RNAP-promoter open complex. We
-              have determined crystal structures at 2.9 and 3.0 {\AA}
-              resolution of functional transcription initiation complexes
-              comprising Thermus thermophilus RNA polymerase, $\sigma$(A), and
-              a promoter DNA fragment corresponding to the transcription bubble
-              and downstream double-stranded DNA of the RNAP-promoter open
-              complex. The structures show that $\sigma$ recognizes the -10
-              element and discriminator element through interactions that
-              include the unstacking and insertion into pockets of three DNA
-              bases and that RNAP recognizes the -4/+2 region through
-              interactions that include the unstacking and insertion into a
-              pocket of the +2 base. The structures further show that
-              interactions between $\sigma$ and template-strand single-stranded
-              DNA (ssDNA) preorganize template-strand ssDNA to engage the RNAP
-              active center.",
+              have determined crystal structures at 2.9 and 3.0 Å resolution of
+              functional transcription initiation complexes comprising Thermus
+              thermophilus RNA polymerase, σ(A), and a promoter DNA fragment
+              corresponding to the transcription bubble and downstream
+              double-stranded DNA of the RNAP-promoter open complex. The
+              structures show that σ recognizes the -10 element and
+              discriminator element through interactions that include the
+              unstacking and insertion into pockets of three DNA bases and that
+              RNAP recognizes the -4/+2 region through interactions that
+              include the unstacking and insertion into a pocket of the +2
+              base. The structures further show that interactions between σ and
+              template-strand single-stranded DNA (ssDNA) preorganize
+              template-strand ssDNA to engage the RNAP active center.",
   journal  = "Science",
   volume   =  338,
   number   =  6110,
   pages    = "1076--1080",
   month    =  nov,
   year     =  2012,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2222,13 +2173,9 @@
   pages    = "4073--4078",
   month    =  mar,
   year     =  2014,
-  keywords = "fluorescence microscopy; polymerase exchange; single
-              molecule;Brandeis",
   language = "en"
 }
 
-% The entry below contains non-ASCII chars that could not be converted
-% to a LaTeX equivalent.
 @ARTICLE{Wang2015-tt,
   title    = "Ribosomal initiation complex-driven changes in the stability and
               dynamics of initiation factor 2 regulate the fidelity of
@@ -2265,118 +2212,18 @@
   pages    = "1819--1834",
   month    =  may,
   year     =  2015,
-  keywords = "30S IC; binding kinetics; conformational dynamics; smFRET;
-              translation initiation;Brandeis",
   language = "en"
 }
 
 @ARTICLE{Lu2015-jq,
-  title     = "Substrate degradation by the proteasome: A single-molecule
+  title     = "Substrate degradation by the proteasome: a single-molecule
                kinetic analysis",
   author    = "Lu, Ying and Lee, Byung-Hoon and King, Randall W and Finley,
                Daniel and Kirschner, Marc W",
-  abstract  = "Many biological processes in cells are regulated by ubiquitin
-               peptides that are attached to proteins. Measurement of single
-               fluorescent molecules in cell extracts can be used to trace the
-               kinetics of such reactions. Lu et al. refined assay conditions
-               to follow ubiquitination by an E3 ubiquitin ligase (see the
-               Perspective by Komander). They visualized the activity of the
-               anaphase-promoting complex (APC), a ubiquitin ligase critical
-               for control of the cell division cycle. The processive initial
-               reaction catalyzed by the APC was replaced by slower reactions.
-               The results show how small, commonly occurring recognition
-               motifs can guide specific and highly controlled enzymatic
-               events. In a companion paper, Lu et al. explored how the number
-               and arrangement of added ubiquitin chains affected the
-               interaction of ubiquitylated proteins with the proteasome (a
-               protein complex that recognizes ubiquitylated proteins and
-               degrades them). The extent of ubiquitylation determined the
-               strength of interaction of a substrate protein with the
-               proteasome, and the arrangement of the ubiquitin chains
-               determined the movement of the protein into the proteasome and
-               thus the rate of degradation. Science , this issue
-               [10.1126/science.1248737][1], [10.1126/science.1250834][2]; see
-               also p. [183][3] \#\#\# INTRODUCTION Protein degradation,
-               mediated by the ubiquitin-proteasome system (UPS), plays a
-               critical and complementary role to transcription, splicing, and
-               translation in the control of gene expression. Effective
-               regulation of the UPS relies on the specificity of substrate
-               recognition, which is conferred largely by the upstream
-               ubiquitylation process. As a specific example, the
-               anaphase-promoting complex (APC) acting on a series of
-               substrates promotes waves of ubiquitylation and degradation,
-               leading to key transitions in the cell cycle. However, in this
-               cascade the proteasome itself also plays a role in the
-               specificity of degradation. There have been various efforts to
-               characterize this role, leading to a commonly held view that a
-               substrate protein must be conjugated with a chain of at least
-               four ubiquitins to be recognized by the proteasome. Yet mass
-               spectrometry studies show that ubiquitin chains on APC
-               substrates (such as cyclin B) contain, on average, only two
-               ubiquitins. But these can have complex ubiquitin configurations
-               created by the multiplicity of ubiquitylated lysine residues.
-               Therefore, the tetraubiquitin chain selection rule may not be
-               generally applicable, and the mechanism by which the proteasome
-               recognizes substrates is still shrouded in mystery. \#\#\#
-               RATIONALE The multiple lysines on a substrate and on ubiquitin
-               itself generate a large number of possible ubiquitin
-               configurations. To understand the ``ubiquitin code'' that must
-               be read by the proteasome and converted into a rate of substrate
-               degradation, we examined the kinetics of degradation with
-               defined ubiquitin configurations by conjugating preformed
-               ubiquitin chains on substrate molecules. Further, to reveal the
-               molecular basis through which some ubiquitin configurations
-               promote more efficient degradation than others, we investigated
-               the degradation process using single-molecule (SM) methods that
-               are capable of identifying transient intermediates and measuring
-               their kinetic parameters and sensitivity to ubiquitin
-               configurations. \#\#\# RESULTS Contrary to the tetraubiquitin
-               chain selection rule, we find that for APC substrates with
-               multiple ubiquitylated lysine residues, diubiquitin chains are
-               more efficient than tetraubiquitin chains in promoting
-               degradation, given the same number of conjugated ubiquitins.
-               Ubiquitin chains are essential for degradation of most
-               substrates. Nevertheless, a multiple monoubiquitylated form of
-               securin, a regulator of chromatid separation, interacts with the
-               proteasome as strongly as securin containing the same number of
-               ubiquitins grouped in chains. By dissecting the degradation
-               process using SM methods, we find that ubiquitin chain
-               structures on substrates promote the passage of a bound
-               substrate into the translocation channel on the proteasome.
-               \#\#\# CONCLUSION This systematic study of synthetically
-               constructed ubiquitylated substrates with defined configurations
-               revealed no simple length threshold for ubiquitin chains for
-               degradation by the proteasome. A distributed array of short
-               ubiquitin chains, as appears naturally on APC substrates, is a
-               superior and perhaps optimal signal for degradation; this
-               conclusion will most likely extend to substrates of other E3
-               ligases. The rate of degradation is an aggregate of two
-               sequential processes: substrate binding and kinetic postbinding
-               events. In the past, it was widely assumed that ubiquitin chains
-               mostly promoted binding to the proteasome. Our SM studies
-               demonstrate that the strength of interaction with the
-               proteasome, for substrates with multiple ubiquitylated lysines,
-               is largely determined by the total number of ubiquitins and is
-               less sensitive to ubiquitin chain configurations. For most
-               substrates, binding alone is not sufficient for degradation.
-               Rather, degradation depends strongly on a process that initiates
-               passage into the substrate translocation channel; this
-               transition, in contrast to binding, is determined by the
-               particular configuration of ubiquitin chains. ![Figure][4] Key
-               transitions in the degradation of ubiquitylated substrates by
-               the proteasome. A polyubiquitylated substrate molecule explores
-               multiple configurations on the proteasome through stochastic
-               binding. Rearrangements of proteasomal subunits, driven by the
-               binding and hydrolysis of adenosine triphosphate, allow a deeper
-               engagement of the substrate with the proteasome, when there are
-               appropriate ubiquitin chain structures on the substrate. As a
-               result of this engagement, the substrate or its terminus is
-               moved closer to the substrate entry port, promoting expeditious
-               initiation of translocation and ensuing degradation. To address
-               how the configuration of conjugated ubiquitins determines the
-               recognition of substrates by the proteasome, we analyzed the
-               degradation kinetics of substrates with chemically defined
-               ubiquitin configurations. Contrary to the view that a
+  abstract  = "To address how the configuration of conjugated ubiquitins
+               determines the recognition of substrates by the proteasome, we
+               analyzed the degradation kinetics of substrates with chemically
+               defined ubiquitin configurations. Contrary to the view that a
                tetraubiquitin chain is the minimal signal for efficient
                degradation, we find that distributing the ubiquitins as
                diubiquitin chains provides a more efficient signal. To
@@ -2387,17 +2234,14 @@
                proteasome-substrate interaction, whereas the chain structure of
                ubiquitin affects translocation into the axial channel on the
                proteasome. Together these two features largely determine the
-               susceptibility of substrates for proteasomal degradation. [1]:
-               /lookup/doi/10.1126/science.1248737 [2]:
-               /lookup/doi/10.1126/science.1250834 [3]:
-               /lookup/doi/10.1126/science.aab0931 [4]: pending:yes",
+               susceptibility of substrates for proteasomal degradation.",
   journal   = "Science",
   publisher = "American Association for the Advancement of Science",
   volume    =  348,
   number    =  6231,
+  pages     = "1250834",
   month     =  apr,
   year      =  2015,
-  keywords  = "Brandeis",
   language  = "en"
 }
 
@@ -2426,7 +2270,6 @@
   pages    = "1248737",
   month    =  apr,
   year     =  2015,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2467,7 +2310,6 @@
   pages     = "1023--1031",
   month     =  aug,
   year      =  2006,
-  keywords  = "Brandeis",
   language  = "en"
 }
 
@@ -2498,7 +2340,6 @@
   pages    = "272",
   month    =  jan,
   year     =  2019,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2528,7 +2369,6 @@
   pages    = "16963--16974",
   month    =  aug,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2554,8 +2394,6 @@
   pages    = "1002--1009",
   month    =  jan,
   year     =  2018,
-  keywords = "FRET; excitation confinement; movements confinement;
-              photoactivation; single-molecule fluorescence;Brandeis",
   language = "en"
 }
 
@@ -2584,7 +2422,6 @@
   pages    = "75--80",
   month    =  feb,
   year     =  2011,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2622,7 +2459,6 @@
   pages    = "442--451",
   month    =  oct,
   year     =  1975,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2643,16 +2479,15 @@
   number   =  8,
   pages    = "861--874",
   month    =  jun,
-  year     =  2006,
-  keywords = "ROC analysis; Classifier evaluation; Evaluation metrics;Brandeis"
+  year     =  2006
 }
 
 @ARTICLE{Chen2014-jd,
   title    = "High-throughput platform for real-time monitoring of biological
               processes by multicolor single-molecule fluorescence",
   author   = "Chen, Jin and Dalal, Ravindra V and Petrov, Alexey N and Tsai,
-              Albert and O'Leary, Se{\'a}n E and Chapin, Karen and Cheng,
-              Janice and Ewan, Mark and Hsiung, Pei-Lin and Lundquist, Paul and
+              Albert and O'Leary, Seán E and Chapin, Karen and Cheng, Janice
+              and Ewan, Mark and Hsiung, Pei-Lin and Lundquist, Paul and
               Turner, Stephen W and Hsu, David R and Puglisi, Joseph D",
   abstract = "Zero-mode waveguides provide a powerful technology for studying
               single-molecule real-time dynamics of biological systems at
@@ -2676,7 +2511,6 @@
   pages    = "664--669",
   month    =  jan,
   year     =  2014,
-  keywords = "Brandeis",
   language = "en"
 }
 
@@ -2704,7 +2538,6 @@
                    approximate inference.",
   month         =  oct,
   year          =  2019,
-  keywords      = "Pyro;Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "stat.ML",
   eprint        = "1910.10775"
@@ -2712,7 +2545,7 @@
 
 @ARTICLE{Kschischang2001-lj,
   title    = "Factor graphs and the sum-product algorithm",
-  author   = "Kschischang, F R and Frey, B J and -. Loeliger, H",
+  author   = "Kschischang, F R and Frey, B J and Loeliger, H-A",
   abstract = "Algorithms that must deal with complicated global functions of
               many variables often exploit the manner in which the given
               functions factor as a product of ``local'' functions, each of
@@ -2736,27 +2569,15 @@
   number   =  2,
   pages    = "498--519",
   month    =  feb,
-  year     =  2001,
-  keywords = "graph theory;message passing;functional analysis;artificial
-              intelligence;signal processing;digital communication;iterative
-              decoding;Viterbi decoding;belief networks;Kalman filters;fast
-              Fourier transforms;hidden Markov models;turbo codes;sum-product
-              algorithm;factor graphs;global functions;local
-              functions;factorization;bipartite graph;generic message-passing
-              algorithm;computational rule;marginal functions;global
-              function;artificial intelligence;signal processing;digital
-              communications;forward/backward algorithm;Viterbi
-              algorithm;iterative turbo decoding algorithm;belief propagation
-              algorithm;Bayesian networks;Kalman filter;fast Fourier
-              transform;FFT algorithms;HMM;Graph theory;Pyro;Brandeis"
+  year     =  2001
 }
 
 @ARTICLE{Foerster2018-kd,
   title         = "{DiCE}: The Infinitely Differentiable {Monte-Carlo}
                    Estimator",
   author        = "Foerster, Jakob and Farquhar, Gregory and Al-Shedivat,
-                   Maruan and Rockt{\"a}schel, Tim and Xing, Eric P and
-                   Whiteson, Shimon",
+                   Maruan and Rocktäschel, Tim and Xing, Eric P and Whiteson,
+                   Shimon",
   abstract      = "The score function estimator is widely used for estimating
                    gradients of stochastic objectives in stochastic computation
                    graphs (SCG), eg, in reinforcement learning and
@@ -2785,7 +2606,6 @@
                    is available at https://www.github.com/alshedivat/lola.",
   month         =  feb,
   year          =  2018,
-  keywords      = "Pyro;Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "cs.LG",
   eprint        = "1802.05098"
@@ -2818,7 +2638,6 @@
                    analysis.",
   month         =  feb,
   year          =  2019,
-  keywords      = "Pyro;Brandeis",
   archivePrefix = "arXiv",
   primaryClass  = "stat.ML",
   eprint        = "1902.03210"
@@ -2834,8 +2653,7 @@
   volume   =  20,
   number   =  28,
   pages    = "1--6",
-  year     =  2019,
-  keywords = "Pyro;Brandeis"
+  year     =  2019
 }
 
 @ARTICLE{Crocker1996-vw,
@@ -2858,9 +2676,7 @@
   number   =  1,
   pages    = "298--310",
   month    =  apr,
-  year     =  1996,
-  keywords = "colloid; image processing; video microscopy; optical tweezers;
-              dynamics; diffusion coefficient; interaction potential;Brandeis"
+  year     =  1996
 }
 
 @ARTICLE{Grigorieff2016-tt,
@@ -2882,8 +2698,6 @@
   pages    = "191--226",
   month    =  jun,
   year     =  2016,
-  keywords = "Asymmetry; Classification; Contrast transfer function; High
-              resolution; Masking; Refinement;Brandeis;Pyro",
   language = "en"
 }
 
@@ -2916,25 +2730,19 @@
   pages    = "107--118.e4",
   month    =  jan,
   year     =  2019,
-  keywords = "RNA polymerase pausing; TFIIS; hypoxia response; transcription
-              elongation; transcription termination; transcriptional
-              backtracking;Brandeis/Journal club",
   language = "en"
 }
 
 @MISC{noauthor_undated-kn,
-  title    = "{SpecificAims20171101f.pdf}",
-  keywords = "Brandeis"
+  title = "{SpecificAims20171101f.pdf}"
 }
 
 @MISC{noauthor_undated-tc,
-  title    = "{ReasearchStrategy20171101f.pdf}",
-  keywords = "Brandeis"
+  title = "{ReasearchStrategy20171101f.pdf}"
 }
 
 @MISC{noauthor_undated-cy,
-  title    = "Introduction20171101f.pdf",
-  keywords = "Brandeis"
+  title = "Introduction20171101f.pdf"
 }
 
 @ARTICLE{Ticau2015-ib,
@@ -2967,7 +2775,6 @@
   pages    = "513--525",
   month    =  apr,
   year     =  2015,
-  keywords = "Applications/Gelles;Thesis/MMR;Brandeis",
   language = "en"
 }
 
@@ -2996,8 +2803,6 @@
   pages     = "377--388",
   month     =  sep,
   year      =  2013,
-  keywords  = "Classification; Electron microscopy; Maximum likelihood; Protein
-               structure; Single particle;Applications/Gelles;Brandeis",
   language  = "en"
 }
 
@@ -3021,13 +2826,11 @@
   pages    = "27--36",
   month    =  sep,
   year     =  2015,
-  keywords = "Fluorescence microscopy; Single molecule statistics; TIRF;
-              Transcription regulation;Applications/Gelles;Brandeis",
   language = "en"
 }
 
 @ARTICLE{Harden2016-ho,
-  title    = "Bacterial {RNA} polymerase can retain $\sigma$70 throughout
+  title    = "Bacterial {RNA} polymerase can retain σ70 throughout
               transcription",
   author   = "Harden, Timothy T and Wells, Christopher D and Friedman, Larry J
               and Landick, Robert and Hochschild, Ann and Kondev, Jane and
@@ -3036,47 +2839,42 @@
               of transcription initiation and transcript elongation and
               termination. During each of these stages, RNA polymerase (RNAP)
               function is regulated by RNAP-associated protein factors. In
-              bacteria, RNAP-associated $\sigma$ factors are strictly required
-              for promoter recognition and have historically been regarded as
-              dedicated initiation factors. However, the primary $\sigma$
-              factor in Escherichia coli, $\sigma$(70), can remain associated
-              with RNAP during the transition from initiation to elongation,
-              influencing events that occur after initiation. Quantitative
-              studies on the extent of $\sigma$(70) retention have been limited
-              to complexes halted during early elongation. Here, we used
-              multiwavelength single-molecule fluorescence-colocalization
-              microscopy to observe the $\sigma$(70)-RNAP complex during
-              initiation from the $\lambda$ PR' promoter and throughout the
-              elongation of a long (>2,000-nt) transcript. Our results provide
-              direct measurements of the fraction of actively transcribing
-              complexes with bound $\sigma$(70) and the kinetics of
-              $\sigma$(70) release from actively transcribing complexes.
-              $\sigma$(70) release from mature elongation complexes was slow
-              (0.0038 s(-1)); a substantial subpopulation of elongation
-              complexes retained $\sigma$(70) throughout transcript elongation,
-              and this fraction depended on the sequence of the initially
-              transcribed region. We also show that elongation complexes
-              containing $\sigma$(70) manifest enhanced recognition of a
-              promoter-like pause element positioned hundreds of nucleotides
-              downstream of the promoter. Together, the results provide a
-              quantitative framework for understanding the postinitiation roles
-              of $\sigma$(70) during transcription.",
+              bacteria, RNAP-associated σ factors are strictly required for
+              promoter recognition and have historically been regarded as
+              dedicated initiation factors. However, the primary σ factor in
+              Escherichia coli, σ(70), can remain associated with RNAP during
+              the transition from initiation to elongation, influencing events
+              that occur after initiation. Quantitative studies on the extent
+              of σ(70) retention have been limited to complexes halted during
+              early elongation. Here, we used multiwavelength single-molecule
+              fluorescence-colocalization microscopy to observe the σ(70)-RNAP
+              complex during initiation from the λ PR' promoter and throughout
+              the elongation of a long (>2,000-nt) transcript. Our results
+              provide direct measurements of the fraction of actively
+              transcribing complexes with bound σ(70) and the kinetics of σ(70)
+              release from actively transcribing complexes. σ(70) release from
+              mature elongation complexes was slow (0.0038 s(-1)); a
+              substantial subpopulation of elongation complexes retained σ(70)
+              throughout transcript elongation, and this fraction depended on
+              the sequence of the initially transcribed region. We also show
+              that elongation complexes containing σ(70) manifest enhanced
+              recognition of a promoter-like pause element positioned hundreds
+              of nucleotides downstream of the promoter. Together, the results
+              provide a quantitative framework for understanding the
+              postinitiation roles of σ(70) during transcription.",
   journal  = "Proc. Natl. Acad. Sci. U. S. A.",
   volume   =  113,
   number   =  3,
   pages    = "602--607",
   month    =  jan,
   year     =  2016,
-  keywords = "CoSMoS; elongation complex; sigma factor; single-molecule
-              fluorescence; transcription
-              regulation;Applications/Gelles;Brandeis",
   language = "en"
 }
 
 @BOOK{Bishop2006-oa,
   title     = "Pattern recognition and machine learning",
   author    = "Bishop, Christopher M",
-  publisher = "springer",
+  publisher = "Springer",
   year      =  2006,
-  keywords  = "Textbooks;Brandeis"
+  address   = "New York"
 }

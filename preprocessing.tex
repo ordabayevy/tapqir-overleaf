@@ -13,7 +13,6 @@
         \State $x^\mathsf{target} = x^{\mathsf{target}, \mathsf{raw}} - \mathsf{shiftX}$
         \State $y^\mathsf{target} = y^{\mathsf{target}, \mathsf{raw}} - \mathsf{shiftY}$
         \State $D_{\mathsf{AOI}(n), \mathsf{pixelX}(i), \mathsf{pixelY}(j)} = D^{\mathsf{raw}}_{\mathsf{pixelX}(i+\mathsf{shiftX}_{\mathsf{AOI}(n)}), \mathsf{pixelY}(j+\mathsf{shiftY}_{\mathsf{AOI}(n)})}$
-        %\State $D_{\mathsf{AOI}(n), \mathsf{frame}(f), \mathsf{pixelX}(i), \mathsf{pixelY}(j)} = D^{\mathsf{raw}}_{\mathsf{frame}(f), \mathsf{pixelX}(i+\mathsf{shiftX}_{\mathsf{AOI}(n), \mathsf{frame}(f)}), \mathsf{pixelY}(j+\mathsf{shiftY}_{\mathsf{AOI}(n), \mathsf{frame}(f)})}$
     \EndFor
 \EndFor
 \Return $D$, $x^\mathsf{target}$, $y^\mathsf{target}$

@@ -18,25 +18,25 @@
 \usepackage{comment}
 \usepackage{siunitx}
 \usepackage{algorithm}
+\usepackage{lineno}
+\linenumbers
 \usepackage[noend]{algpseudocode}
-% \graphicspath{ {./images/} }
+\usepackage[style=nature]{biblatex}
+\AtEveryBibitem{\clearlist{language}}
 % argmax operator
 \DeclareMathOperator*{\argmax}{argmax}
+\addbibresource{references.bib}
 
-\title{Bayesian analysis of single-molecule fluorescence colocalization images}
+\title{Bayesian machine learning analysis of single-molecule fluorescence colocalization images}
 % Bayesian classification of single-molecule fluorescence colocalization images
-
-% objective
-% model-based
-% molecular thermodynamics and kinetics from Bayesian analysis of single-molecule fluorescence.
-
+% Bayesian analysis of single-molecule fluorescence colocalization images
 
 \author{Yerdos A. Ordabayev\and Larry  J. Friedman\and Jeff Gelles\thanks{Corresponding authors: gelles@brandeis.edu and dtheobald@brandeis.edu}\and Douglas L. Theobald\footnotemark[1] \\ Department of Biochemistry, Brandeis University, Waltham, MA 02454 USA}
 
 \begin{document}
 \maketitle
 \begin{abstract} % 150 words limit
-Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods allow elucidation of complex biochemical reaction mechanisms. However, analysis of CoSMoS data is intrinsically challenging because of low image signal-to-noise ratios, non-specific surface binding of the fluorescent molecules, and analysis methods that require subjective inputs to achieve accurate results. Here, we use Bayesian probabilistic programming to implement Tapqir, a method based on an holistic model of CoSMoS data.  This method accounts for uncertainties in image analysis due to photon and camera noise, optical non-uniformities, non-specific binding, and spot detection. Rather than merely producing a binary ``spot/no spot'' classification of unspecified reliability, Tapqir objectively assigns spot classification probabilities that allow accurate downstream analysis of molecular dynamics, thermodynamics, and kinetics.   We both quantitatively validate Tapqir performance against simulated CoSMoS image data with known properties and also demonstrate that it implements fully objective, automated analysis of experiment-derived data sets with a wide range of signal, noise, and non-specific binding characteristics. 
+Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods allow elucidation of complex biochemical reaction mechanisms. However, analysis of CoSMoS data is intrinsically challenging because of low image signal-to-noise ratios, non-specific surface binding of the fluorescent molecules, and analysis methods that require subjective inputs to achieve accurate results. Here, we use Bayesian probabilistic programming to implement Tapqir, an unsupervised machine learning method based on a holistic, physics-based causal model of CoSMoS data.  This method accounts for uncertainties in image analysis due to photon and camera noise, optical non-uniformities, non-specific binding, and spot detection. Rather than merely producing a binary ``spot/no spot'' classification of unspecified reliability, Tapqir objectively assigns spot classification probabilities that allow accurate downstream analysis of molecular dynamics, thermodynamics, and kinetics.   We both quantitatively validate Tapqir performance against simulated CoSMoS image data with known properties and also demonstrate that it implements fully objective, automated analysis of experiment-derived data sets with a wide range of signal, noise, and non-specific binding characteristics. 
 \end{abstract}
 
 % 2500-3500 limit
@@ -54,10 +54,7 @@ Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods al
 \input{acknowledgement}
 
 % 40
-\bibliography{references}
-
-%This defines the bibliographies style. Search online for a list of available styles.
-\bibliographystyle{unsrt}
+\printbibliography
 
 \input{figures}
 
@@ -66,5 +63,3 @@ Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods al
 \input{supplemental}
 
 \end{document}
-
-% Multi-wavelength single-molecule fluorescence colocalization methods allow elucidation of complex biochemical reaction mechanisms. However, analysis of colocalization data is an intrinsically challenging and time-consuming problem for multiple reasons. First, to minimize dye photobleaching, images frequently are collected at low signal-to-noise ratios, making it challenging to discriminate real fluorescent spots from noise. Second, transient non-specific interactions of the binder molecule with the surface of the microscope slide can give rise to both false-positive and false-negative detection. Third, current analysis methods require subjective choice of user-set thresholds for such spot parameters as amplitude, diameter and proximity. To overcome these difficulties, we developed a new analysis method based on statistical modeling of the image data. This method: 1) maximizes extraction of useful information from data by analyzing 2-D images, not integrated intensity; 2) discriminates authentic fluorescence spots from fluctuations in background fluorescence in a probabilistic manner and assigns spot probabilities (not merely a binary "spot/no spot" classification); 3) uses a realistic pixel intensity model that accounts for background, spot, and camera noise sources; 4) explicitly models non-specific interactions of binder molecules with the slide surface; and 5) can globally fit data from experimental samples together with negative controls that lack target molecules. The software is implemented in the Python-based Pyro probabilistic programming language, which incorporates modern deep machine learning and Bayesian modeling to allow easy substitution of different statistical models, efficient use of parallelized processing (GPU) hardware, and scalability to large data sets. The algorithm is effective without manual parameter tweaking on both simulated and experiment-derived data sets with a wide range of signal, noise, and non-specific binding characteristics. We anticipate that this work will increase the accessibility and utility of single-molecule fluorescence colocalization methods.

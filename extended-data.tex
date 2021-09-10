@@ -42,7 +42,7 @@
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure3.png}
-\caption{\textbf{Tapqir analysis of image data simulated using a broad range of global parameters.} Simulations (see Methods) consist of 16 datasets where values of global parameters ($\pi$, $\lambda$, $\sigma^{xy}$, and $g$) where randomly generated for each dataset (Supplementary Data 2). Simulated data were fit with Tapqir, and parameter values from the fit (with 95\% credible interval) are plotted against the true parameter values. To guide the eye, dashed lines  indicate identical true and fit values. \textbf{a}, Gain of the camera $g$. \textbf{b}, Average specific binding probability $\pi$. \textbf{c}, Nonspecific binding rate $\lambda$. \textbf{d}, Proximity parameter $\sigma^{xy}$. }
+\caption{\textbf{Tapqir analysis of image data simulated using a broad range of global parameters.} Simulations (see Methods) consist of 16 data sets where values of global parameters ($\pi$, $\lambda$, $\sigma^{xy}$, and $g$) where randomly generated for each data set (Supplemental Data 2). Simulated data were fit with Tapqir, and parameter values from the fit (with 95\% credible interval) are plotted against the true parameter values. To guide the eye, dashed lines  indicate identical true and fit values. \textbf{a}, Gain of the camera $g$. \textbf{b}, Average specific binding probability $\pi$. \textbf{c}, Nonspecific binding rate $\lambda$. \textbf{d}, Proximity parameter $\sigma^{xy}$. }
 \label{fig:tapqir_global}
 \end{figure}
 \pagebreak
@@ -51,8 +51,8 @@
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{extended-data/figure5.png}
-\caption{\textbf{Additional example showing extraction of target-binder association kinetics from experimental data.} Data are from Data set A ($\mathrm{SNR} = 1.63$, $\lambda = 0.2958$; see Extended Data Table 1).  Results are plotted as in Fig. 6, except that for clarity only every $2^\mathrm{nd}$ frame and every $3^\mathrm{rd}$ AOI is shown in (\textbf{a}).}
-\label{fig:rpb1snap549}
+\caption{\textbf{False negative misidentifications by Tapqir and spot-picker method.} The same $\lambda = 1$ simulated data set used in Fig. 4e-h (\texttt{lamda1} in Supplemental Data 1) was analyzed by Tapqir and spot-picker.  The data set contained 418 AOI images containing target-specific spots, of which the 37 shown here were falsely predicted to contain no target-specific spot (3 by Tapqir and 34 by spot-picker). Correct ($+$) and incorrect ($-$) predictions by each program are indicated. In all AOI images except AOI 3 frame 109, there is a nearby target-nonspecific spot in addition to the target-specific one. False negative classifications by spot-picker method are presumably due to the presence of a closely located target-nonspecific spot that distorts the shape of a target-specific spot. Tapqir, on the other hand, is able to correctly infer the presence of two closely located spots even when they are not completely resolved (Fig. 4h). The rare (3 out of 418) false negative classifications by Tapqir likely arise from target-specific spots with centers that deviate from the target location by much more ($\sim 0.7$ pixels) than the inferred proximity parameter ($\sigma^{xy} = 0.2$ pixels).}
+\label{fig:tapqirvsspotpicker}
 \end{figure}
 \pagebreak
 
@@ -113,7 +113,7 @@ $0.1022\:[0.1009, 0.1035]$ & $0.2958\:[0.294, 0.2970]$ & $6.507\:[6.505, 6.509]$
 \bottomrule
 \multicolumn{7}{l}{\footnotesize{\parbox{1.2\textwidth}{\textsuperscript{a}$N$ - number of on-target AOIs, $N_\mathsf{c}$ - number of control off-target AOIs, $F$ - number of frames.
 
-\textsuperscript{b}Unattended calculation time on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU and CUDA version 11.4 installed.}}} \rule{0pt}{3ex} \\
+\textsuperscript{b}Unattended calculation time on an AMD Ryzen Threadripper 2990WX with an Nvidia GeForce RTX 2080Ti GPU using CUDA version 11.4.}}} \rule{0pt}{3ex} \\
 \end{tabular}}
 \end{table}
 \clearpage
