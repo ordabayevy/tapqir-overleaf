@@ -12,7 +12,6 @@ from tapqir.utils.dataset import load
 
 mpl.rc("text", usetex=True)
 mpl.rcParams.update({"font.size": 8})
-# mpl.rcParams["savefig.facecolor"] = "0.8"
 
 # path to simulated data
 SIMULATIONS_DIR = Path("simulations")
@@ -72,7 +71,7 @@ for i, name in enumerate(truth_df.index):
         ax.text(
             -20,
             -5.5,
-            r"\textbf{a}",
+            r"\textbf{A}",
         )
 
 gs = fig.add_gridspec(
@@ -91,7 +90,7 @@ ax = fig.add_subplot(gs[0])
 ax.text(
     -2,
     1.1,
-    r"\textbf{b}",
+    r"\textbf{B}",
 )
 ax.errorbar(
     truth_df["SNR"],
@@ -193,7 +192,7 @@ for i, name in enumerate(["height300", "height750", "height3000"]):
         ax.text(
             -0.6,
             7e3,
-            r"\textbf{c}",
+            r"\textbf{C}",
         )
         ax.text(
             0.2,
@@ -221,7 +220,7 @@ ax = fig.add_subplot(gs[2])
 ax.text(
     -2,
     1.1,
-    r"\textbf{d}",
+    r"\textbf{D}",
 )
 ax.plot(
     truth_df["SNR"],
@@ -317,7 +316,7 @@ ax = fig.add_subplot(gs[0])
 ax.text(
     -0.5,
     1.1,
-    r"\textbf{e}",
+    r"\textbf{E}",
 )
 ax.errorbar(
     truth_df["lamda"],
@@ -420,7 +419,7 @@ for i, name in enumerate(["lamda0.01", "lamda0.15", "lamda1"]):
         ax.text(
             -0.6,
             7e3,
-            r"\textbf{f}",
+            r"\textbf{F}",
         )
         ax.text(
             0.3,
@@ -448,7 +447,7 @@ ax = fig.add_subplot(gs[2])
 ax.text(
     -0.5,
     1.1,
-    r"\textbf{g}",
+    r"\textbf{G}",
 )
 ax.plot(
     truth_df["lamda"],
@@ -529,7 +528,7 @@ for i, (n, f) in enumerate(zip(aois, frames)):
     ax.imshow(model.data.ontarget.images[n, f], cmap="gray")
     ax.axis("off")
     if i == 0:
-        ax.text(-20, -4, r"\textbf{h}")
+        ax.text(-20, -4, r"\textbf{H}")
         ax.text(
             -11,
             10,
@@ -658,7 +657,7 @@ for i, name in enumerate(["negative0.01", "negative0.15", "negative1"]):
         ax.text(
             -0.6,
             7e3,
-            r"\textbf{i}",
+            r"\textbf{I}",
         )
         ax.text(
             0.3,
@@ -686,4 +685,4 @@ for i, name in enumerate(["negative0.01", "negative0.15", "negative1"]):
         r"$\pi = 0$",
     )
 
-plt.savefig("figures/figure5.png", dpi=600)
+plt.savefig("figures/tapqir_performance.png", dpi=600)
