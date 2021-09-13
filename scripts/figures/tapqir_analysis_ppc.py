@@ -58,7 +58,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.text(
             -25,
             -13,
-            r"\textbf{a}",
+            r"\textbf{A}",
         )
         ax.text(
             -13,
@@ -159,7 +159,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.text(
             -25,
             -13,
-            r"\textbf{b}",
+            r"\textbf{B}",
         )
         ax.text(
             -13,
@@ -266,7 +266,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.text(
             -25,
             -13,
-            r"\textbf{c}",
+            r"\textbf{C}",
         )
         ax.text(
             -13,
@@ -332,7 +332,8 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel d
-path_data = Path("experimental/GreB")
+# path_data = Path("experimental/GreB")
+path_data = Path("/shared/centaur/final/GreB")
 model = Cosmos(verbose=False)
 model.load(path_data, data_only=False)
 
@@ -341,8 +342,10 @@ predictive = Predictive(
     pyro.poutine.uncondition(model.model), guide=model.guide, num_samples=1
 )
 
-aois = [2, 2, 2, 2, 3, 4]
-frames = [10, 1875, 1456, 3778, 4055, 2361]
+#  aois = [2, 2, 2, 2, 3, 4]
+#  frames = [10, 1875, 1456, 3778, 4055, 2361]
+aois = [26, 26, 26, 26, 26, 29]
+frames = [2261, 2290, 2270, 2307, 2311, 54]
 
 model.n = torch.tensor(aois)
 pyro.set_rng_seed(0)
@@ -367,7 +370,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.text(
             -25,
             -13,
-            r"\textbf{d}",
+            r"\textbf{D}",
         )
         ax.text(
             -13,
@@ -432,4 +435,4 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     else:
         ax.set_yticklabels([])
 
-plt.savefig("figures/figure4.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_ppc.png", dpi=600)
