@@ -44,7 +44,7 @@ truth_df = truth_df.drop(columns=["seed"])
 
 # panel a
 ax = fig.add_subplot(gs[0])
-ax.text(-0.28 * 25 - 2, 1.05 * 25 - 2, r"\textbf{a}")
+ax.text(-0.28 * 25 - 2, 1.05 * 25 - 2, r"\textbf{A}")
 ax.plot(truth_df["gain"].sort_values(), truth_df["gain"].sort_values(), "k--")
 ax.errorbar(
     truth_df["gain"],
@@ -90,7 +90,7 @@ ax.set_ylabel(r"$g$ (fit)")
 
 # panel b
 ax = fig.add_subplot(gs[1])
-ax.text(-0.28 * 0.5 - 0.05, 1.05 * 0.5 - 0.05, r"\textbf{b}")
+ax.text(-0.28 * 0.5 - 0.05, 1.05 * 0.5 - 0.05, r"\textbf{B}")
 ax.plot(truth_df["pi"].sort_values(), truth_df["pi"].sort_values(), "k--")
 ax.errorbar(
     truth_df["pi"],
@@ -138,7 +138,7 @@ ax.set_ylabel(r"$\pi$ (fit)")
 
 # panel c
 ax = fig.add_subplot(gs[2])
-ax.text(-0.28 * 1.2 - 0.1, 1.05 * 1.2 - 0.1, r"\textbf{c}")
+ax.text(-0.28 * 1.2 - 0.1, 1.05 * 1.2 - 0.1, r"\textbf{C}")
 ax.plot(truth_df["lamda"].sort_values(), truth_df["lamda"].sort_values(), "k--")
 ax.errorbar(
     truth_df["lamda"],
@@ -187,7 +187,7 @@ ax.set_ylabel(r"$\lambda$ (fit)")
 
 # panel d
 ax = fig.add_subplot(gs[3])
-ax.text(-0.28 * 0.55 + 0.15, 1.05 * 0.55 + 0.15, r"\textbf{d}")
+ax.text(-0.28 * 0.55 + 0.15, 1.05 * 0.55 + 0.15, r"\textbf{D}")
 ax.plot(truth_df["proximity"].sort_values(), truth_df["proximity"].sort_values(), "k--")
 ax.errorbar(
     truth_df["proximity"].sort_values(),
@@ -237,4 +237,4 @@ ax.set_yticklabels([r"$0.2$", r"$0.3$", r"$0.4$", r"$0.5$", r"$0.6$"])
 ax.set_xlabel(r"$\sigma^{xy}$ (true)")
 ax.set_ylabel(r"$\sigma^{xy}$ (fit)")
 
-plt.savefig("extended-data/figure3.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_randomized.png", dpi=600)
