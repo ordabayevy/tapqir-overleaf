@@ -44,7 +44,7 @@ for i, f in enumerate(frames):
     ax.axes.yaxis.set_visible(False)
 
     if i == 0:
-        ax.text(-35, -5, r"\textbf{a}")
+        ax.text(-35, -5, r"\textbf{A}")
         ax.text(
             -15,
             11,
@@ -306,7 +306,7 @@ for i, f in enumerate(frames):
     ax.axes.yaxis.set_visible(False)
 
     if i == 0:
-        ax.text(-5, -5, r"\textbf{b}")
+        ax.text(-5, -5, r"\textbf{B}")
 
 for i, f in enumerate(frames):
     ax = fig.add_subplot(gs1[1, i])
@@ -465,4 +465,4 @@ for i, f in enumerate(frames):
         )
     )
 
-plt.savefig("extended-data/figure2.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_probs.png", dpi=600)
