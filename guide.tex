@@ -1,35 +1,35 @@
-%\label{alg:pseudocode}
-\paragraph{Algorithm 3.} Pseudocode representation of Tapqir guide.
+% \paragraph{Algorithm 3.} Pseudocode representation of Tapqir guide.
 
 \algnewcommand{\Initialize}[1]{%
   \State \textbf{Variational parameter initializations} $\{ \mathrm{initial\:value}, \quad \mathrm{constraint} \}$:
   \Statex \hspace*{\algorithmicindent}\parbox[t]{.8\linewidth}{\raggedright #1}
 }
 
+\begin{algorithm}
+\caption{Pseudocode representation of Tapqir guide.}\label{alg:guide}
 \begin{algorithmic}[1]
 \Initialize{
-    $g_\mathsf{mean} \gets \{ 5, \quad \mathbb{R}_{>0} \} $ \\
-    $g_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $\sigma^{xy}_\mathsf{mean} \gets \{ 0, \quad (0, (P+1) / \sqrt{12}) \} \rule{0pt}{3ex} $ \\
-    $\sigma^{xy}_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>2} \} $ \rule{0pt}{3ex} \\
-    $\pi_\mathsf{mean} \gets \{ 0.5, \quad [0, 1] \} $ \rule{0pt}{3ex} \\
-    $\pi_\mathsf{size} \gets \{ 2, \quad \mathbb{R}_{>2} \} $ \rule{0pt}{3ex} \\
-    $\lambda_\mathsf{mean} \gets \{ 0.5, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $\lambda_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $\mu^b_\mathsf{mean} \gets \{ \mathsf{mean}(D)^{\mathsf{AOI}[N]}, \quad \mathbb{R}_{>0} \}$ \rule{0pt}{3ex} \\
-    $\sigma^b_\mathsf{mean} \gets \{ 1^{\mathsf{AOI}[N]}, \quad \mathbb{R}_{>0} \}$ \rule{0pt}{3ex} \\
-    $b_\mathsf{mean} \gets \{ \mathsf{mean}(D)^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \}$ \rule{0pt}{3ex} \\
-    $b_\mathsf{beta} \gets \{ 1^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $\theta_\mathsf{prob} \gets \{ 1/3^{\mathsf{target}[1+K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \sum_\mathsf{target} \theta_\mathsf{prob} = 1 \}$ \rule{0pt}{3ex} \\
-    $m_\mathsf{prob} \gets \left\{ \mathsf{target} \begin{array}[b]{@{}c@{}}\mathsf{spot}\\\begin{bmatrix} 0.5 & 0.5 \\ 1 & 0.5 \\ 0.5 & 1 \end{bmatrix}\end{array}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [ 0, 1 ] \right \} $ \rule{0pt}{3ex} \\
-    $h_\mathsf{mean} \gets \{ 2000^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $h_\mathsf{beta} \gets \{ 0.001^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \rule{0pt}{3ex} \\
-    $w_\mathsf{mean} \gets \{ 1.5^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [0.75, 2.25] \} $ \rule{0pt}{3ex} \\
-    $w_\mathsf{size} \gets \{ 100^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>2} \} $ \rule{0pt}{3ex} \\
-    $x_\mathsf{mean} \gets \{ 0^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [-(P+1)/2, (P+1)/2] \} $ \rule{0pt}{3ex} \\
-    $y_\mathsf{mean} \gets \{ 0^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [-(P+1)/2, (P+1)/2] \} $ \rule{0pt}{3ex} \\
-    $xy_\mathsf{size} \gets \{ 200^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>2} \} $ \rule{0pt}{3ex}
-    }
+    $g_\mathsf{mean} \gets \{ 5, \quad \mathbb{R}_{>0} \} $;
+    $g_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>0} \} $ \\
+    $\sigma^{xy}_\mathsf{mean} \gets \{ 0, \quad (0, (P+1) / \sqrt{12}) \} $;
+    $\sigma^{xy}_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>2} \} $ \\
+    $\pi_\mathsf{mean} \gets \{ 0.5, \quad [0, 1] \} $;
+    $\pi_\mathsf{size} \gets \{ 2, \quad \mathbb{R}_{>2} \} $ \\
+    $\lambda_\mathsf{mean} \gets \{ 0.5, \quad \mathbb{R}_{>0} \} $;
+    $\lambda_\mathsf{beta} \gets \{ 100, \quad \mathbb{R}_{>0} \} $ \\
+    $\mu^b_\mathsf{mean} \gets \{ \mathsf{mean}(D)^{\mathsf{AOI}[N]}, \quad \mathbb{R}_{>0} \}$;
+    $\sigma^b_\mathsf{mean} \gets \{ 1^{\mathsf{AOI}[N]}, \quad \mathbb{R}_{>0} \}$ \\
+    $b_\mathsf{mean} \gets \{ \mathsf{mean}(D)^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \}$ \\
+    $b_\mathsf{beta} \gets \{ 1^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \\
+    $\theta_\mathsf{prob} \gets \{ 1/3^{\mathsf{target}[1+K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \sum_\mathsf{target} \theta_\mathsf{prob} = 1 \}$ \\
+    $m_\mathsf{prob} \gets \left\{ \mathsf{target} \begin{array}[b]{@{}c@{}}\mathsf{spot}\\\begin{bmatrix} 0.5 & 0.5 \\ 1 & 0.5 \\ 0.5 & 1 \end{bmatrix}\end{array}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [ 0, 1 ] \right \} $ \\
+    $h_\mathsf{mean} \gets \{ 2000^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \\
+    $h_\mathsf{beta} \gets \{ 0.001^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>0} \} $ \\
+    $w_\mathsf{mean} \gets \{ 1.5^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [0.75, 2.25] \} $ \\
+    $w_\mathsf{size} \gets \{ 100^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>2} \} $ \\
+    $x_\mathsf{mean} \gets \{ 0^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [-(P+1)/2, (P+1)/2] \} $ \\
+    $y_\mathsf{mean} \gets \{ 0^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad [-(P+1)/2, (P+1)/2] \} $ \\
+    $xy_\mathsf{size} \gets \{ 200^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}, \quad \mathbb{R}_{>2} \} $ }
 \State $g \sim \mathbf{Gamma}(g_\mathsf{mean}, \sqrt{g_\mathsf{mean} / g_\mathsf{beta}})$
 \Comment{camera gain}
 \State $\sigma^{xy} \sim \mathbf{AffineBeta}(\sigma^{xy}_\mathsf{mean}, \sigma^{xy}_\mathsf{size}, 0, (P+1) / \sqrt{12})$
@@ -78,3 +78,4 @@
     \EndFor
 \EndFor
 \end{algorithmic}
+\end{algorithm}

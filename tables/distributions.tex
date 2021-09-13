@@ -1,0 +1,29 @@
+\begin{table}
+\caption{\label{tab:distributions} \textbf{Probability distributions used in the model.}}
+\begin{tabular}{l l}
+\toprule
+Distribution & PDF \\
+\midrule
+$x \sim \mathbf{AffineBeta}(\mu, \nu, a, b)$ &
+    $\dfrac{y^{\alpha-1}(1-y)^{\beta-1}}{\text{B}(\alpha, \beta)}$
+    where $\alpha=\dfrac{\nu (\mu-a)}{b-a}$, $\beta=\dfrac{\nu (b-\mu)}{b-a}$, and $y = \dfrac{x-a}{b-a}$ \\
+$x \sim \mathbf{Bernoulli}(\pi)$ &
+    $\pi^x (1-\pi)^{1-x}$ \\
+$x \sim \mathbf{Beta}(\alpha, \beta)$ &
+    $\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{\text{B}(\alpha, \beta)}$ \\
+$x \sim \mathbf{Categorical}_{\{z_i\}^k_{i=1}}(\mathbf{p})$ &
+    $\prod_{i=1}^k p_i^{[x=z_i]}$ \\
+$x \sim \mathbf{Exponential}(\lambda)$ &
+    $\lambda e^{-\lambda x}$ \rule{0pt}{3ex} \\
+$x \sim \mathbf{Gamma}(\mu, \sigma)$ &
+    $\dfrac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1} e^{-\beta x}$
+    where $\alpha = \dfrac{\mu^2}{\sigma^2}$ and $\beta = \dfrac{\mu}{\sigma^2}$ \\
+$x \sim \mathbf{HalfNormal}(\sigma)$ &
+    $\dfrac{\sqrt{2}}{\sigma \sqrt{\pi}} \exp \left( -\dfrac{x^2}{2\sigma^2} \right)$
+    for  $x > 0$ \\
+$k \sim \mathbf{TruncPoisson}(\lambda, K) $ & $ \begin{cases} 1 - e^{-\lambda} \sum_{i=0}^{K-1} \dfrac{\lambda^i}{i!} & \textrm{if $k = K$} \\ \dfrac{\lambda^k e^{-\lambda}}{k!} & \textrm{otherwise} \end{cases} $ \\
+$x \sim \mathbf{Uniform}(a, b)$ &
+    $\dfrac{1}{b-a}$ for $x \in [a, b]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
