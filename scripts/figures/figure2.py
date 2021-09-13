@@ -32,7 +32,7 @@ model.load(path_data, data_only=False)
 
 # 2-D image
 ax = fig.add_subplot(gsa[0, 0])
-ax.text(-8, -8, r"\textbf{a}")
+ax.text(-8, -8, r"\textbf{A}")
 n = 163
 f = 640
 vmin, vmax = 340, 635
@@ -174,7 +174,7 @@ for m1, m2 in ((0, 0), (0, 1), (1, 0), (1, 1)):
             pad=2,
             fontsize=8,
         )
-        ax.text2D(-0.125, 0.12, s=r"\textbf{b}")
+        ax.text2D(-0.125, 0.12, s=r"\textbf{B}")
     elif m1 == 0 and m2 == 1:
         ax.set_title(
             r"$m_{\mathsf{spot}(1)}=0$" + "\n" + r"$m_{\mathsf{spot}(2)}=1$",
@@ -219,7 +219,7 @@ theta0 = (
 ax.imshow(theta0.numpy(), vmin=0, vmax=200, cmap="gray")
 ax.axis("off")
 ax.set_title(r"$\theta = 0$", fontsize=8)
-ax.text(-4, -3, r"\textbf{c}")
+ax.text(-4, -3, r"\textbf{C}")
 ax.text(-4.5 + 6, 2.5 + 7, s=r"$\mathbf{1}$", color="C0")
 ax.text(3.5 + 6, -1.5 + 7, s=r"$\mathbf{2}$", color="C1")
 
@@ -262,7 +262,6 @@ ax.text(0 + 6, 0 + 7, s=r"$\mathbf{2}$", color="C1")
 # panel d
 ax = fig.add_subplot(gs[:, 1])
 ax.axis("off")
-ax.text(-0.1, 0.95, r"\textbf{d}")
+ax.text(-0.1, 0.95, r"\textbf{D}")
 
-plt.savefig("figures/figure2.svg", dpi=600)
-plt.savefig("figures/figure2.png", dpi=600)
+plt.savefig("figures/graphical_model.svg", dpi=600)
