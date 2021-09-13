@@ -1,6 +1,11 @@
-\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ELIFE ARTICLE TEMPLATE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PREAMBLE 
+\documentclass[9pt,lineno]{elife}
+% \documentclass{article}
 
-\usepackage{arxiv}
+% \usepackage{arxiv}
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
@@ -9,7 +14,7 @@
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{amssymb}
+% \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
@@ -18,23 +23,41 @@
 \usepackage{comment}
 \usepackage{siunitx}
 \usepackage{algorithm}
-\usepackage{lineno}
-\linenumbers
+% \usepackage{lineno}
+% \linenumbers
 \usepackage[noend]{algpseudocode}
-\usepackage[style=nature]{biblatex}
-\AtEveryBibitem{\clearlist{language}}
+%\usepackage[style=nature]{biblatex}
+% \AtEveryBibitem{\clearlist{language}}
 % argmax operator
 \DeclareMathOperator*{\argmax}{argmax}
-\addbibresource{references.bib}
+% \addbibresource{references.bib}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Bayesian machine learning analysis of single-molecule fluorescence colocalization images}
 % Bayesian classification of single-molecule fluorescence colocalization images
 % Bayesian analysis of single-molecule fluorescence colocalization images
 
-\author{Yerdos A. Ordabayev\and Larry  J. Friedman\and Jeff Gelles\thanks{Corresponding authors: gelles@brandeis.edu and dtheobald@brandeis.edu}\and Douglas L. Theobald\footnotemark[1] \\ Department of Biochemistry, Brandeis University, Waltham, MA 02454 USA}
+\author[1]{Yerdos A. Ordabayev}
+\author[1]{Larry  J. Friedman}
+\author[1*]{Jeff Gelles}
+\author[1*]{Douglas L. Theobald}
+\affil[1]{Department of Biochemistry, Brandeis University, Waltham, MA 02454 USA}
+
+\corr{gelles@brandeis.edu}{JG}
+\corr{dtheobald@brandeis.edu}{DLT}
+
+% \author{Yerdos A. Ordabayev\and Larry  J. Friedman\and Jeff Gelles\thanks{Corresponding authors: gelles@brandeis.edu and dtheobald@brandeis.edu}\and Douglas L. Theobald\footnotemark[1] \\ Department of Biochemistry, Brandeis University, Waltham, MA 02454 USA}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+
 \maketitle
+
 \begin{abstract} % 150 words limit
 Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods allow elucidation of complex biochemical reaction mechanisms. However, analysis of CoSMoS data is intrinsically challenging because of low image signal-to-noise ratios, non-specific surface binding of the fluorescent molecules, and analysis methods that require subjective inputs to achieve accurate results. Here, we use Bayesian probabilistic programming to implement Tapqir, an unsupervised machine learning method based on a holistic, physics-based causal model of CoSMoS data.  This method accounts for uncertainties in image analysis due to photon and camera noise, optical non-uniformities, non-specific binding, and spot detection. Rather than merely producing a binary ``spot/no spot'' classification of unspecified reliability, Tapqir objectively assigns spot classification probabilities that allow accurate downstream analysis of molecular dynamics, thermodynamics, and kinetics.   We both quantitatively validate Tapqir performance against simulated CoSMoS image data with known properties and also demonstrate that it implements fully objective, automated analysis of experiment-derived data sets with a wide range of signal, noise, and non-specific binding characteristics. 
 \end{abstract}
@@ -54,11 +77,13 @@ Multi-wavelength single-molecule fluorescence colocalization (CoSMoS) methods al
 \input{acknowledgement}
 
 % 40
-\printbibliography
+% \printbibliography
+% \bibliographystyle{vancouver-elife}
+\bibliography{references}
 
-\input{figures}
+% \input{figures}
 
-\input{extended-data}
+% \input{extended-data}
 
 \input{supplemental}
 

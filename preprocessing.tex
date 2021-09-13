@@ -1,7 +1,8 @@
 \algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
 
-\paragraph{Algorithm 1.} Extraction of AOI images from raw images. \\
-
+\begin{algorithm}
+\caption{Extraction of AOI images from raw images.}
+\label{alg:preprocessing}
 \begin{algorithmic}[1]
 \State \textbf{input:} $D^\mathsf{raw}$, $x^{\mathsf{target},\mathsf{raw}}$, $y^{\mathsf{target},\mathsf{raw}}$
 \ForAll{$\mathsf{frame}[F]$}
@@ -17,3 +18,4 @@
 \EndFor
 \Return $D$, $x^\mathsf{target}$, $y^\mathsf{target}$
 \end{algorithmic}
+\end{algorithm}

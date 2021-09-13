@@ -1,0 +1,41 @@
+\begin{table}
+\caption{\label{tab:variables} \textbf{Variables used in the Tapqir model.}}
+\begin{tabular}{l l l}
+\toprule
+Symbol & Meaning & Domain \\
+\midrule
+$K$ & maximum number of spots per image & $\mathbb{N}$ \\
+$N$ & number of on-target AOIs & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$N_\mathsf{c}$ & number of off-target control AOIs & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$F$ & number of frames & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$P$ & size of the AOI image in pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$g$ & camera gain & $\mathbb{R}_{>0}$ \rule{0pt}{3ex} \\
+$\sigma^{xy}$ & proximity & $(0, (P+1)/\sqrt{12})$ \rule{0pt}{3ex} \\
+$\pi$ & average target-specific binding probability & [0, 1] \rule{0pt}{3ex} \\
+$\lambda$ & target-nonspecific binding rate & $\mathbb{R}_{>0}$ \rule{0pt}{3ex} \\
+$\mu^b$ & mean background intensity across AOI & $\mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ \rule{0pt}{3ex} \\
+$\sigma^b$ & standard deviation of background intensity across AOI & $\mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ \rule{0pt}{3ex} \\
+$b$ & background intensity & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$\theta$ & target-specific spot index & $\{0, 1, \dots, K \}^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$m$ & spot presence indicator & $\{ 0, 1 \}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$h$ & integrated spot intensity & $\mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$w$ & spot width & $[0.75, 2.25]^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$x$ & center of the spot on the $x$-axis & $\mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y$ & center of the spot on the $y$-axis & $\mathbb{R}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$\mu^S$ & 2-D Gaussian spot & $\mathbb{R}_{>0}^{\mathsf{spot}[K] \times \mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$\mu^I$ & ideal image w/o offset & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$\delta$ & offset signal & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$I$ & observed image w/o offset signal & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$D$ & observed image ($I + \delta$) & $\mathbb{R}_{>0}^{\mathsf{AOI}[N] \times \mathsf{frame}[F] \times \mathsf{pixelX}[P] \times \mathsf{pixelY}[P]}$ \rule{0pt}{3ex} \\
+$x^\mathsf{target}$ & target molecule position on the $x$-axis & $[P/2-1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y^\mathsf{target}$ & target molecule position on the $y$-axis & $[P/2-1, P/2]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$i$ & pixel index on the $x$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
+$j$ & pixel index on the $y$-axis & $\{0, \dots, (P-1)\}^{\mathsf{pixelX}[P]}$ \rule{0pt}{3ex} \\
+$W$ & width of the raw microscope images in pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$H$ & height of the raw microscope image in pixels & $\mathbb{N}$ \rule{0pt}{3ex} \\
+$D^\mathsf{raw}$ & raw microscope images & $\mathbb{R}_{>0}^{\mathsf{frame}[F] \times \mathsf{pixelX}[H] \times \mathsf{pixelY}[W]}$ \rule{0pt}{3ex} \\
+$x^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $x$-axis & $[-0.5, H-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+$y^{\mathsf{target}, \mathsf{raw}}$ & target molecule position in raw images on the $y$-axis & $[-0.5, W-0.5]^{\mathsf{AOI}[N] \times \mathsf{frame}[F]}$ \rule{0pt}{3ex} \\
+\bottomrule
+\end{tabular}
+\end{table}
