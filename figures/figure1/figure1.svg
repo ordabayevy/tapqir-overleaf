@@ -218,9 +218,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="140.17857"
-     inkscape:cy="343.39286"
+     inkscape:zoom="1.979899"
+     inkscape:cx="414.41508"
+     inkscape:cy="86.115504"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -449,7 +449,7 @@
          id="tspan4212"
          x="20.210371"
          y="120.95109"
-         style="font-size:2.82222px;fill:#228833;fill-opacity:1;stroke-width:0.264583">RNApII (green excitation)</tspan></text>
+         style="font-size:2.82222px;fill:#228833;fill-opacity:1;stroke-width:0.264583">Pol II (green excitation)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#4477aa;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1138,7 +1138,7 @@
          id="tspan2187"
          x="-79.600876"
          y="59.778893"
-         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">a</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">A</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1149,7 +1149,7 @@
          id="tspan2187-6"
          x="-79.850639"
          y="83.682701"
-         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">b</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">B</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1160,7 +1160,7 @@
          id="tspan2187-6-5"
          x="-79.406143"
          y="127.40186"
-         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">c</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">C</tspan></text>
     <g
        id="g2521"
        transform="translate(0,-4.2333335)">
@@ -1183,14 +1183,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.82223px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="47.652542"
+       x="47.488136"
        y="64.845543"
        id="text2492-1"><tspan
          sodipodi:role="line"
-         x="47.652542"
+         x="47.488136"
          y="64.845543"
          style="font-size:2.82223px;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.264583"
-         id="tspan3400">RNApII</tspan></text>
+         id="tspan3400">Pol II</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -1548,7 +1548,7 @@
          id="tspan2187-6-5-6"
          x="-79.181778"
          y="158.79634"
-         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">d</tspan></text>
+         style="font-weight:bold;font-size:2.82222px;stroke-width:0.264583">D</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:5.64444px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
