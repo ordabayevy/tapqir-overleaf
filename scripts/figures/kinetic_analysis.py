@@ -75,7 +75,7 @@ f2 = 300
 
 # target-binder reaction
 ax = fig.add_subplot(gs[0])
-ax.text(-0.37, 0.9, r"\textbf{a}")
+ax.text(-0.37, 0.9, r"\textbf{A}")
 ax.text(
     0.27,
     0.5,
@@ -128,7 +128,7 @@ ax.set_ylim(0, 1)
 
 # simulation
 ax = fig.add_subplot(gs[1])
-ax.text(-0.45 * 300, 1.1, r"\textbf{b}")
+ax.text(-0.45 * 300, 1.1, r"\textbf{B}")
 ax.plot(
     torch.arange(f1, f2),
     model.data.ontarget.labels["z"][n, f1:f2],
@@ -471,7 +471,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.02$", r"$0.04$"])
         ax.set_ylabel(r"$k_\mathsf{on}$ (s$^{-1}$)")
-        ax.text(-0.7, 1.05 * 0.05, r"\textbf{c}")
+        ax.text(-0.7, 1.05 * 0.05, r"\textbf{C}")
         ax.legend(bbox_to_anchor=(0, 1.25), loc="upper left", frameon=False, ncol=2)
     else:
         ax.set_yticklabels([])
@@ -534,7 +534,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.2$", r"$0.4$"])
         ax.set_ylabel(r"$k_\mathsf{off}$ (s$^{-1}$)")
-        ax.text(-0.7, 1.05 * 0.5, r"\textbf{d}")
+        ax.text(-0.7, 1.05 * 0.5, r"\textbf{D}")
     else:
         ax.set_yticklabels([])
     ax.set_ylim(-0.02, 0.5)
@@ -593,7 +593,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     if i == 0:
         ax.set_yticklabels([r"$0$", r"$0.08$", r"$0.16$"])
         ax.set_ylabel(r"$K_\mathsf{eq}$")
-        ax.text(-0.7, 1.05 * 0.2, r"\textbf{e}")
+        ax.text(-0.7, 1.05 * 0.2, r"\textbf{E}")
     else:
         ax.set_yticklabels([])
     if i == 1:
@@ -601,4 +601,4 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     ax.set_ylim(-0.01, 0.2)
     ax.set_xlim(-0.1, 1.1)
 
-plt.savefig("figures/figure6.png", dpi=600)
+plt.savefig("figures/kinetic_analysis.png", dpi=600)
