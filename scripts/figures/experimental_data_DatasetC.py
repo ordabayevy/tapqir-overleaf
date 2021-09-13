@@ -36,7 +36,7 @@ ax = fig.add_subplot(gs[0, :])
 ax.text(
     -30,
     -10,
-    r"\textbf{a}",
+    r"\textbf{A}",
 )
 
 # sorted on-target
@@ -62,7 +62,7 @@ ax = fig.add_subplot(gsb[0, 0])
 ax.text(
     -0.38 * model.data.ontarget.F,
     1.1,
-    r"\textbf{b}",
+    r"\textbf{B}",
 )
 ax.text(
     model.data.ontarget.F,
@@ -71,7 +71,7 @@ ax.text(
     horizontalalignment="right",
 )
 
-results = pd.read_csv("scripts/extended-data/figure7.csv", index_col=0)
+results = pd.read_csv("scripts/figures/DatasetC.csv", index_col=0)
 # prepare data
 Tmax = model.data.ontarget.F
 torch.manual_seed(0)
@@ -142,7 +142,7 @@ ax = fig.add_subplot(gsb[0, 1])
 ax.text(
     -0.38 * model.data.ontarget.F,
     1.1,
-    r"\textbf{c}",
+    r"\textbf{C}",
 )
 ax.text(
     model.data.ontarget.F,
@@ -260,7 +260,7 @@ ax = fig.add_subplot(gsd[0])
 ax.text(
     -0.38 * 0.006,
     2,
-    r"\textbf{d}",
+    r"\textbf{D}",
 )
 ax.barh(
     [0, 1],
@@ -377,4 +377,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("extended-data/figure7.png", dpi=600)
+plt.savefig("figures/experimental_data_DatasetC.png", dpi=600)
