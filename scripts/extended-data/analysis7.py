@@ -100,4 +100,4 @@ results.loc["Af_sp", "Mean"] = pyro.param("Af").mean().item()
 ll, ul = hpdi(pyro.param("Af").data.squeeze(), 0.95, dim=0)
 results.loc["Af_sp", "95% LL"], results.loc["Af_sp", "95% UL"] = ll.item(), ul.item()
 
-results.to_csv("scripts/extended-data/figure7.csv")
+results.to_csv("scripts/figures/experimental_data_DatasetC.csv")
