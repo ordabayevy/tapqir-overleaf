@@ -1,0 +1,5 @@
+outs:
+- md5: 6c2e13971a7cc5ce534e277067533c7c.dir
+  size: 965002930
+  nfiles: 18
+  path: DatasetA_glimpse
