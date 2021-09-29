@@ -24,7 +24,7 @@ gs = fig.add_gridspec(
 
 # panel a
 path_data = Path("experimental/Rpb1SNAP549")
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 model.load_checkpoint(param_only=True)
@@ -125,7 +125,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
 
 # panel b
 path_data = Path("experimental/sigma54RNAPCy3-597P255")
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 model.load_checkpoint(param_only=True)
@@ -232,7 +232,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
 
 # panel c
 path_data = Path("experimental/sigma54RNAPCy3-598P2993")
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 model.load_checkpoint(param_only=True)
@@ -334,7 +334,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
 # panel d
 # path_data = Path("experimental/GreB")
 path_data = Path("/shared/centaur/final/GreB")
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 model.load_checkpoint(param_only=True)
@@ -344,8 +344,10 @@ predictive = Predictive(
 
 #  aois = [2, 2, 2, 2, 3, 4]
 #  frames = [10, 1875, 1456, 3778, 4055, 2361]
-aois = [26, 26, 26, 26, 26, 29]
-frames = [2261, 2290, 2270, 2307, 2311, 54]
+aois = [26, 26, 33, 44, 26, 29]
+frames = [2261, 2290, 4775, 4835, 2311, 54]
+#  aois = [7, 7, 7, 7, 7, 18]
+#  frames = [3687, 3706, 3730, 3745, 3718, 3410]
 
 model.n = torch.tensor(aois)
 pyro.set_rng_seed(0)
@@ -389,7 +391,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     ax = fig.add_subplot(gsd[1, i])
     samples = predictive()
     img_sample = samples["d/data"][0, i, f]
-    ax.imshow(img_sample.numpy(), vmin=340, vmax=500, cmap="gray")
+    ax.imshow(img_sample.numpy(), vmin=340, vmax=550, cmap="gray")
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
     if i == 0:
