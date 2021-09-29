@@ -11,7 +11,9 @@ $x \sim \mathbf{Bernoulli}(\pi)$ &
     $\pi^x (1-\pi)^{1-x}$ \\
 $x \sim \mathbf{Beta}(\alpha, \beta)$ &
     $\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{\text{B}(\alpha, \beta)}$ \\
-$x \sim \mathbf{Categorical}_{\{z_i\}^k_{i=1}}(\mathbf{p})$ &
+$x \sim \mathbf{Categorical}(p)$ &
+    $\prod_{i=1}^k p_i^{[x=i]}$ \\
+$x \sim \mathbf{Empirical}(z, p)$ &
     $\prod_{i=1}^k p_i^{[x=z_i]}$ \\
 $x \sim \mathbf{Exponential}(\lambda)$ &
     $\lambda e^{-\lambda x}$ \rule{0pt}{3ex} \\
