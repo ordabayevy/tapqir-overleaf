@@ -362,7 +362,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     ax.imshow(
         model.data.ontarget.images[n, f].numpy(),
         vmin=340,
-        vmax=500,
+        vmax=550,
         cmap="gray",
     )
     ax.axes.xaxis.set_visible(False)
