@@ -13,12 +13,12 @@ fig = plt.figure(figsize=(7.2, 5.4), constrained_layout=False)
 
 # panel a
 path_data = "simulations/lamda0.5"
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
-n = 0
-frames = [100, 103, 105, 108, 110, 113, 115, 118, 120]
-f1, f2 = 100, 121
+n = 1
+frames = [425, 428, 430, 433, 435, 438, 440, 443, 445]
+f1, f2 = 425, 446
 vmin, vmax = model.data.vmin, model.data.vmax
 gs = fig.add_gridspec(
     nrows=9,
@@ -35,7 +35,7 @@ gs1 = gs[0].subgridspec(2, 9)
 for i, f in enumerate(frames):
     ax = fig.add_subplot(gs1[0, i])
     plt.imshow(
-        model.data.ontarget.images[n, f].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
+        model.data.images[n, f, model.cdx].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
     )
     for axis in ["top", "bottom", "left", "right"]:
         ax.spines[axis].set_linewidth(1.2)
@@ -57,15 +57,15 @@ for i, f in enumerate(frames):
     ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
     # add patch
     for k in range(2):
-        if model.params["d/m_probs"][k, n, f].item() > 0.5:
-            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+        if model.params["m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["theta_probs"][k, n, f].item() > 0.5
             ax.add_patch(
                 Circle(
                     (
-                        model.data.ontarget.x[n, f]
-                        + model.params["d/x"]["Mean"][k, n, f].item(),
-                        model.data.ontarget.y[n, f]
-                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                        model.data.x[n, f, model.cdx]
+                        + model.params["x"]["Mean"][k, n, f].item(),
+                        model.data.y[n, f, model.cdx]
+                        + model.params["y"]["Mean"][k, n, f].item(),
                     ),
                     1.5,
                     color=f"C{k}",
@@ -125,15 +125,18 @@ ax.set_ylabel(r"$p(\mathsf{specific})$")
 # height
 for k in range(2):
     ax = fig.add_subplot(gs[2 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/height"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/height"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/height"]["LL"][k, n, f1:f2][mask],
-            model.params["d/height"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/height"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["height"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["height"]["Mean"][k, n, f1:f2][mask]
+                - model.params["height"]["LL"][k, n, f1:f2][mask],
+                model.params["height"]["UL"][k, n, f1:f2][mask]
+                - model.params["height"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -168,15 +171,18 @@ for k in range(2):
 
     # x
     ax = fig.add_subplot(gs[3 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/x"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/x"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/x"]["LL"][k, n, f1:f2][mask],
-            model.params["d/x"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/x"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["x"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["x"]["Mean"][k, n, f1:f2][mask]
+                - model.params["x"]["LL"][k, n, f1:f2][mask],
+                model.params["x"]["UL"][k, n, f1:f2][mask]
+                - model.params["x"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -262,15 +268,18 @@ for k in range(2):
 
     # y
     ax = fig.add_subplot(gs[4 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/y"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/y"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/y"]["LL"][k, n, f1:f2][mask],
-            model.params["d/y"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/y"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["y"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["y"]["Mean"][k, n, f1:f2][mask]
+                - model.params["y"]["LL"][k, n, f1:f2][mask],
+                model.params["y"]["UL"][k, n, f1:f2][mask]
+                - model.params["y"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -307,12 +316,15 @@ for k in range(2):
 ax = fig.add_subplot(gs[8, :])
 ax.errorbar(
     x=torch.arange(f1, f2),
-    y=model.params["d/background"]["Mean"][n, f1:f2],
-    yerr=(
-        model.params["d/background"]["Mean"][n, f1:f2]
-        - model.params["d/background"]["LL"][n, f1:f2],
-        model.params["d/background"]["UL"][n, f1:f2]
-        - model.params["d/background"]["Mean"][n, f1:f2],
+    y=model.params["background"]["Mean"][n, f1:f2],
+    yerr=torch.stack(
+        (
+            model.params["background"]["Mean"][n, f1:f2]
+            - model.params["background"]["LL"][n, f1:f2],
+            model.params["background"]["UL"][n, f1:f2]
+            - model.params["background"]["Mean"][n, f1:f2],
+        ),
+        0,
     ),
     fmt="o",
     ms=2,
@@ -367,8 +379,8 @@ for i, f in enumerate(frames):
     )
 
 # panel b
-path_data = Path("experimental/Rpb1SNAP549")
-model = Cosmos(verbose=False)
+path_data = Path("experimental/DatasetA")
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 n = 163
@@ -391,7 +403,7 @@ gs1 = gs[0].subgridspec(2, 9)
 for i, f in enumerate(frames):
     ax = fig.add_subplot(gs1[0, i])
     plt.imshow(
-        model.data.ontarget.images[n, f].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
+        model.data.images[n, f, model.cdx].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
     )
     for axis in ["top", "bottom", "left", "right"]:
         ax.spines[axis].set_linewidth(1.2)
@@ -407,15 +419,15 @@ for i, f in enumerate(frames):
     ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
     # add patch
     for k in range(2):
-        if model.params["d/m_probs"][k, n, f].item() > 0.5:
-            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+        if model.params["m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["theta_probs"][k, n, f].item() > 0.5
             ax.add_patch(
                 Circle(
                     (
-                        model.data.ontarget.x[n, f]
-                        + model.params["d/x"]["Mean"][k, n, f].item(),
-                        model.data.ontarget.y[n, f]
-                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                        model.data.x[n, f, model.cdx]
+                        + model.params["x"]["Mean"][k, n, f].item(),
+                        model.data.y[n, f, model.cdx]
+                        + model.params["y"]["Mean"][k, n, f].item(),
                     ),
                     1.5,
                     color=f"C{k}",
@@ -466,15 +478,18 @@ ax.set_ylim(-0.15, 1.15)
 # height
 for k in range(2):
     ax = fig.add_subplot(gs[2 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/height"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/height"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/height"]["LL"][k, n, f1:f2][mask],
-            model.params["d/height"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/height"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["height"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["height"]["Mean"][k, n, f1:f2][mask]
+                - model.params["height"]["LL"][k, n, f1:f2][mask],
+                model.params["height"]["UL"][k, n, f1:f2][mask]
+                - model.params["height"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -509,15 +524,18 @@ for k in range(2):
 
     # x
     ax = fig.add_subplot(gs[3 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/x"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/x"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/x"]["LL"][k, n, f1:f2][mask],
-            model.params["d/x"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/x"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["x"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["x"]["Mean"][k, n, f1:f2][mask]
+                - model.params["x"]["LL"][k, n, f1:f2][mask],
+                model.params["x"]["UL"][k, n, f1:f2][mask]
+                - model.params["x"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -552,15 +570,18 @@ for k in range(2):
 
     # y
     ax = fig.add_subplot(gs[4 + k * 3, :])
-    mask = model.params["d/m_probs"][k, n, f1:f2] > 0.5
+    mask = model.params["m_probs"][k, n, f1:f2] > 0.5
     ax.errorbar(
         x=torch.arange(f1, f2)[mask],
-        y=model.params["d/y"]["Mean"][k, n, f1:f2][mask],
-        yerr=(
-            model.params["d/y"]["Mean"][k, n, f1:f2][mask]
-            - model.params["d/y"]["LL"][k, n, f1:f2][mask],
-            model.params["d/y"]["UL"][k, n, f1:f2][mask]
-            - model.params["d/y"]["Mean"][k, n, f1:f2][mask],
+        y=model.params["y"]["Mean"][k, n, f1:f2][mask],
+        yerr=torch.stack(
+            (
+                model.params["y"]["Mean"][k, n, f1:f2][mask]
+                - model.params["y"]["LL"][k, n, f1:f2][mask],
+                model.params["y"]["UL"][k, n, f1:f2][mask]
+                - model.params["y"]["Mean"][k, n, f1:f2][mask],
+            ),
+            0,
         ),
         fmt="o",
         ms=2,
@@ -597,12 +618,15 @@ for k in range(2):
 ax = fig.add_subplot(gs[8, :])
 ax.errorbar(
     x=torch.arange(f1, f2),
-    y=model.params["d/background"]["Mean"][n, f1:f2],
-    yerr=(
-        model.params["d/background"]["Mean"][n, f1:f2]
-        - model.params["d/background"]["LL"][n, f1:f2],
-        model.params["d/background"]["UL"][n, f1:f2]
-        - model.params["d/background"]["Mean"][n, f1:f2],
+    y=model.params["background"]["Mean"][n, f1:f2],
+    yerr=torch.stack(
+        (
+            model.params["background"]["Mean"][n, f1:f2]
+            - model.params["background"]["LL"][n, f1:f2],
+            model.params["background"]["UL"][n, f1:f2]
+            - model.params["background"]["Mean"][n, f1:f2],
+        ),
+        0,
     ),
     fmt="o",
     ms=2,
