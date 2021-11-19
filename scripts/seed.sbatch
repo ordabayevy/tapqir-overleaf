@@ -6,6 +6,6 @@
 
 # Path to your executable
 python scripts/cosmos_simulations.py \
-  -bs 4 --cuda --dtype double \
   --seed ${SLURM_ARRAY_TASK_ID} \
+  --cuda \
   --path simulations/seed${SLURM_ARRAY_TASK_ID}
