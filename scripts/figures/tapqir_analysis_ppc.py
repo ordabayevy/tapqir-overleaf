@@ -23,7 +23,7 @@ gs = fig.add_gridspec(
 )
 
 # panel a
-path_data = Path("experimental/Rpb1SNAP549")
+path_data = Path("experimental/DatasetA")
 model = Cosmos()
 model.load(path_data, data_only=False)
 
@@ -46,7 +46,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # experiment
     ax = fig.add_subplot(gsa[0, i])
     ax.imshow(
-        model.data.ontarget.images[n, f].numpy(),
+        model.data.images[n, f, model.cdx].numpy(),
         vmin=250,
         vmax=650,
         cmap="gray",
@@ -76,7 +76,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # prediction
     ax = fig.add_subplot(gsa[1, i])
     samples = predictive()
-    img_sample = samples["d/data"][0, i, f]
+    img_sample = samples["data"][0, i, f]
     ax.imshow(img_sample.numpy(), vmin=250, vmax=650, cmap="gray")
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
@@ -92,7 +92,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # histogram
     ax = fig.add_subplot(gsa[2, i])
     ax.hist(
-        model.data.ontarget.images[n, f].flatten().numpy(),
+        model.data.images[n, f, model.cdx].flatten().numpy(),
         range=(200, 700),
         density=True,
         bins=10,
@@ -124,7 +124,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel b
-path_data = Path("experimental/sigma54RNAPCy3-597P255")
+path_data = Path("experimental/DatasetB")
 model = Cosmos()
 model.load(path_data, data_only=False)
 
@@ -137,7 +137,7 @@ aois = [2, 3, 2, 3, 2, 4]
 frames = [2, 699, 912, 892, 980, 4099]
 
 model.n = torch.tensor(aois)
-pyro.set_rng_seed(0)
+pyro.set_rng_seed(1)
 samples = predictive()
 
 gsb = gs[0, 1].subgridspec(
@@ -147,7 +147,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # experiment
     ax = fig.add_subplot(gsb[0, i])
     ax.imshow(
-        model.data.ontarget.images[n, f].numpy(),
+        model.data.images[n, f, model.cdx].numpy(),
         vmin=1070,
         vmax=1200,
         cmap="gray",
@@ -177,7 +177,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # prediction
     ax = fig.add_subplot(gsb[1, i])
     samples = predictive()
-    img_sample = samples["d/data"][0, i, f]
+    img_sample = samples["data"][0, i, f]
     ax.imshow(img_sample.numpy(), vmin=1070, vmax=1200, cmap="gray")
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
@@ -193,7 +193,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # histogram
     ax = fig.add_subplot(gsb[2, i])
     ax.hist(
-        model.data.ontarget.images[n, f].flatten().numpy(),
+        model.data.images[n, f, model.cdx].flatten().numpy(),
         range=(1070, 1250),
         density=True,
         bins=10,
@@ -231,7 +231,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel c
-path_data = Path("experimental/sigma54RNAPCy3-598P2993")
+path_data = Path("experimental/DatasetC")
 model = Cosmos()
 model.load(path_data, data_only=False)
 
@@ -254,7 +254,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # experiment
     ax = fig.add_subplot(gsc[0, i])
     ax.imshow(
-        model.data.ontarget.images[n, f].numpy(),
+        model.data.images[n, f, model.cdx].numpy(),
         vmin=330,
         vmax=550,
         cmap="gray",
@@ -284,7 +284,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # prediction
     ax = fig.add_subplot(gsc[1, i])
     samples = predictive()
-    img_sample = samples["d/data"][0, i, f]
+    img_sample = samples["data"][0, i, f]
     ax.imshow(img_sample.numpy(), vmin=330, vmax=550, cmap="gray")
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
@@ -300,7 +300,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # histogram
     ax = fig.add_subplot(gsc[2, i])
     ax.hist(
-        model.data.ontarget.images[n, f].flatten().numpy(),
+        model.data.images[n, f, model.cdx].flatten().numpy(),
         range=(280, 680),
         density=True,
         bins=10,
@@ -332,8 +332,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         ax.set_yticklabels([])
 
 # panel d
-# path_data = Path("experimental/GreB")
-path_data = Path("/shared/centaur/final/GreB")
+path_data = Path("experimental/DatasetD")
 model = Cosmos()
 model.load(path_data, data_only=False)
 
@@ -342,12 +341,8 @@ predictive = Predictive(
     pyro.poutine.uncondition(model.model), guide=model.guide, num_samples=1
 )
 
-#  aois = [2, 2, 2, 2, 3, 4]
-#  frames = [10, 1875, 1456, 3778, 4055, 2361]
-aois = [26, 26, 33, 44, 26, 29]
-frames = [2261, 2290, 4775, 4835, 2311, 54]
-#  aois = [7, 7, 7, 7, 7, 18]
-#  frames = [3687, 3706, 3730, 3745, 3718, 3410]
+aois = [28, 29, 38, 38, 54, 72]
+frames = [440, 445, 245, 447, 1747, 2630]
 
 model.n = torch.tensor(aois)
 pyro.set_rng_seed(0)
@@ -360,7 +355,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # experiment
     ax = fig.add_subplot(gsd[0, i])
     ax.imshow(
-        model.data.ontarget.images[n, f].numpy(),
+        model.data.images[n, f, model.cdx].numpy(),
         vmin=340,
         vmax=550,
         cmap="gray",
@@ -390,7 +385,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # prediction
     ax = fig.add_subplot(gsd[1, i])
     samples = predictive()
-    img_sample = samples["d/data"][0, i, f]
+    img_sample = samples["data"][0, i, f]
     ax.imshow(img_sample.numpy(), vmin=340, vmax=550, cmap="gray")
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
@@ -406,7 +401,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     # histogram
     ax = fig.add_subplot(gsd[2, i])
     ax.hist(
-        model.data.ontarget.images[n, f].flatten().numpy(),
+        model.data.images[n, f, model.cdx].flatten().numpy(),
         range=(300, 550),
         density=True,
         bins=10,

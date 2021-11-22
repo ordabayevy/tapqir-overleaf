@@ -3,7 +3,7 @@ from pathlib import Path
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import torch
-from tapqir.distributions.kspotgammanoise import _gaussian_spots
+from tapqir.distributions.util import gaussian_spots
 from tapqir.models import Cosmos
 
 mpl.rc("text", usetex=True)
@@ -26,8 +26,8 @@ gs = fig.add_gridspec(
 # panel a
 gsa = gs[0, 0].subgridspec(1, 3, width_ratios=[2, 1, 3])
 
-path_data = Path("experimental/Rpb1SNAP549")
-model = Cosmos(verbose=False)
+path_data = Path("experimental/DatasetA")
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 # 2-D image
@@ -36,7 +36,7 @@ ax.text(-8, -8, r"\textbf{A}")
 n = 163
 f = 640
 vmin, vmax = 340, 635
-ax.imshow(model.data.ontarget.images[n, f].numpy(), vmin=vmin, vmax=vmax, cmap="gray")
+ax.imshow(model.data.images[n, f, model.cdx].numpy(), vmin=vmin, vmax=vmax, cmap="gray")
 ax.set_xticks([])
 ax.set_yticks([])
 ax.set_xlim(-3, 16)
@@ -101,12 +101,12 @@ ax.arrow(
 ax.axis("off")
 
 # 3-D plot
-vmin3d = model.params["d/background"]["Mean"][n, f] + model.data.offset.mean
+vmin3d = model.params["background"]["Mean"][n, f] + model.data.offset.mean
 vmax3d = vmin3d + 150
 ax = fig.add_subplot(gsa[0, 2], projection="3d")
-X = Y = torch.arange(model.data.P)
-Y, X = torch.meshgrid(Y, X)
-Z = model.data.ontarget.images[n, f].numpy()
+P_range = torch.arange(model.data.P)
+X, Y = torch.meshgrid(P_range, P_range, indexing="xy")
+Z = model.data.images[n, f, model.cdx].numpy()
 ax.invert_yaxis()
 # Plot the surface.
 surf = ax.plot_surface(
@@ -132,25 +132,26 @@ ax.set_title("3-D plot", y=1, pad=2, fontsize=8)
 
 # panel b
 gsb = gs[1, 0].subgridspec(2, 2, hspace=0.0)
-vmin3d = model.params["d/background"]["Mean"][n, f]
+vmin3d = model.params["background"]["Mean"][n, f]
 vmax3d = vmin3d + 120
 for m1, m2 in ((0, 0), (0, 1), (1, 0), (1, 1)):
     ax = fig.add_subplot(gsb[m1, m2], projection="3d")
 
-    img_ideal = model.params["d/background"]["Mean"][n, f : f + 1, None, None]
-    gaussian = _gaussian_spots(
-        model.params["d/height"]["Mean"][:, n, f : f + 1],
-        model.params["d/width"]["Mean"][:, n, f : f + 1],
-        model.params["d/x"]["Mean"][:, n, f : f + 1],
-        model.params["d/y"]["Mean"][:, n, f : f + 1],
-        model.data.ontarget.xy[n, f : f + 1],
-        14,
+    img_ideal = model.params["background"]["Mean"][n, f : f + 1, None, None]
+    gaussian = gaussian_spots(
+        model.params["height"]["Mean"][:, n, f : f + 1],
+        model.params["width"]["Mean"][:, n, f : f + 1],
+        model.params["x"]["Mean"][:, n, f : f + 1],
+        model.params["y"]["Mean"][:, n, f : f + 1],
+        model.data.xy[n, f : f + 1, model.cdx],
+        model.data.P,
         torch.tensor([[m1], [m2]]),
     )
     img_ideal = img_ideal + gaussian.sum(-4)
     Z = img_ideal[0].numpy()
 
     # Plot the surface.
+    ax.invert_yaxis()
     surf = ax.plot_surface(
         X,
         Y,
@@ -164,7 +165,7 @@ for m1, m2 in ((0, 0), (0, 1), (1, 0), (1, 1)):
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.zaxis.set_ticklabels([])
-    ax.view_init(elev=15.0, azim=210)
+    ax.view_init(elev=15.0, azim=125)
     ax.set_zlim(vmin3d - 150, vmax3d + 100)
 
     if m1 == 0 and m2 == 0:
@@ -182,15 +183,15 @@ for m1, m2 in ((0, 0), (0, 1), (1, 0), (1, 1)):
             pad=2,
             fontsize=8,
         )
-        ax.text2D(0.01, 0.03, s=r"$\mathbf{2}$", color="C1")
+        ax.text2D(-0.05, 0.03, s=r"$\mathbf{2}$", color="C1")
     elif m1 == 1 and m2 == 0:
-        ax.text2D(-0.05, 0.03, s=r"$\mathbf{1}$", color="C0")
         ax.set_title(
             r"$m_{\mathsf{spot}(1)}=1$" + "\n" + r"$m_{\mathsf{spot}(2)}=0$",
             y=1,
             pad=2,
             fontsize=8,
         )
+        ax.text2D(0.01, 0.035, s=r"$\mathbf{1}$", color="C0")
     elif m1 == 1 and m2 == 1:
         ax.set_title(
             r"$m_{\mathsf{spot}(1)}=1$" + "\n" + r"$m_{\mathsf{spot}(2)}=1$",
@@ -198,15 +199,15 @@ for m1, m2 in ((0, 0), (0, 1), (1, 0), (1, 1)):
             pad=2,
             fontsize=8,
         )
-        ax.text2D(-0.05, 0.03, s=r"$\mathbf{1}$", color="C0")
-        ax.text2D(0.01, 0.03, s=r"$\mathbf{2}$", color="C1")
+        ax.text2D(0.01, 0.035, s=r"$\mathbf{1}$", color="C0")
+        ax.text2D(-0.05, 0.03, s=r"$\mathbf{2}$", color="C1")
 
 # panel c
 gsc = gs[2, 0].subgridspec(1, 3)
 
 ax = fig.add_subplot(gsc[0, 0])
 theta0 = (
-    _gaussian_spots(
+    gaussian_spots(
         height=torch.tensor([3000, 3000]),
         width=torch.tensor([1.5, 1.5]),
         x=torch.tensor([-4.5, 3.5]),
@@ -225,7 +226,7 @@ ax.text(3.5 + 6, -1.5 + 7, s=r"$\mathbf{2}$", color="C1")
 
 ax = fig.add_subplot(gsc[0, 1])
 theta1 = (
-    _gaussian_spots(
+    gaussian_spots(
         height=torch.tensor([3000, 3000]),
         width=torch.tensor([1.5, 1.5]),
         x=torch.tensor([0, 3.5]),
@@ -243,7 +244,7 @@ ax.text(3.5 + 6, -3.5 + 7, s=r"$\mathbf{2}$", color="C1")
 
 ax = fig.add_subplot(gsc[0, 2])
 theta2 = (
-    _gaussian_spots(
+    gaussian_spots(
         height=torch.tensor([3000, 3000]),
         width=torch.tensor([1.5, 1.5]),
         x=torch.tensor([0.5, 0]),
