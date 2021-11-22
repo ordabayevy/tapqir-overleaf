@@ -23,7 +23,7 @@ $x \sim \mathbf{Gamma}(\mu, \sigma)$ &
 $x \sim \mathbf{HalfNormal}(\sigma)$ &
     $\dfrac{\sqrt{2}}{\sigma \sqrt{\pi}} \exp \left( -\dfrac{x^2}{2\sigma^2} \right)$
     for  $x > 0$ \\
-$k \sim \mathbf{TruncPoisson}(\lambda, K) $ & $ \begin{cases} 1 - e^{-\lambda} \sum_{i=0}^{K-1} \dfrac{\lambda^i}{i!} & \textrm{if $k = K$} \\ \dfrac{\lambda^k e^{-\lambda}}{k!} & \textrm{otherwise} \end{cases} $ \\
+$k \sim \mathbf{TruncPoisson}(\lambda, K) $ & $ \begin{cases} 1 - e^{-\lambda} \sum_{i=0}^{K-1} \dfrac{\lambda^i}{i!} & \mathrm{if } k = K \\ \dfrac{\lambda^k e^{-\lambda}}{k!} & \mathrm{otherwise} \end{cases} $ \\
 $x \sim \mathbf{Uniform}(a, b)$ &
     $\dfrac{1}{b-a}$ for $x \in [a, b]$ \\
 \bottomrule
