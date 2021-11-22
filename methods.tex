@@ -12,7 +12,7 @@ Raw input data into Tapqir consists of 1) binder channel images ($D^\mathsf{raw}
 
 \subsection{The Tapqir model} 
 
-Our intent is to model CoSMoS image data by accounting for the significant physical aspects of image formation, such as photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. A graphical representation of the Tapqir model for CoSMoS data similar to that in \FIG{graphical_model}D but including probability distributions and other additional detail is shown in \FIGSUPP[graphical_model]{extended}A. The corresponding generative model represented as pseudocode is shown in \ALGORITHM{model}. All variables with short descriptions and their domains are listed in \TABLE{variables}. Below, we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
+Our intent is to model CoSMoS image data by accounting for the significant physical aspects of image formation, such as photon noise and binding of target-specific and target-nonspecific molecules to the microscope slide surface. A graphical representation of the Tapqir model for CoSMoS data similar to that in \FIG{graphical_model}D but including probability distributions and other additional detail is shown in \FIGSUPP[graphical_model]{extended}. The corresponding generative model represented as pseudocode is shown in \ALGORITHM{model}. All variables with short descriptions and their domains are listed in \TABLE{variables}. Below, we describe the model in detail starting with the observed data and the likelihood function and then proceed with model parameters and their prior distributions.
 
 \subsubsection{Image likelihood}
 
@@ -56,7 +56,7 @@ To discriminate between spots that arise from target-specific and target-nonspec
 
 \subsubsection{Prior distributions}
 
-The prior distributions for the model parameters are summarized in \FIGSUPP[graphical_model]{extended}A and detailed below. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). 
+The prior distributions for the model parameters are summarized in \FIGSUPP[graphical_model]{extended} and detailed below. Unless otherwise indicated we assume largely uninformative priors (such as the Half-Normal distribution with large mean). 
 
 Background intensity $b$ follows a Gamma distribution:
 %
@@ -115,7 +115,7 @@ In CoSMoS experiments the microscope/camera hardware is typically designed to se
     w \sim \mathbf{Uniform}(0.75, 2.25)
 \end{equation}
 
-Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule to an accuracy $\sigma^{xy}$ that is generally smaller than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x^\mathsf{target}$, $y^\mathsf{target}$), and a standard deviation parameterized as proximity $\sigma^{xy} $ (\FIGSUPP[graphical_model]{extended}B, green). On the other hand, non-specific binding to the microscope slide surface can occur anywhere within the image and therefore has a uniform distribution (\FIGSUPP[graphical_model]{extended}B, red).  Off-targets spots may fall slightly outside the AOI image yet still affect pixel intensities within the AOI.  Therefore the range for ($x$, $y$) is extended one pixel wider than the size of the image, which allows the center of off-target spots to fall slightly beyond the AOI boundary. We chose the Affine-Beta distribution because it models a continuous parameter defined on a bounded interval. Note that the Uniform distribution is a special case of the Affine-Beta distribution.
+Priors for spot position ($x$, $y$) depend on whether the spot represents target-specific or non-specific binding. Specifically bound molecules are colocalized with the target molecule to an accuracy $\sigma^{xy}$ that is generally smaller than one pixel and depends on various factors including microscope point-spread function and magnification, accuracy of registration between binder and target channels, and accuracy of drift correction. We use an Affine-Beta prior with zero mean position relative to the target molecule location ($x^\mathsf{target}$, $y^\mathsf{target}$), and a standard deviation parameterized as proximity $\sigma^{xy} $ (\FIGSUPP[graphical_model]{xy}, green). On the other hand, non-specific binding to the microscope slide surface can occur anywhere within the image and therefore has a uniform distribution (\FIGSUPP[graphical_model]{xy}, red).  Off-targets spots may fall slightly outside the AOI image yet still affect pixel intensities within the AOI.  Therefore the range for ($x$, $y$) is extended one pixel wider than the size of the image, which allows the center of off-target spots to fall slightly beyond the AOI boundary. We chose the Affine-Beta distribution because it models a continuous parameter defined on a bounded interval. Note that the Uniform distribution is a special case of the Affine-Beta distribution.
 %
 \begin{equation}
     x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
@@ -238,7 +238,7 @@ For posterior predictive checking, sampled images ($\widetilde{D}$) were produce
 \end{aligned}
 \end{equation}
 
-\subsubsection{Calculation of spot probabilities}
+\subsection{Calculation of spot probabilities}
 
 The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image is calculated as:
 
@@ -254,7 +254,7 @@ The marginal spot presence probability $p(m | D)$ is calculated as:
 
 Variational inference directly optimizes for $q(\theta) \equiv \theta_\mathsf{prob}$ and $q(m | \theta) \equiv m_\mathsf{prob}$ probabilities (see Eq. 20 and \ALGORITHM{guide}), which approximate $p(\theta | D)$ and $p(m | \theta, D)$, respectively. For simplicity in the main text and figures we suppress the conditional dependency on $D$ in $p(\theta | D)$ and $p(m | D)$ and instead write them as $p(\theta)$ and $p(m)$, respectively.
 
-\subsubsection{Signal-to-noise ratio}
+\subsection{Signal-to-noise ratio}
 
 We define SNR as:
 
@@ -326,7 +326,7 @@ Similarly, to estimate mean and 95\% CI of $K_\mathsf{eq}$ (\FIG{kinetic_analysi
     K_\mathsf{eq} = \dfrac{\pi}{1 - \pi}
 \end{equation}
 
-To calculate  time-to-first binding kinetics from Tapqir-derived $p(\mathsf{specific})$ (\FIG{experimental_data}B, \FIGSUPP[experimental_data]{DatasetA}B, \FIGSUPP[experimental_data]{DatasetC}B, and \FIGSUPP[experimental_data]{DatasetD}B), 2,000 binary time records $z$ were sampled from $p(\mathsf{specific})$. For each time record initial absent intervals were measured and analyzed using Eq. (7) in \cite{Friedman2015-nx}, yielding distributions of $k_\mathsf{a}$, $k_\mathsf{ns}$, and $A_\mathsf{f}$. Mean value and 95\% credible intervals were calculated from these distributions. Initial absent intervals from ``spot-picker'' analysis (\FIG{experimental_data}C, \FIGSUPP[experimental_data]{DatasetA}C, \FIGSUPP[experimental_data]{DatasetC}C, and \FIGSUPP[experimental_data]{DatasetD}C) were analyzed as described in \citep{Friedman2015-nx} with the only difference being that on-target and off-target data were here analyzed jointly instead of being analyzed sequentially \citep{Friedman2015-nx}.  Note that the $k_\mathsf{ns}$ values determined using the two methods are not directly comparable for several reasons, including that the non-specific binding frequencies are effectively measured over different areas. For Tapqir the target area is approximately $ \pi \left( \sigma^{xy} \right) ^2$ (which is between 0.3 and 0.8 pixels$^2$ in the different experimental data sets) and for spot-picker the area is subjectively chosen as $\pi \cdot 1.5^2 = 7$ pixels$^2$.
+To calculate  time-to-first binding kinetics from Tapqir-derived $p(\mathsf{specific})$ (\FIG{experimental_data}B, \FIGSUPP[experimental_data]{DatasetA}B, \FIGSUPP[experimental_data]{DatasetC}B, and \FIGSUPP[experimental_data]{DatasetD}B), 2000 binary time records $z$ were sampled from $p(\mathsf{specific})$. For each time record initial absent intervals were measured and analyzed using Eq. (7) in \cite{Friedman2015-nx}, yielding distributions of $k_\mathsf{a}$, $k_\mathsf{ns}$, and $A_\mathsf{f}$. Mean value and 95\% credible intervals were calculated from these distributions. Initial absent intervals from ``spot-picker'' analysis (\FIG{experimental_data}C, \FIGSUPP[experimental_data]{DatasetA}C, \FIGSUPP[experimental_data]{DatasetC}C, and \FIGSUPP[experimental_data]{DatasetD}C) were analyzed as described in \citep{Friedman2015-nx} with the only difference being that on-target and off-target data were here analyzed jointly instead of being analyzed sequentially \citep{Friedman2015-nx}.  Note that the $k_\mathsf{ns}$ values determined using the two methods are not directly comparable for several reasons, including that the non-specific binding frequencies are effectively measured over different areas. For Tapqir the target area is approximately $ \pi \left( \sigma^{xy} \right) ^2$ (which is between 0.3 and 0.8 pixels$^2$ in the different experimental data sets) and for spot-picker the area is subjectively chosen as $\pi \cdot 1.5^2 = 7$ pixels$^2$.
 
 \include{tables/variables}
 
