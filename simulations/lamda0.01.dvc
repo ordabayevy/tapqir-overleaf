@@ -1,0 +1,5 @@
+outs:
+- md5: a9ab6af5ce65e6c03e8d6b56551946d1.dir
+  size: 15010223
+  nfiles: 23
+  path: lamda0.01
