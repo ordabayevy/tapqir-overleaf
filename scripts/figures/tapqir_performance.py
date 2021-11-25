@@ -3,6 +3,7 @@ from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import torch
 from matplotlib.patches import Circle
@@ -28,17 +29,19 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        model = Cosmos(verbose=False)
+        model = Cosmos()
         model.load(data_path, data_only=False)
 
-        fit[data_path.name] = model.statistics.drop("trained").astype(float)
+        fit[data_path.name] = model.summary.astype(float)
         for p in ("gain", "proximity", "pi", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        mask = torch.from_numpy(model.data.ontarget.labels["z"])
-        samples = torch.masked_select(model.params["p(specific)"], mask)
+        mask = torch.from_numpy(model.data.labels["z"][..., 0])
+        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"].flatten()
+        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+            : model.data.N
+        ].flatten()
 
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="height")
@@ -61,7 +64,7 @@ for i, name in enumerate(truth_df.index):
     ax.axes.yaxis.set_visible(False)
     ax.set_title(fr"${truth_df.loc[name, 'SNR']:.2f}$", fontsize=8)
     data = load(SIMULATIONS_DIR / name)
-    ax.imshow(data.ontarget.images[3, 222].numpy(), vmin=190, vmax=380, cmap="gray")
+    ax.imshow(data.images[3, 222, 0].numpy(), vmin=190, vmax=380, cmap="gray")
     if i == 0:
         ax.text(
             -12,
@@ -95,7 +98,7 @@ ax.text(
 ax.errorbar(
     truth_df["SNR"],
     [fit[i].loc["p(specific)", "Mean"] for i in truth_df.index],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["p(specific)", ["95% LL", "95% UL"]].values
@@ -285,17 +288,19 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        model = Cosmos(verbose=False)
+        model = Cosmos()
         model.load(data_path, data_only=False)
 
-        fit[data_path.name] = model.statistics.drop("trained").astype(float)
+        fit[data_path.name] = model.summary.astype(float)
         for p in ("gain", "proximity", "pi", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        mask = torch.from_numpy(model.data.ontarget.labels["z"])
-        samples = torch.masked_select(model.params["p(specific)"], mask)
+        mask = torch.from_numpy(model.data.labels["z"][..., 0])
+        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"].flatten()
+        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+            : model.data.N
+        ].flatten()
 
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="lamda")
@@ -321,7 +326,7 @@ ax.text(
 ax.errorbar(
     truth_df["lamda"],
     [fit[i].loc["p(specific)", "Mean"] for i in truth_df.index],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["p(specific)", ["95% LL", "95% UL"]].values
@@ -518,14 +523,14 @@ gs = fig.add_gridspec(
 model = Cosmos()
 model.load("simulations/lamda1", data_only=False)
 
-spotpicker = loadmat("simulations/spotpicker_result.mat")
+# spotpicker = loadmat("simulations/spotpicker_result.mat")
 
 aois = [0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4]
 frames = [166, 333, 476, 59, 163, 440, 157, 321, 34, 386, 60, 191]
 
 for i, (n, f) in enumerate(zip(aois, frames)):
     ax = fig.add_subplot(gs[0, i])
-    ax.imshow(model.data.ontarget.images[n, f], cmap="gray")
+    ax.imshow(model.data.images[n, f, 0], cmap="gray")
     ax.axis("off")
     if i == 0:
         ax.text(-20, -4, r"\textbf{H}")
@@ -540,15 +545,15 @@ for i, (n, f) in enumerate(zip(aois, frames)):
     ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
     # add patch
     for k in range(2):
-        if model.params["d/m_probs"][k, n, f].item() > 0.5:
-            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+        if model.params["m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["theta_probs"][k, n, f].item() > 0.5
             ax.add_patch(
                 Circle(
                     (
-                        model.data.ontarget.x[n, f]
-                        + model.params["d/x"]["Mean"][k, n, f].item(),
-                        model.data.ontarget.y[n, f]
-                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                        model.data.x[n, f, 0]
+                        + model.params["x"]["Mean"][k, n, f].item(),
+                        model.data.y[n, f, 0]
+                        + model.params["y"]["Mean"][k, n, f].item(),
                     ),
                     1.5,
                     color=f"C{k}",
@@ -578,17 +583,19 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        model = Cosmos(verbose=False)
+        model = Cosmos()
         model.load(data_path, data_only=False)
 
-        fit[data_path.name] = model.statistics.drop("trained").astype(float)
+        fit[data_path.name] = model.summary.astype(float)
         for p in ("gain", "proximity", "pi", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        mask = torch.from_numpy(model.data.ontarget.labels["z"])
-        samples = torch.masked_select(model.params["p(specific)"], mask)
+        mask = torch.from_numpy(model.data.labels["z"][..., 0])
+        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"].flatten()
+        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+            : model.data.N
+        ].flatten()
 
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float)
 truth_df = truth_df.sort_values(by="lamda")

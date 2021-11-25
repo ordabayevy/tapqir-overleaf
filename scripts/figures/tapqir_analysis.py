@@ -16,9 +16,9 @@ path_data = "simulations/lamda0.5"
 model = Cosmos()
 model.load(path_data, data_only=False)
 
-n = 1
-frames = [425, 428, 430, 433, 435, 438, 440, 443, 445]
-f1, f2 = 425, 446
+n = 0
+frames = [100, 103, 105, 108, 110, 113, 115, 118, 120]
+f1, f2 = 100, 121
 vmin, vmax = model.data.vmin, model.data.vmax
 gs = fig.add_gridspec(
     nrows=9,

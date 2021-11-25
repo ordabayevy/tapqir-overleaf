@@ -10,16 +10,16 @@ from tapqir.utils.imscroll import time_to_first_binding
 from tapqir.utils.mle_analysis import train, ttfb_guide, ttfb_model
 
 # load model & parameters
-# path_data = Path("experimental/GreB")
-path_data = Path("/shared/centaur/final/GreB")
-model = Cosmos(verbose=False)
+path_data = Path("experimental/DatasetD")
+# path_data = Path("/shared/centaur/final/GreB")
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 # prepare data
-Tmax = model.data.ontarget.F
+Tmax = model.data.F
 control = None
 torch.manual_seed(0)
-z = dist.Bernoulli(model.params["p(specific)"]).sample((2000,))
+z = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample((2000,))
 data = time_to_first_binding(z)
 
 # use cuda
@@ -53,9 +53,13 @@ results.loc["Af", "95% LL"], results.loc["Af", "95% UL"] = ll.item(), ul.item()
 
 
 # Spotpicker fit
-spotpicker_data = time_to_first_binding(model.data.ontarget.labels["z"])
+spotpicker_data = time_to_first_binding(
+    model.data.labels["z"][: model.data.N, :, model.cdx]
+)
 spotpicker_data = torch.tensor(spotpicker_data, dtype=torch.float)
-spotpicker_control = time_to_first_binding(model.data.offtarget.labels["z"])
+spotpicker_control = time_to_first_binding(
+    model.data.labels["z"][model.data.N :, :, model.cdx]
+)
 spotpicker_control = torch.tensor(spotpicker_control, dtype=torch.float)
 
 torch.manual_seed(0)

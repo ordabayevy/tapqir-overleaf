@@ -14,9 +14,9 @@ model.load("simulations/lamda1", data_only=False)
 spotpicker = loadmat("simulations/spotpicker_result.mat")
 
 aois, frames = np.nonzero(
-    model.data.ontarget.labels["z"]
+    model.data.labels["z"][: model.data.N, :, model.cdx]
     & (
-        ~model.params["z_map"].numpy()
+        ~model.params["z_map"][: model.data.N].numpy()
         | ~spotpicker["binary_default1p5"][:5].astype(bool)
     )
 )
@@ -34,7 +34,7 @@ gs = fig.add_gridspec(
 
 for i, (n, f) in enumerate(zip(aois, frames)):
     ax = fig.add_subplot(gs[i // 10, i % 10])
-    ax.imshow(model.data.ontarget.images[n, f], cmap="gray")
+    ax.imshow(model.data.images[n, f, model.cdx], cmap="gray")
     tsign = "+" if model.params["z_map"][n, f] else "-"
     ssign = "+" if spotpicker["binary_default1p5"][n, f] else "-"
     ax.set_title(
@@ -49,4 +49,4 @@ for i, (n, f) in enumerate(zip(aois, frames)):
         )
     ax.axis("off")
 
-plt.savefig("extended-data/figure5.png", dpi=600)
+plt.savefig("figures/tapqir_performance_fn.png", dpi=600)

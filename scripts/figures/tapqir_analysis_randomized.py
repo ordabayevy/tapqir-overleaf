@@ -2,6 +2,7 @@ from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import torch
 
@@ -33,9 +34,9 @@ for data_path in SIMULATIONS_DIR.iterdir():
         ).rename(data_path.name)
         truth[data_path.name]["seed"] = data_path.name[4:]
 
-        statistics = pd.read_csv(data_path / "statistics.csv", index_col=0)
+        statistics = pd.read_csv(data_path / "cosmos-channel0-summary.csv", index_col=0)
 
-        fit[data_path.name] = statistics.drop("trained").astype(float)
+        fit[data_path.name] = statistics.astype(float)
         for p in ("gain", "proximity", "pi", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
@@ -49,7 +50,7 @@ ax.plot(truth_df["gain"].sort_values(), truth_df["gain"].sort_values(), "k--")
 ax.errorbar(
     truth_df["gain"],
     [fit[i].loc["gain", "Mean"] for i in truth_df.index],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["gain", ["95% LL", "95% UL"]].values
@@ -95,7 +96,7 @@ ax.plot(truth_df["pi"].sort_values(), truth_df["pi"].sort_values(), "k--")
 ax.errorbar(
     truth_df["pi"],
     [fit[i].loc["pi", "Mean"] for i in truth_df.index],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["pi", ["95% LL", "95% UL"]].values - fit[i].loc["pi", "Mean"]
@@ -143,7 +144,7 @@ ax.plot(truth_df["lamda"].sort_values(), truth_df["lamda"].sort_values(), "k--")
 ax.errorbar(
     truth_df["lamda"],
     [fit[i].loc["lamda", "Mean"] for i in truth_df.index],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["lamda", ["95% LL", "95% UL"]].values
@@ -195,7 +196,7 @@ ax.errorbar(
         fit[i].loc["proximity", "Mean"]
         for i in truth_df.sort_values(by="proximity").index
     ],
-    yerr=torch.tensor(
+    yerr=np.array(
         [
             abs(
                 fit[i].loc["proximity", ["95% LL", "95% UL"]].values

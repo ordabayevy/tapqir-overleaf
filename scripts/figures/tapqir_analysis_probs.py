@@ -13,7 +13,7 @@ fig = plt.figure(figsize=(7.2, 3.8), constrained_layout=False)
 
 # panel a
 path_data = "simulations/lamda0.5"
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 n = 0
@@ -35,7 +35,7 @@ gs1 = gs[0].subgridspec(2, 9)
 for i, f in enumerate(frames):
     ax = fig.add_subplot(gs1[0, i])
     plt.imshow(
-        model.data.ontarget.images[n, f].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
+        model.data.images[n, f, model.cdx].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
     )
     for axis in ["top", "bottom", "left", "right"]:
         ax.spines[axis].set_linewidth(1.2)
@@ -57,15 +57,15 @@ for i, f in enumerate(frames):
     ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
     # add patch
     for k in range(2):
-        if model.params["d/m_probs"][k, n, f].item() > 0.5:
-            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+        if model.params["m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["theta_probs"][k, n, f].item() > 0.5
             ax.add_patch(
                 Circle(
                     (
-                        model.data.ontarget.x[n, f]
-                        + model.params["d/x"]["Mean"][k, n, f].item(),
-                        model.data.ontarget.y[n, f]
-                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                        model.data.x[n, f, model.cdx]
+                        + model.params["x"]["Mean"][k, n, f].item(),
+                        model.data.y[n, f, model.cdx]
+                        + model.params["y"]["Mean"][k, n, f].item(),
                     ),
                     1.5,
                     color=f"C{k}",
@@ -127,7 +127,7 @@ for k in range(2):
     ax = fig.add_subplot(gs[2 + k * 2, :])
     ax.plot(
         torch.arange(f1, f2),
-        model.params["d/z_probs"][k, n, f1:f2],
+        model.params["theta_probs"][k, n, f1:f2],
         "o-",
         ms=2,
         lw=0.5,
@@ -163,7 +163,7 @@ for k in range(2):
     ax = fig.add_subplot(gs[3 + k * 2, :])
     ax.plot(
         torch.arange(f1, f2),
-        model.params["d/m_probs"][k, n, f1:f2],
+        model.params["m_probs"][k, n, f1:f2],
         "o-",
         ms=2,
         lw=0.5,
@@ -273,8 +273,8 @@ for i, f in enumerate(frames):
     )
 
 # panel b
-path_data = Path("/shared/centaur/final/Rpb1SNAP549")
-model = Cosmos(verbose=False)
+path_data = Path("experimental/DatasetA")
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 n = 163
@@ -297,7 +297,7 @@ gs1 = gs[0].subgridspec(2, 9)
 for i, f in enumerate(frames):
     ax = fig.add_subplot(gs1[0, i])
     plt.imshow(
-        model.data.ontarget.images[n, f].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
+        model.data.images[n, f, model.cdx].numpy(), vmin=vmin, vmax=vmax, cmap="gray"
     )
     for axis in ["top", "bottom", "left", "right"]:
         ax.spines[axis].set_linewidth(1.2)
@@ -313,15 +313,15 @@ for i, f in enumerate(frames):
     ax.imshow(torch.ones((model.data.P, model.data.P)), vmin=0, vmax=1, cmap="gray")
     # add patch
     for k in range(2):
-        if model.params["d/m_probs"][k, n, f].item() > 0.5:
-            fill = model.params["d/z_probs"][k, n, f].item() > 0.5
+        if model.params["m_probs"][k, n, f].item() > 0.5:
+            fill = model.params["theta_probs"][k, n, f].item() > 0.5
             ax.add_patch(
                 Circle(
                     (
-                        model.data.ontarget.x[n, f]
-                        + model.params["d/x"]["Mean"][k, n, f].item(),
-                        model.data.ontarget.y[n, f]
-                        + model.params["d/y"]["Mean"][k, n, f].item(),
+                        model.data.x[n, f, model.cdx]
+                        + model.params["x"]["Mean"][k, n, f].item(),
+                        model.data.y[n, f, model.cdx]
+                        + model.params["y"]["Mean"][k, n, f].item(),
                     ),
                     1.5,
                     color=f"C{k}",
@@ -374,7 +374,7 @@ for k in range(2):
     ax = fig.add_subplot(gs[2 + k * 2, :])
     ax.plot(
         torch.arange(f1, f2),
-        model.params["d/z_probs"][k, n, f1:f2],
+        model.params["theta_probs"][k, n, f1:f2],
         "o-",
         ms=2,
         lw=0.5,
@@ -409,7 +409,7 @@ for k in range(2):
     ax = fig.add_subplot(gs[3 + k * 2, :])
     ax.plot(
         torch.arange(f1, f2),
-        model.params["d/m_probs"][k, n, f1:f2],
+        model.params["m_probs"][k, n, f1:f2],
         "o-",
         ms=2,
         lw=0.5,

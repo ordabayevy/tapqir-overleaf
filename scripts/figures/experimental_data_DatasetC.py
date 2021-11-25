@@ -14,8 +14,8 @@ mpl.rcParams["font.family"] = "sans-serif"
 mpl.rcParams.update({"font.size": 8})
 
 # load model & parameters
-path_data = Path("experimental/sigma54RNAPCy3-598P2993")
-model = Cosmos(verbose=False)
+path_data = Path("experimental/DatasetC")
+model = Cosmos()
 model.load(path_data, data_only=False)
 
 fig = plt.figure(figsize=(7.2, 4.6), constrained_layout=False)
@@ -40,13 +40,13 @@ ax.text(
 )
 
 # sorted on-target
-ttfb = time_to_first_binding(model.params["z_map"])
+ttfb = time_to_first_binding(model.params["z_map"][: model.data.N])
 # sort ttfb
 sdx = torch.argsort(ttfb, descending=True)
 
 norm = mpl.colors.Normalize(vmin=0, vmax=1)
 im = ax.imshow(
-    model.params["p(specific)"][sdx][:, ::10],
+    model.params["p(specific)"][: model.data.N][sdx][:, ::10],
     norm=norm,
     aspect="equal",
     interpolation="none",
@@ -60,12 +60,12 @@ gsb = gs[1, 0].subgridspec(1, 2, wspace=0.4)
 # panel b (Tapqir)
 ax = fig.add_subplot(gsb[0, 0])
 ax.text(
-    -0.38 * model.data.ontarget.F,
+    -0.38 * model.data.F,
     1.1,
     r"\textbf{B}",
 )
 ax.text(
-    model.data.ontarget.F,
+    model.data.F,
     1.1,
     "Tapqir",
     horizontalalignment="right",
@@ -73,9 +73,9 @@ ax.text(
 
 results = pd.read_csv("scripts/figures/DatasetC.csv", index_col=0)
 # prepare data
-Tmax = model.data.ontarget.F
+Tmax = model.data.F
 torch.manual_seed(0)
-z = dist.Bernoulli(model.params["p(specific)"]).sample((2000,))
+z = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample((2000,))
 data = time_to_first_binding(z)
 
 nz = (data == 0).sum(1, keepdim=True)
@@ -140,20 +140,24 @@ ax.set_ylim(-0.05, 1.05)
 # panel c (Spotpicker)
 ax = fig.add_subplot(gsb[0, 1])
 ax.text(
-    -0.38 * model.data.ontarget.F,
+    -0.38 * model.data.F,
     1.1,
     r"\textbf{C}",
 )
 ax.text(
-    model.data.ontarget.F,
+    model.data.F,
     1.1,
     "Spot-picker",
     horizontalalignment="right",
 )
 
-spotpicker_data = time_to_first_binding(model.data.ontarget.labels["z"])
+spotpicker_data = time_to_first_binding(
+    model.data.labels["z"][: model.data.N, :, model.cdx]
+)
 spotpicker_data = torch.tensor(spotpicker_data, dtype=torch.float)
-spotpicker_control = time_to_first_binding(model.data.offtarget.labels["z"])
+spotpicker_control = time_to_first_binding(
+    model.data.labels["z"][model.data.N :, :, model.cdx]
+)
 spotpicker_control = torch.tensor(spotpicker_control, dtype=torch.float)
 
 torch.manual_seed(0)
