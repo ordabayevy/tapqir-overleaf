@@ -4,7 +4,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import torch
 
 mpl.rc("text", usetex=True)
 mpl.rcParams.update({"font.size": 8})

@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 import torch
 from matplotlib.patches import Circle
-from scipy.io import loadmat
 from tapqir.models import Cosmos
 from tapqir.utils.dataset import load
 

@@ -2,6 +2,7 @@ from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import torch
 from pyro import distributions as dist
@@ -26,14 +27,16 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        model = Cosmos(verbose=False)
+        model = Cosmos()
         model.load(data_path, data_only=False)
 
-        fit[data_path.name] = model.statistics.drop("trained").astype(float)
+        fit[data_path.name] = model.summary.astype(float)
         for p in ("gain", "proximity", "lamda", "SNR", "kon", "koff"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        z_samples = dist.Bernoulli(model.params["p(specific)"]).sample((500,))
+        z_samples = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample(
+            (500,)
+        )
         # kon distribtion (MLE fit)
         kon_samples = association_rate(z_samples)
         fit[data_path.name].loc["kon", "Mean"] = kon_samples.mean().item()
@@ -65,7 +68,7 @@ gs = fig.add_gridspec(
 
 # panel a
 
-model = Cosmos(verbose=False)
+model = Cosmos()
 model.load(SIMULATIONS_DIR / "kon0.02lamda1", data_only=False)
 torch.manual_seed(0)
 z_samples = dist.Bernoulli(model.params["p(specific)"]).sample((2,))
@@ -131,7 +134,7 @@ ax = fig.add_subplot(gs[1])
 ax.text(-0.45 * 300, 1.1, r"\textbf{B}")
 ax.plot(
     torch.arange(f1, f2),
-    model.data.ontarget.labels["z"][n, f1:f2],
+    model.data.labels["z"][n, f1:f2, model.cdx],
     "-",
     lw=1,
     color="C0",
@@ -429,7 +432,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
             for i in truth_df.index
             if i.startswith(f"kon{kon}")
         ],
-        yerr=torch.tensor(
+        yerr=np.array(
             [
                 abs(
                     fit[i].loc["kon", ["95% LL", "95% UL"]].values
@@ -492,7 +495,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
             for i in truth_df.index
             if i.startswith(f"kon{kon}")
         ],
-        yerr=torch.tensor(
+        yerr=np.array(
             [
                 abs(
                     fit[i].loc["koff", ["95% LL", "95% UL"]].values
@@ -552,7 +555,7 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
             for i in truth_df.index
             if i.startswith(f"kon{kon}")
         ],
-        yerr=torch.tensor(
+        yerr=np.array(
             [
                 abs(
                     fit[i].loc["Keq", ["95% LL", "95% UL"]].values
