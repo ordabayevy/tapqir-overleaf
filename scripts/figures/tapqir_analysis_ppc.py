@@ -137,7 +137,7 @@ aois = [2, 3, 2, 3, 2, 4]
 frames = [2, 699, 912, 892, 980, 4099]
 
 model.n = torch.tensor(aois)
-pyro.set_rng_seed(1)
+pyro.set_rng_seed(0)
 samples = predictive()
 
 gsb = gs[0, 1].subgridspec(
@@ -211,13 +211,13 @@ for i, n, f in zip(torch.arange(6), aois, frames):
         lw=0.5,
         color="C0",
     )
-    ax.set_ylim(0, 0.04)
+    ax.set_ylim(0, 0.05)
     ax.set_xlim(1070, 1250)
     ax.set_xticks([1100, 1200])
-    ax.set_yticks([0, 0.01, 0.03])
+    ax.set_yticks([0, 0.02, 0.04])
     if i == 0:
         ax.set_xticklabels([r"$1.1$", r"$1.2$"])
-        ax.set_yticklabels([r"$0$", r"$0.01$", r"$0.03$"])
+        ax.set_yticklabels([r"$0$", r"$0.02$", r"$0.04$"])
         ax.set_ylabel("Density")
     elif i == 2:
         ax.set_xticklabels([r"$1.1$", r"$1.2$"])
@@ -341,8 +341,8 @@ predictive = Predictive(
     pyro.poutine.uncondition(model.model), guide=model.guide, num_samples=1
 )
 
-aois = [28, 29, 38, 38, 54, 72]
-frames = [440, 445, 245, 447, 1747, 2630]
+aois = [26, 26, 32, 43, 26, 28]
+frames = [2261, 2290, 4775, 4835, 2311, 54]
 
 model.n = torch.tensor(aois)
 pyro.set_rng_seed(0)
