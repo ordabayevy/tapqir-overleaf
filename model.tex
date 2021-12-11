@@ -18,12 +18,22 @@
     \ForAll{$\mathsf{frame}[F]$}
         \State $b \sim \mathbf{Gamma}(\mu^b, \sigma^b)$
         \Comment{background intensity}
-        \If{on-target AOI}
-            \State $\theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)$
-            \Comment{target-specific spot index}
-        \ElsIf{off-target AOI}
-            \State $\theta = 0$
-        \EndIf
+        \State $
+            z \sim
+            \begin{cases}
+                \mathbf{Bernoulli}(\pi) & \text{on-target AOI} \\
+                \mathbf{Bernoulli}(0) & \text{control off-target AOI} \rule{0pt}{4ex}
+            \end{cases}
+        $
+        \Comment{target-specific spot presence}
+        \State $
+            \theta \sim
+            \begin{cases}
+                \mathbf{Categorical}\left( \begin{bmatrix} 1, 0, \dots, 0 \end{bmatrix} \right) & z = 0 \\
+                \mathbf{Categorical}\left( \begin{bmatrix} 0, \frac{1}{K}, \dots, \frac{1}{K} \end{bmatrix} \right) & z = 1 \rule{0pt}{4ex}
+            \end{cases}
+        $
+        \Comment{target-specific spot index}
         \ForAll{$\mathsf{spot}[K]$}
             \State $ m_{\mathsf{spot}(k)} \sim
                 \begin{cases}

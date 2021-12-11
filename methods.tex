@@ -51,7 +51,7 @@ The intensities for a 2-D Gaussian spot at each pixel coordinate ($i$, $j$) is g
 with spot parameters total integrated intensity $h$, width $w$, and center ($x$, $y$) relative to the target (or off-target control) location ($x^\mathsf{target}$, $y^\mathsf{target}$). 
 %
 
-To discriminate between spots that arise from target-specific and target-nonspecific binding, we use the index parameter $\theta$ which ranges from $0$ to $K$. $\theta$ specifies the index of the target-specific spot when it is present, and $\theta = 0$ means no target-specific spot is present. For example, $\{ m_{\mathsf{spot}(1)}=1, m_{\mathsf{spot}(2)}=1, \theta=2 \}$ means that both spots are present and spot 2 is target-specific. A combination like $\{ m_{\mathsf{spot}(1)}=0, m_{\mathsf{spot}(2)}=1, \theta=1 \}$ has zero probability since spot 1 cannot be absent and target-specific at the same time. For off-target control data, in which no spots are target-specific by definition, $\theta$ is always set to zero.
+Our primary quantity of interest is whether target-specific spot is absent or present in a given AOI. We encode this information using a binary \emph{state} parameter $z$ with 0 and 1 denoting target-specific spot absence and presence, respectively. To indicate which of the spots is target-specific, we use the \emph{index} parameter $\theta$ which ranges from $0$ to $K$. $\theta \in \{1, \cdots, K \}$ specifies the index of the target-specific spot when it is present ($z = 1$), and $\theta = 0$ means no target-specific spot is present ($z = 0$). For example, $\{ m_{\mathsf{spot}(1)}=1, m_{\mathsf{spot}(2)}=1, z = 1, \theta=2 \}$ means that both spots are present and spot 2 is target-specific. A combination like $\{ m_{\mathsf{spot}(1)}=0, m_{\mathsf{spot}(2)}=1, z = 1, \theta=1 \}$ is impossible (i.e, has zero probability) since spot 1 cannot be absent and target-specific at the same time. For off-target control data, in which no spots are target-specific by definition, $z$ and $\theta$ are always set to zero.
 %
 
 \subsubsection{Prior distributions}
@@ -74,10 +74,24 @@ where the mean $\mu^b \in \mathbb{R}_{>0}^{\mathsf{AOI}[N]}$ and standard deviat
 \end{align}
 \end{subequations}
 %
-The prior distribution for the index of the target-specific spot $\theta$ is modeled hierarchically in terms of the average target-specific binding probability $\pi \in [0, 1] $. The probability that $\theta = 0$ is equal to the probability of no specifically bound spot being present (i.e., $1-\pi$). Since spot indices are arbitrarily assigned, the probability that the specifically bound molecule is present is equally split between those indices (i.e., $\frac{\pi}{K}$). We represent the prior for $\theta$ as a Categorical distribution of the following form:
+The target-specific presence parameter $z$ has a Bernoulli prior parameterized by the average target-specific binding probability $\pi \in [0, 1] $ for on-target AOIs and zero probability for control off-target AOIs:
 %
 \begin{equation}
-    \theta \sim \mathbf{Categorical}\left(1 - \pi, \frac{\pi}{K}, \dots, \frac{\pi}{K}\right)
+    z \sim
+    \begin{cases}
+        \mathbf{Bernoulli}(\pi) & \text{on-target AOI} \\
+        \mathbf{Bernoulli}(0) & \text{control off-target AOI} \rule{0pt}{4ex}
+    \end{cases}
+\end{equation}
+%
+The prior distribution for the index of the target-specific spot $\theta$ is conditional on $z$. When no specifically bound spot is present (i.e., $z = 0$) $\theta$ always equals 0. Since spot indices are arbitrarily assigned, when the target-specific spot is present (i.e., $z = 1$) $\theta$ can take any value between $1$ and $K$ with equal probability. We represent the prior for $\theta$ as a Categorical distribution of the following form:
+%
+\begin{equation}
+    \theta \sim
+    \begin{cases}
+        \mathbf{Categorical}\left( \begin{bmatrix} 1, 0, \dots, 0 \end{bmatrix} \right) & z = 0 \\
+        \mathbf{Categorical}\left( \begin{bmatrix} 0, \frac{1}{K}, \dots, \frac{1}{K} \end{bmatrix} \right) & z = 1 \rule{0pt}{4ex}
+    \end{cases}
 \end{equation}
 
 The average target-specific binding probability $\pi$ has an uninformative Jeffreys prior \citep{Gelman2013-ro} given by a Beta distribution:
@@ -120,7 +134,7 @@ Priors for spot position ($x$, $y$) depend on whether the spot represents target
 \begin{equation}
     x_{\mathsf{spot}(k)}, y_{\mathsf{spot}(k)} \sim
     \begin{cases}
-        \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k ~\textrm{(target-specific)} \\
+        \mathbf{AffineBeta}\left( 0, \sigma^{xy}, -\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta = k ~\text{(target-specific)} \\
         \mathbf{Uniform}\left(-\dfrac{P+1}{2}, \dfrac{P+1}{2} \right) & \theta \neq k ~\text{(target-nonspecific)} \rule{0pt}{4ex}
     \end{cases}
 \end{equation}
@@ -131,19 +145,19 @@ We give $\sigma^{xy}$ an Exponential prior with a characteristic width of one pi
     \sigma^{xy} \sim \mathbf{Exponential}(1)
 \end{equation}
 
-Gain $g$ depends on the settings of the amplifier and electron multiplier (if present) in the camera. It has a positive value and is typically in the range between 5--20. We use a Half-Normal prior with a broad distribution encompassing this range:
+Gain $g$ depends on the settings of the amplifier and electron multiplier (if present) in the camera. It has a positive value and is typically in the range between 5--50. We use a Half-Normal prior with a broad distribution encompassing this range:
 %
 \begin{equation}
     g \sim \mathbf{HalfNormal}(50)
 \end{equation}
 
-The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of 1. Bin values $\delta_\mathsf{samples}$ and their weights $\delta_\mathsf{weights}$ are used to construct an Empirical prior:
+The prior distribution for the offset signal $\delta$ is empirically measured from the output of camera sensor regions that are masked from incoming photons. Collected data from these pixels are transformed into a density histogram with step size of 1. The resulting histogram typically has a long right hand tail of low density. For computational efficiency, we shorten this tail by clamping together pixel intensity values from the upper 0.5\% percentile. Since $D = \delta + I$ (Eq. 1) and photon-dependent intensity $I$ is positive all of $D$ values have to be larger than the smallest offset intensity value. If that is not the case we add a single value $\min(D) - 1$ to the offset empirical distribution which does not affect the distribution. Bin values $\delta_\mathsf{samples}$ and their weights $\delta_\mathsf{weights}$ are used to construct an Empirical prior:
 %
 \begin{equation}
     \delta \sim \mathbf{Empirical}(\delta_\mathsf{samples}, \delta_\mathsf{weights})
 \end{equation}
 
-All simulated and experimental data sets in this work were analyzed using the prior distributions and hyperparameter values given in this section, which are compatible with a broad range of experimental conditions (\TABLE{datasets}). We anticipate that these will work with images taken on variety of microscope hardware, although it is possible that highly atypical microscope designs (e.g., those with effective magnifications that are sub-optimal for CoSMoS) might require adjustment of some fixed hyperparameters (those in Eqs. 6a, 6b, 10, 11, 12, 14, and 15).
+All simulated and experimental data sets in this work were analyzed using the prior distributions and hyperparameter values given in this section, which are compatible with a broad range of experimental conditions (\TABLE{datasets}). We anticipate that these will work with images taken on variety of microscope hardware, although it is possible that highly atypical microscope designs (e.g., those with effective magnifications that are sub-optimal for CoSMoS) might require adjustment of some fixed hyperparameters and distributions (those in Eqs. 6a, 6b, 11, 12, 13, 15, and 16).
 
 \subsection{Joint distribution}
 
@@ -151,7 +165,7 @@ The joint distribution of the data and all parameters is the fundamental distrib
 %
 \begin{equation}
 \begin{aligned}
-    p(D, \phi) =~&p(g) p(\sigma^{xy}) p(\pi) p(\lambda) \prod_{\mathsf{AOI}} \left[ p(\mu^b) p(\sigma^b) \prod_{\mathsf{frame}} \left[ \vphantom{\prod_{F}} p(b | \mu^b, \sigma^b) p(\theta | \pi) \vphantom{\prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}}} \cdot \right. \right. \\
+    p(D, \phi) =~&p(g) p(\sigma^{xy}) p(\pi) p(\lambda) \prod_{\mathsf{AOI}} \left[ p(\mu^b) p(\sigma^b) \prod_{\mathsf{frame}} \left[ \vphantom{\prod_{F}} p(b | \mu^b, \sigma^b) p(z | \pi) p(\theta | z) \vphantom{\prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}}} \cdot \right. \right. \\
     &\prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} p(m | \theta, \lambda) p(h) p(w) p(x | \sigma^{xy}, \theta) p(y | \sigma^{xy}, \theta) \right] \left. \left. \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} p(\delta) p(D | \mu^I, g, \delta) \right] \right]
 \end{aligned}
 \end{equation}
@@ -162,45 +176,62 @@ The Tapqir generative model is a stochastic function that describes a properly n
 
 \subsection{Inference}
 
-For a Bayesian analysis, we want to obtain the posterior distribution for parameters $\phi$ given the observed data $D$ using Bayes' rule:
+For a Bayesian analysis, we want to obtain the posterior distribution for parameters $\phi$ given the observed data $D$. There are three discrete parameters $z$, $\theta$, and $\delta$ that can be exactly marginalized out using Pyro's enumeration strategy \citep{Obermeyer2019-xt}. Let $\phi^{\prime} = \phi - \{ z, \theta, \delta \}$ be the rest of the parameters. We obtain posterior distributions of $\phi^{\prime}$ using Bayes' rule:
 %
 \begin{equation}
-    p(\phi | D) =
-    \dfrac{p(D, \phi)}{\int_{\phi} p(D, \phi) d\phi}
+    p(\phi^{\prime} | D) =
+    \dfrac{\sum_{z, \theta, \delta} p(D, \phi)}{\int_{\phi} p(D, \phi) d\phi}
 \end{equation}
 
-Note that the integral in the denominator of this expression is necessary to calculate the posterior distribution, but it is usually analytically intractable. However, variational inference provides a robust method to approximate the posterior distribution $p(\phi | D)$ with a parameterized variational distribution $q(\phi)$ \citep{Bishop2006-oa}.
+Note that the integral in the denominator of this expression is necessary to calculate the posterior distribution, but it is usually analytically intractable. However, variational inference provides a robust method to approximate the posterior distribution $p(\phi^{\prime} | D)$ with a parameterized variational distribution $q(\phi^{\prime})$ \citep{Bishop2006-oa}.
 %
 \begin{equation}
-    p(\phi | D) \simeq q(\phi)
+    p(\phi^{\prime} | D) \simeq q(\phi^{\prime})
 \end{equation}
 
 
-$q(\phi)$ has the following factorization:
+$q(\phi^{\prime})$ has the following factorization:
 
 \begin{equation}
 \begin{aligned}
-    q(\phi) =~&q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \cdot \\
-    &\prod_{\mathsf{AOI}} \left[ q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}} \left[ q(b) q(\theta) \prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} q(m | \theta) q(h | m) q(w | m) q(x | m) q(y | m) \right] \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} q(\delta) \right] \right]
+    q(\phi^{\prime}) =~&q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \cdot \\
+    &\prod_{\mathsf{AOI}} \left[ q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}} \left[ q(b) \prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} q(m) q(h | m) q(w | m) q(x | m) q(y | m) \right] \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} q(\delta) \right] \right]
 \end{aligned}
 \end{equation}
 
-The variational distribution $q(\phi)$ is provided as pseudocode for a generative stochastic function (\ALGORITHM{guide}). In Pyro this is called ``the guide''. Variational inference is sensitive to initial values of variational parameters. In \ALGORITHM{guide}, step 1 we provide the initial values of variational parameters that worked well in our analysis.
+The variational distribution $q(\phi^{\prime})$ is provided as pseudocode for a generative stochastic function (\ALGORITHM{guide}). In Pyro this is called ``the guide''. Variational inference is sensitive to initial values of variational parameters. In \ALGORITHM{guide}, step 1 we provide the initial values of variational parameters that worked well in our analysis.
 
 \input{guide}
 
-To accelerate convergence, we first run inference with a model where $\theta$ is marginalized out $\left(\textrm{i.e., } \sum_\theta p(D, \phi) \right)$ and use a variational distribution $q(\phi \setminus \theta)$) without $\theta$
-%
+\subsection{Calculation of spot probabilities}
+
+Variational inference directly optimizes for $q(m) \equiv m_\mathsf{prob}$ probabilities (see Eq. 21 and \ALGORITHM{guide}), which approximates $p(m | D)$. To estimate the marginal posterior probabilities $p(z, \theta | D)$ we use a Monte Carlo sampling method:
+
 \begin{equation}
 \begin{aligned}
-    q(\phi \setminus \theta) =~&q(g) q(\sigma^{xy}) q(\pi) q(\lambda) \cdot \\
-    &\prod_{\mathsf{AOI}} \left[ q(\mu^b) q(\sigma^b) \prod_{\mathsf{frame}} \left[ \vphantom{\prod_{F}} q(b) \prod_{\mathsf{spot}} \left[ \vphantom{\prod_{F}} q(m) q(h | m) q(w | m) q(x | m) q(y | m) \right] \prod_{\substack{\mathsf{pixelX} \\ \mathsf{pixelY}}} q(\delta) \right] \right]
+    p(z, \theta | D) &= \int_{\phi^{\prime}} p(z, \theta, \phi^{\prime} | D) d\phi^{\prime} \\
+    &=  \int_{\phi^{\prime}} p(z, \theta | \phi^{\prime}) p(\phi^{\prime} | D) d\phi^{\prime} \\
+    &\simeq \int_{\phi^{\prime}} p(z, \theta | \phi^{\prime}) q(\phi^{\prime}) d\phi^{\prime} \\
+    &\simeq \dfrac{1}{S} \sum_{s=1}^{S} p(z, \theta | \phi^{\prime}_s) \quad \text{where} \quad \phi^{\prime}_s \sim q(\phi^{\prime})
 \end{aligned}
 \end{equation}
 
-where we calculate Bernoulli probabilities in $q(m)$ as $\sum_\mathsf{target} m_\mathsf{prob} \theta_\mathsf{prob}$. 
+In our calculations we used $S = 50$ number of Monte Carlo samples. Marginal probabilities $p(z | D)$ and $p(\theta | D)$ are calculated as:
 
-We then run inference with the full model $p(D, \phi)$ and guide $q(\phi)$ pair, where variational parameters learned from the marginal guide $q(\phi \setminus \theta)$ are held fixed.  We use $m_\mathsf{prob}$ and $\theta_\mathsf{prob}$ calculated from the marginal guide as initial guesses in the full variational distribution $q(\phi)$.
+\begin{subequations}
+\begin{align}
+    p(z | D) &= \sum_{\theta} p(z, \theta | D) \\
+    p(\theta | D) &= \sum_{z} p(z, \theta | D)
+\end{align}
+\end{subequations}
+
+The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image by definition is:
+
+\begin{equation}
+    p(\mathsf{specific}) \equiv p(z = 1 | D)
+\end{equation}
+
+For simplicity in the main text and figures we suppress the conditional dependency on $D$ in $p(\theta | D)$ and $p(m | D)$ and instead write them as $p(\theta)$ and $p(m)$, respectively.
 
 \subsection{Tapqir implementation}
 
@@ -213,14 +244,14 @@ Credible intervals were calculated from posterior distribution samples as the hi
 
 \subsection{Data simulation}
 
-Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--5.
+Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($z$, $\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--5.
 
-For kinetic simulations (\FIG{kinetic_analysis}, Supplemental Data 5), $\theta$ was modeled using a discrete Markov process with initial probability $\theta_\mathsf{init}$ of each state and the transition probability matrix $\theta_\mathsf{trans}$:
+For kinetic simulations (\FIG{kinetic_analysis}, Supplemental Data 5), $z$ was modeled using a discrete Markov process with the initial probability and the transition probability matrix:
 %
 \begin{subequations}
 \begin{align}
-    \theta_\mathsf{init} &= \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{2\left( k_\mathsf{on} + k_\mathsf{off} \right)} & \frac{k_\mathsf{on}}{2\left( k_\mathsf{on} + k_\mathsf{off} \right)} \end{bmatrix} \\
-    \theta_\mathsf{trans} &= \begin{bmatrix} 1 - k_\mathsf{on} & k_\mathsf{on}/2 & k_\mathsf{on}/2 \\ k_\mathsf{off} & (1 - k_\mathsf{off})/2 & (1 - k_\mathsf{off})/2 \\ k_\mathsf{off} & (1 - k_\mathsf{off})/2 & (1 - k_\mathsf{off})/2 \end{bmatrix}
+    p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) &= \mathbf{Categorical} \left( \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{k_\mathsf{on} + k_\mathsf{off}} \end{bmatrix} \right) \\
+    p(z_{\mathsf{frame}(f)} | z_{\mathsf{frame}(f-1)}, k_\mathsf{on}, k_\mathsf{off}) &= \mathbf{Categorical} \left( \begin{bmatrix} 1 - k_\mathsf{on} & k_\mathsf{on} \\ k_\mathsf{off} & 1 - k_\mathsf{off} \end{bmatrix} \right)
 \end{align}
 \end{subequations}
 
@@ -237,22 +268,6 @@ For posterior predictive checking, sampled images ($\widetilde{D}$) were produce
     &\simeq \int_\phi p(\widetilde{D} | \phi) q(\phi) d\phi
 \end{aligned}
 \end{equation}
-
-\subsection{Calculation of spot probabilities}
-
-The probability, $p(\mathsf{specific})$, that a target-specific fluorescence spot is present in a given image is calculated as:
-
-\begin{equation}
-    p(\mathsf{specific}) \equiv p(\theta > 0 | D) = p(\theta = 1 | D) + p(\theta = 2 | D)
-\end{equation}
-
-The marginal spot presence probability $p(m | D)$ is calculated as:
-
-\begin{equation}
-    p(m | D) \equiv \sum_\theta p(\theta | D) p(m | \theta, D)
-\end{equation}
-
-Variational inference directly optimizes for $q(\theta) \equiv \theta_\mathsf{prob}$ and $q(m | \theta) \equiv m_\mathsf{prob}$ probabilities (see Eq. 20 and \ALGORITHM{guide}), which approximate $p(\theta | D)$ and $p(m | \theta, D)$, respectively. For simplicity in the main text and figures we suppress the conditional dependency on $D$ in $p(\theta | D)$ and $p(m | D)$ and instead write them as $p(\theta)$ and $p(m)$, respectively.
 
 \subsection{Signal-to-noise ratio}
 
@@ -308,15 +323,6 @@ To estimate simple binding/dissociation kinetic parameters (\FIG{kinetic_analysi
 \begin{equation}
     \hat{k}_\mathsf{on}, \hat{k}_\mathsf{off} = \argmax_{k_\mathsf{on}, k_\mathsf{off}} \prod_\mathsf{AOI} \left[ p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) \prod_{f=1}^{F-1} p(z_{\mathsf{frame}(f)} | z_{\mathsf{frame}(f-1)}, k_\mathsf{on}, k_\mathsf{off}) \right]
 \end{equation}
-
-where:
-
-\begin{subequations}
-\begin{align}
-    p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) &= \mathbf{Categorical} \left( \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{\left( k_\mathsf{on} + k_\mathsf{off} \right)} \end{bmatrix} \right) \\
-    p(z_{\mathsf{frame}(f)} | z_{\mathsf{frame}(f-1)}, k_\mathsf{on}, k_\mathsf{off}) &= \mathbf{Categorical} \left( \begin{bmatrix} 1 - k_\mathsf{on} & k_\mathsf{on} \\ k_\mathsf{off} & 1 - k_\mathsf{off} \end{bmatrix} \right)
-\end{align}
-\end{subequations}
 
 Repeating this procedure 2000 times gave the distributions of $k_\mathsf{on}$ and $k_\mathsf{off}$ from which we compute mean and 95\% credible interval.
 
