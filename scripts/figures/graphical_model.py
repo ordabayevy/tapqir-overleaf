@@ -219,7 +219,7 @@ theta0 = (
 )
 ax.imshow(theta0.numpy(), vmin=0, vmax=200, cmap="gray")
 ax.axis("off")
-ax.set_title(r"$\theta = 0$", fontsize=8)
+ax.set_title(r"$z = 0, \: \theta = 0$", fontsize=8)
 ax.text(-4, -3, r"\textbf{C}")
 ax.text(-4.5 + 6, 2.5 + 7, s=r"$\mathbf{1}$", color="C0")
 ax.text(3.5 + 6, -1.5 + 7, s=r"$\mathbf{2}$", color="C1")
@@ -238,7 +238,7 @@ theta1 = (
 )
 ax.imshow(theta1.numpy(), vmin=0, vmax=200, cmap="gray")
 ax.axis("off")
-ax.set_title(r"$\theta = 1$", fontsize=8)
+ax.set_title(r"$z = 1, \: \theta = 1$", fontsize=8)
 ax.text(0 + 6, 0 + 7, s=r"$\mathbf{1}$", color="C0")
 ax.text(3.5 + 6, -3.5 + 7, s=r"$\mathbf{2}$", color="C1")
 
@@ -256,7 +256,7 @@ theta2 = (
 )
 ax.imshow(theta2.numpy(), vmin=0, vmax=200, cmap="gray")
 ax.axis("off")
-ax.set_title(r"$\theta = 2$", fontsize=8)
+ax.set_title(r"$z = 1, \: \theta = 2$", fontsize=8)
 ax.text(0.5 + 6, 5.5 + 7, s=r"$\mathbf{1}$", color="C0")
 ax.text(0 + 6, 0 + 7, s=r"$\mathbf{2}$", color="C1")
 
