@@ -89,7 +89,7 @@ for i, f in enumerate(frames):
 ax = fig.add_subplot(gs[1, :])
 ax.plot(
     torch.arange(f1, f2),
-    model.params["p(specific)"][n, f1:f2],
+    model.params["z_probs"][n, f1:f2],
     "o-",
     ms=2,
     lw=0.5,
@@ -209,10 +209,10 @@ for k in range(2):
         right=True,
     )
     ax.set_xticks(torch.arange(f1, f2 + 1, 5))
-    ax.set_yticks([1, 2])
+    ax.set_yticks([1, 2, 3])
     ax.set_xticklabels([])
     ax.set_xlim(f1 - 0.5, f2 - 0.5)
-    ax.set_ylim(0.5, 2.5)
+    ax.set_ylim(0, 3.5)
     ax.set_ylabel(r"$w$")
 
     # x
@@ -611,7 +611,7 @@ for k in range(2):
     ax.set_xticklabels([])
     ax.set_yticklabels([])
     ax.set_xlim(f1 - 0.5, f2 - 0.5)
-    ax.set_ylim(0.5, 2.5)
+    ax.set_ylim(0, 3.5)
 
     # x
     ax = fig.add_subplot(gs[4 + k * 4, :])
