@@ -1,3 +1,14 @@
+"""
+Figure 2–Figure supplement 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The prior distributions for x and y spot position parameters.
+
+To generate source image file ``figures/graphical_model_xy.svg``, run::
+
+  python scripts/figures/graphical_model_xy.py
+"""
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import torch

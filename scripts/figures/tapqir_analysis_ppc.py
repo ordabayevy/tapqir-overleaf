@@ -1,3 +1,21 @@
+"""
+Figure 3-Figure supplement 2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Reproduction of experimental data by posterior predictive sampling.
+
+To generate source image file ``figures/tapqir_analysis_ppc.svg``, run::
+
+  python scripts/figures/tapqir_analysis_ppc.py
+
+Input data:
+
+* ``experimental/DatasetA`` (panel A)
+* ``experimental/DatasetB`` (panel B)
+* ``experimental/DatasetC`` (panel C)
+* ``experimental/DatasetD`` (panel D)
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl

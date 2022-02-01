@@ -1,3 +1,29 @@
+"""
+Figure 5
+--------
+
+Tapqir analysis of association/dissociation kinetics and thermodynamics.
+
+To generate source image file ``figures/kinetic_analysis.svg``, run::
+
+  python scripts/figures/kinetic_analysis.py
+
+Input data:
+
+* ``simulations/kon0.01lamda0.01``
+* ``simulations/kon0.01lamda0.15``
+* ``simulations/kon0.01lamda0.5``
+* ``simulations/kon0.01lamda1``
+* ``simulations/kon0.02lamda0.01``
+* ``simulations/kon0.02lamda0.15``
+* ``simulations/kon0.02lamda0.5``
+* ``simulations/kon0.02lamda1``
+* ``simulations/kon0.03lamda0.01``
+* ``simulations/kon0.03lamda0.15``
+* ``simulations/kon0.03lamda0.5``
+* ``simulations/kon0.03lamda1``
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl
@@ -34,7 +60,7 @@ for data_path in SIMULATIONS_DIR.iterdir():
         for p in ("gain", "proximity", "lamda", "SNR", "kon", "koff"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        z_samples = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample(
+        z_samples = dist.Bernoulli(model.params["z_probs"][: model.data.N]).sample(
             (500,)
         )
         # kon distribtion (MLE fit)
@@ -71,7 +97,7 @@ gs = fig.add_gridspec(
 model = Cosmos()
 model.load(SIMULATIONS_DIR / "kon0.02lamda1", data_only=False)
 torch.manual_seed(0)
-z_samples = dist.Bernoulli(model.params["p(specific)"]).sample((2,))
+z_samples = dist.Bernoulli(model.params["z_probs"]).sample((2,))
 n = 4
 f1 = 0
 f2 = 300
@@ -174,7 +200,7 @@ ax.text(
 ax = fig.add_subplot(gs[2])
 ax.plot(
     torch.arange(f1, f2),
-    model.params["p(specific)"][n, f1:f2],
+    model.params["z_probs"][n, f1:f2],
     "o-",
     ms=1,
     lw=1,
@@ -604,4 +630,4 @@ for i, kon in enumerate([0.01, 0.02, 0.03]):
     ax.set_ylim(-0.01, 0.2)
     ax.set_xlim(-0.1, 1.1)
 
-plt.savefig("figures/kinetic_analysis.png", dpi=600)
+plt.savefig("figures/kinetic_analysis.png", dpi=900)

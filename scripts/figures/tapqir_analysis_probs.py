@@ -1,3 +1,19 @@
+"""
+Figure 3-Figure supplement 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Calculated spot probabilities.
+
+To generate source image file ``figures/tapqir_analysis_probs.svg``, run::
+
+  python scripts/figures/tapqir_analysis_probs.py
+
+Input data:
+
+* ``simulations/lamda0.5`` (panel A)
+* ``experimental/DatasetA`` (panel B)
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl
@@ -89,7 +105,7 @@ for i, f in enumerate(frames):
 ax = fig.add_subplot(gs[1, :])
 ax.plot(
     torch.arange(f1, f2),
-    model.params["p(specific)"][n, f1:f2],
+    model.params["z_probs"][n, f1:f2],
     "o-",
     ms=2,
     lw=0.5,
@@ -337,7 +353,7 @@ for i, f in enumerate(frames):
 ax = fig.add_subplot(gs[1, :])
 ax.plot(
     torch.arange(f1, f2),
-    model.params["p(specific)"][n, f1:f2],
+    model.params["z_probs"][n, f1:f2],
     "o-",
     ms=2,
     lw=0.5,

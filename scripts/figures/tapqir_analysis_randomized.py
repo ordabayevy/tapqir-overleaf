@@ -1,3 +1,18 @@
+"""
+Figure 3-Figure supplement 3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Tapqir analysis of image data simulated using a broad range of global parameters.
+
+To generate source image file ``figures/tapqir_analysis_randomized.svg``, run::
+
+  python scripts/figures/tapqir_analysis_randomized.py
+
+Input data:
+
+* ``simulations/seed{0-16}``
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl

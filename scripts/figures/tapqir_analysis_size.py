@@ -1,3 +1,20 @@
+"""
+Figure 3-Figure supplement 4
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Effect of AOI size on analysis of experimental data.
+
+To generate source image file ``figures/tapqir_analysis_size.svg``, run::
+
+  python scripts/figures/tapqir_analysis_size.py
+
+Input data:
+
+* ``experimental/DatasetA`` (14x14 AOIs)
+* ``experimental/P10DatasetA`` (10x10 AOIs)
+* ``experimental/P6DatasetA`` (6x6 AOIs)
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl

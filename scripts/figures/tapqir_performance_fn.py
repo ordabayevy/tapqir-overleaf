@@ -1,3 +1,19 @@
+"""
+Figure 4-Figure supplement 1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+False negative spot misidentifications by Tapqir and spot-picker method.
+
+To generate source image file ``figures/tapqir_performance_fn.svg``, run::
+
+  python scripts/figures/tapqir_performance_fn.py
+
+Input data:
+
+* ``simulations/lamda1``
+* ``simulations/spotpicker_result.mat`` (spot-picker analysis output)
+"""
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -49,4 +65,4 @@ for i, (n, f) in enumerate(zip(aois, frames)):
         )
     ax.axis("off")
 
-plt.savefig("figures/tapqir_performance_fn.png", dpi=600)
+plt.savefig("figures/tapqir_performance_fn.png", dpi=900)

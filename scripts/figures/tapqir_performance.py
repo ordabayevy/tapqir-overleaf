@@ -1,3 +1,20 @@
+"""
+Figure 4
+--------
+
+Tapqir performance on simulated data with different SNRs or different non-specific binding rates.
+
+To generate source image file ``figures/tapqir_performance.svg``, run::
+
+  python scripts/figures/tapqir_performance.py
+
+Input data:
+
+* ``simulations/height*`` (panels A, B, C, D)
+* ``simulations/lamda*`` (panels E, F, G, H)
+* ``simulations/negative*`` (panel I)
+"""
+
 from collections import defaultdict
 from pathlib import Path
 
@@ -36,9 +53,9 @@ for data_path in SIMULATIONS_DIR.iterdir():
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
         mask = torch.from_numpy(model.data.labels["z"][..., 0])
-        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
+        samples = torch.masked_select(model.params["z_probs"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+        predictions[data_path.name]["z_all"] = model.params["z_probs"][
             : model.data.N
         ].flatten()
 
@@ -295,9 +312,9 @@ for data_path in SIMULATIONS_DIR.iterdir():
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
         mask = torch.from_numpy(model.data.labels["z"][..., 0])
-        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
+        samples = torch.masked_select(model.params["z_probs"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+        predictions[data_path.name]["z_all"] = model.params["z_probs"][
             : model.data.N
         ].flatten()
 
@@ -590,9 +607,9 @@ for data_path in SIMULATIONS_DIR.iterdir():
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
         mask = torch.from_numpy(model.data.labels["z"][..., 0])
-        samples = torch.masked_select(model.params["p(specific)"][: model.data.N], mask)
+        samples = torch.masked_select(model.params["z_probs"][: model.data.N], mask)
         predictions[data_path.name]["z_masked"] = samples
-        predictions[data_path.name]["z_all"] = model.params["p(specific)"][
+        predictions[data_path.name]["z_all"] = model.params["z_probs"][
             : model.data.N
         ].flatten()
 
@@ -691,4 +708,4 @@ for i, name in enumerate(["negative0.01", "negative0.15", "negative1"]):
         r"$\pi = 0$",
     )
 
-plt.savefig("figures/tapqir_performance.png", dpi=600)
+plt.savefig("figures/tapqir_performance.png", dpi=900)

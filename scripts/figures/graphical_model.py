@@ -1,3 +1,18 @@
+"""
+Figure 2
+--------
+
+Depiction of the *cosmos* probabilistic image model and model parameters.
+
+To generate source image file ``figures/graphical_model.svg``, run::
+
+  python scripts/figures/graphical_model.py
+
+Input data:
+
+* ``experimental/DatasetA``
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl

@@ -1,3 +1,19 @@
+"""
+Figure 3
+--------
+
+Tapqir analysis and inferred model parameters.
+
+To generate source image file ``figures/tapqir_analysis.svg``, run::
+
+  python scripts/figures/tapqir_analysis.py
+
+Input data:
+
+* ``simulations/lamda0.5`` (panel A)
+* ``experimental/DatasetA`` (panel B)
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl
