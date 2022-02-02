@@ -2,6 +2,14 @@ Source data repository for: Bayesian machine learning analysis of single-molecul
 
 This repository contains Figures, Figure supplements, Supplemental Data files, and the scripts and data used to generate them.
 
+Clone repository
+----------------
+
+.. code::
+
+   git clone https://github.com/ordabayevy/tapqir-overleaf.git
+   cd tapqir-overleaf
+
 Install Tapqir
 --------------
 
