@@ -1,4 +1,5 @@
 scripts/__pycache__/
+scripts/supplementary/__pycache__/
 notebooks/.ipynb_checkpoints/
 simulations/
 experimental/
