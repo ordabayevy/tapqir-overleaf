@@ -1,3 +1,11 @@
+Install Tapqir
+--------------
+
+Follow `these instructions <https://tapqir.readthedocs.io/en/latest/install/index.html>`_ to install Tapqir.
+
+Download data
+-------------
+
 Analysis output of experimental data is stored in ``experimental`` folder:
 
 * DatasetA: ``experimental/DatasetA``
@@ -16,11 +24,12 @@ Analysis output of simulated data is stored in ``simulations`` folder:
 * Supplemental Data 5: ``simulations/kon*``
 * Supplemental Data 6: ``simulations/sigma*``
 
-These folder contain following analysis outputs:
+These folders contain following files:
 
 * ``data.tpqr`` AOI images
 * ``cosmos-channel0-params.tpqr``: posterior parameter distributions
 * ``cosmos-channel0-summary.csv``: summary of global parameter values
+* ``.tapqir``: folder containing internal files such as last model checkpoint, configuration file, and log files.
 
 Figure 1
 --------
@@ -344,7 +353,7 @@ Supplemental Data 1
 
 Varying non-specific binding rate simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data1.xlsx``, run::
+To generate supplementary file ``supplementary/data1.xlsx``, run::
 
   python scripts/supplementary/data1.py
 
@@ -358,7 +367,7 @@ Supplemental Data 2
 
 Randomized simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data2.xlsx``, run::
+To generate supplementary file ``supplementary/data2.xlsx``, run::
 
   python scripts/supplementary/data2.py
 
@@ -372,7 +381,7 @@ Supplemental Data 3
 
 Randomized simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data3.xlsx``, run::
+To generate supplementary file ``supplementary/data3.xlsx``, run::
 
   python scripts/supplementary/data3.py
 
@@ -386,7 +395,7 @@ Supplemental Data 4
 
 No target-specific binding and varying non-specific binding rate simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data4.xlsx``, run::
+To generate supplementary file ``supplementary/data4.xlsx``, run::
 
   python scripts/supplementary/data4.py
 
@@ -400,7 +409,7 @@ Supplemental Data 5
 
 Kinetic simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data5.xlsx``, run::
+To generate supplementary file ``supplementary/data5.xlsx``, run::
 
   python scripts/supplementary/data5.py
 
@@ -414,7 +423,7 @@ Supplemental Data 6
 
 Varying proximity simulation parameters and corresponding fit values
 
-To generate source image file ``supplementary/data6.xlsx``, run::
+To generate supplementary file ``supplementary/data6.xlsx``, run::
 
   python scripts/supplementary/data6.py
 
