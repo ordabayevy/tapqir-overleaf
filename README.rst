@@ -25,14 +25,17 @@ These folder contain following analysis outputs:
 Figure 1
 --------
 
-Example CoSMoS experiment.
+.. image:: figures/cosmos_experiment/cosmos_experiment.png
+   :caption: Example CoSMoS experiment.
 
 Image file: ``figures/cosmos_epxeriment/cosmos_experiment.png``
+
 
 Figure 2
 --------
 
-Depiction of the cosmos probabilistic image model and model parameters.
+.. image:: figures/graphical_model.png
+   :caption: Depiction of the cosmos probabilistic image model and model parameters.
 
 Image file: ``figures/graphical_model.png``
 
@@ -49,14 +52,16 @@ Graphical model in panel D is located at ``figures/graphical_model.pdf``.
 Figure 2–Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Extended graphical representation of the cosmos generative probabilistic model.
+.. image:: figures/graphical_model_extended.png
+   :caption: Extended graphical representation of the cosmos generative probabilistic model.
 
 Image file: ``figures/graphical_model_extended.png``
 
 Figure 2–Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The prior distributions for x and y spot position parameters.
+.. image:: figures/graphical_model_xy.png
+   :caption: The prior distributions for x and y spot position parameters.
 
 Image file: ``figures/graphical_model_xy.png``
 
@@ -68,7 +73,8 @@ To generate the image file, run::
 Figure 3
 --------
 
-Tapqir analysis and inferred model parameters.
+.. image:: figures/tapqir_analysis.png
+   :caption: Tapqir analysis and inferred model parameters.
 
 Image file: ``figures/tapqir_analysis.png``
 
@@ -84,7 +90,8 @@ Input data:
 Figure 3-Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Calculated spot probabilities.
+.. image:: figures/tapqir_analysis_probs.png
+   :caption: Calculated spot probabilities.
 
 Image file: ``figures/tapqir_analysis_probs.png``
 
@@ -100,7 +107,8 @@ Input data:
 Figure 3-Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Reproduction of experimental data by posterior predictive sampling.
+.. image:: figures/tapqir_analysis_ppc.png
+   :caption: Reproduction of experimental data by posterior predictive sampling.
 
 Image file: ``figures/tapqir_analysis_ppc.png``
 
@@ -118,7 +126,8 @@ Input data:
 Figure 3-Figure supplement 3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Tapqir analysis of image data simulated using a broad range of global parameters.
+.. image:: figures/tapqir_analysis_randomized.png
+   :caption: Tapqir analysis of image data simulated using a broad range of global parameters.
 
 Image file: ``figures/tapqir_analysis_randomized.png``
 
@@ -133,7 +142,8 @@ Input data:
 Figure 3-Figure supplement 4
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Effect of AOI size on analysis of experimental data.
+.. image:: figures/tapqir_analysis_size.png
+   :caption: Effect of AOI size on analysis of experimental data.
 
 Image file: ``figures/tapqir_analysis_size.png``
 
