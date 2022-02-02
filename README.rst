@@ -1,3 +1,7 @@
+Source data repository for: Bayesian machine learning analysis of single-molecule fluorescence colocalization images (Ordabayev et. al.).
+
+This repository contains Figures, Figure supplements, Supplemental Data files, and the scripts and data used to generate them.
+
 Install Tapqir
 --------------
 
@@ -5,6 +9,11 @@ Follow `these instructions <https://tapqir.readthedocs.io/en/latest/install/inde
 
 Download data
 -------------
+
+.. code::
+
+   wget https://zenodo.org/record/5949388/files/ms_files.zip
+   unzip ms_files.zip && rm ms_files.zip
 
 Analysis output of experimental data is stored in ``experimental`` folder:
 
