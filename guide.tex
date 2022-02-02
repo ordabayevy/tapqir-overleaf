@@ -36,7 +36,7 @@
 \State $\pi \sim \mathbf{Beta}(\pi_\mathsf{mean}, \pi_\mathsf{size})$
 \Comment{average specific binding probability}
 \State $\lambda \sim \mathbf{Gamma}(\lambda_\mathsf{mean}, \sqrt{\lambda_\mathsf{mean} / \lambda_\mathsf{beta}})$
-\Comment{non-specific binding rate}
+\Comment{non-specific binding density}
 \ForAll{$\mathsf{AOI}[N+N_\mathsf{c}]$}
     \State $\mu^b \sim \mathbf{Delta}(\mu^b_\mathsf{mean})$
     \Comment{mean background intensity} 

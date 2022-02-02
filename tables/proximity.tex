@@ -1,14 +1,17 @@
 \begin{table}[]
-\caption{\label{tab:proximity} \textbf{The effect of mapping accuracy on classification accuracy.}}
-\begin{tabular}{cccc}
+\caption{\label{tab:proximity} \textbf{The effect of mapping precision on classification accuracy.}\textsuperscript{a}}
+\begin{tabular}{cccl}
     \toprule
-    $\sigma^{xy}$ (true) & $\sigma^{xy} \: [95\% \: \text{CI}]$ (fit) & MCC & $\sigma^{xy}$ prior \\
+    $\sigma^{xy}$ (true) & $\sigma^{xy}$ (fit) \: $[95\% \: \text{CI}]$  & MCC & $\sigma^{xy}$ prior \\
     \midrule
-    $0.2$ & $0.21 \: [0.20, 0.23]$ & $0.972$ & $\mathbf{Exponential}(1)$ \\
-    $1$ & $0.98 \: [0.91, 1.05]$ & $0.856$ & $\mathbf{Exponential}(1)$ \\
-    $1.5$ & $1.49 \: [1.38, 1.60]$ & $0.742$ & $\mathbf{Exponential}(1)$ \\
-    $2$ & $1.87 \: [1.73, 2.02]$ & $0.632$ & $\mathbf{Exponential}(1)$ \\
-    $2$ & $1.88 \: [1.74, 2.03]$ & $0.630$ & $\mathbf{Uniform}(0, (P+1) / \sqrt{12})$ \\
+    $0.2$ & $0.21 \: [0.20, 0.22]$ & $0.989$ & $\mathbf{Exponential}(1)$ \\
+    $1$ & $0.96 \: [0.90, 1.02]$ & $0.939$ & $\mathbf{Exponential}(1)$ \\
+    $1.5$ & $1.49 \: [1.40, 1.59]$ & $0.890$ & $\mathbf{Exponential}(1)$ \\
+    $2$ & $1.96 \: [1.84, 2.09]$ & $0.834$ & $\mathbf{Exponential}(1)$ \\
+    $2$ & $1.97 \: [1.84, 2.09]$ & $0.834$ & $\mathbf{Uniform}(0, (P+1) / \sqrt{12})$ \\
+    \bottomrule
+    \multicolumn{4}{l}{\footnotesize{\parbox{0.75\textwidth}{\rule{0pt}{3ex}\textsuperscript{a}Data were simulated over a range of proximity parameter $\sigma^{xy}$ values at fixed $\pi=0.15$ and $\lambda=0.15$
+    (Supplemental Data 6).}}} \\
     \bottomrule
 \end{tabular}
 \end{table}
