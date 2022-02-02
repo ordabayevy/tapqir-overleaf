@@ -4,7 +4,9 @@ Figure 3-Figure supplement 1
 
 Calculated spot probabilities.
 
-To generate source image file ``figures/tapqir_analysis_probs.svg``, run::
+Image file: ``figures/tapqir_analysis_probs.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_probs.py
 
@@ -481,4 +483,4 @@ for i, f in enumerate(frames):
         )
     )
 
-plt.savefig("figures/tapqir_analysis_probs.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_probs.png", dpi=900)

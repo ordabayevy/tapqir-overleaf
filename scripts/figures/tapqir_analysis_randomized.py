@@ -4,7 +4,9 @@ Figure 3-Figure supplement 3
 
 Tapqir analysis of image data simulated using a broad range of global parameters.
 
-To generate source image file ``figures/tapqir_analysis_randomized.svg``, run::
+Image file: ``figures/tapqir_analysis_randomized.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_randomized.py
 
@@ -252,4 +254,4 @@ ax.set_yticklabels([r"$0.2$", r"$0.3$", r"$0.4$", r"$0.5$", r"$0.6$"])
 ax.set_xlabel(r"$\sigma^{xy}$ (true)")
 ax.set_ylabel(r"$\sigma^{xy}$ (fit)")
 
-plt.savefig("figures/tapqir_analysis_randomized.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_randomized.png", dpi=900)

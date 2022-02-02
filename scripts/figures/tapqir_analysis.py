@@ -4,7 +4,9 @@ Figure 3
 
 Tapqir analysis and inferred model parameters.
 
-To generate source image file ``figures/tapqir_analysis.svg``, run::
+Image file: ``figures/tapqir_analysis.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis.py
 
@@ -787,4 +789,4 @@ for i, f in enumerate(frames):
         )
     )
 
-plt.savefig("figures/tapqir_analysis.png", dpi=600)
+plt.savefig("figures/tapqir_analysis.png", dpi=900)

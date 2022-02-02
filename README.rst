@@ -4,6 +4,8 @@ Analysis output of experimental data is stored in ``experimental`` folder:
 * DatasetB: ``experimental/DatasetB``
 * DatasetC: ``experimental/DatasetC``
 * DatasetD: ``experimental/DatasetD``
+* DatasetA: ``experimental/P10DatasetA`` (10x10 AOIs)
+* DatasetA: ``experimental/P6DatasetA`` (6x6 AOIs)
 
 Analysis output of simulated data is stored in ``simulations`` folder:
 
@@ -23,14 +25,18 @@ These folder contain following analysis outputs:
 Figure 1
 --------
 
+Example CoSMoS experiment.
+
 Image file: ``figures/cosmos_epxeriment/cosmos_experiment.png``
 
 Figure 2
 --------
 
-Depiction of the *cosmos* probabilistic image model and model parameters.
+Depiction of the cosmos probabilistic image model and model parameters.
 
-To generate source image file ``figures/graphical_model.png``, run::
+Image file: ``figures/graphical_model.png``
+
+To generate panels A, B, and C in the image, run (outpus ``figures/graphical_model.svg`` vector image)::
 
   python scripts/figures/graphical_model.py
 
@@ -38,19 +44,23 @@ Input data:
 
 * ``experimental/DatasetA``
 
+Graphical model in panel D is located at ``figures/graphical_model.pdf``.
+
 Figure 2–Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Extended graphical representation of the *cosmos* generative probabilistic model.
+Extended graphical representation of the cosmos generative probabilistic model.
 
-Source file: ``figures/graphical_model_extended.svg``
+Image file: ``figures/graphical_model_extended.png``
 
 Figure 2–Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The prior distributions for x and y spot position parameters.
 
-To generate source image file ``figures/graphical_model_xy.png``, run::
+Image file: ``figures/graphical_model_xy.png``
+
+To generate the image file, run::
 
   python scripts/figures/graphical_model_xy.py
 
@@ -60,7 +70,9 @@ Figure 3
 
 Tapqir analysis and inferred model parameters.
 
-To generate source image file ``figures/tapqir_analysis.png``, run::
+Image file: ``figures/tapqir_analysis.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis.py
 
@@ -74,7 +86,9 @@ Figure 3-Figure supplement 1
 
 Calculated spot probabilities.
 
-To generate source image file ``figures/tapqir_analysis_probs.png``, run::
+Image file: ``figures/tapqir_analysis_probs.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_probs.py
 
@@ -88,7 +102,9 @@ Figure 3-Figure supplement 2
 
 Reproduction of experimental data by posterior predictive sampling.
 
-To generate source image file ``figures/tapqir_analysis_ppc.png``, run::
+Image file: ``figures/tapqir_analysis_ppc.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_ppc.py
 
@@ -104,7 +120,9 @@ Figure 3-Figure supplement 3
 
 Tapqir analysis of image data simulated using a broad range of global parameters.
 
-To generate source image file ``figures/tapqir_analysis_randomized.png``, run::
+Image file: ``figures/tapqir_analysis_randomized.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_randomized.py
 
@@ -117,13 +135,17 @@ Figure 3-Figure supplement 4
 
 Effect of AOI size on analysis of experimental data.
 
-To generate source image file ``figures/tapqir_analysis_size.png``, run::
+Image file: ``figures/tapqir_analysis_size.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_size.py
 
 Input data:
 
-* ``simulations/seed{0-16}``
+* ``experimental/DatasetA`` (14x14 AOIs)
+* ``experimental/P10DatasetA`` (10x10 AOIs)
+* ``experimental/P6DatasetA`` (6x6 AOIs)
 
 
 Figure 4

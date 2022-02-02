@@ -4,7 +4,9 @@ Figure 3-Figure supplement 2
 
 Reproduction of experimental data by posterior predictive sampling.
 
-To generate source image file ``figures/tapqir_analysis_ppc.svg``, run::
+Image file: ``figures/tapqir_analysis_ppc.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_ppc.py
 
@@ -450,4 +452,4 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     else:
         ax.set_yticklabels([])
 
-plt.savefig("figures/tapqir_analysis_ppc.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_ppc.png", dpi=900)

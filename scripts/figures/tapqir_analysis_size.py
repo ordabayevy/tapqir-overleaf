@@ -4,7 +4,9 @@ Figure 3-Figure supplement 4
 
 Effect of AOI size on analysis of experimental data.
 
-To generate source image file ``figures/tapqir_analysis_size.svg``, run::
+Image file: ``figures/tapqir_analysis_size.png``
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_analysis_size.py
 
@@ -263,4 +265,4 @@ axb.plot(
     color="C4",
 )
 
-plt.savefig("figures/tapqir_analysis_size.png", dpi=600)
+plt.savefig("figures/tapqir_analysis_size.png", dpi=900)
