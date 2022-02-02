@@ -13,7 +13,7 @@ from tapqir.utils.simulate import simulate
 
 def main(args):
     device = "cuda"
-    N, F, P = 5, 500, 14
+    N, F, P = 10, 500, 14
     params = {}
     params["width"] = 1.4
     params["gain"] = 7
@@ -24,11 +24,13 @@ def main(args):
     params["height"] = 3000
     params["background"] = 150
 
-    model = Cosmos(1, 2, device, args.dtype)
+    model = Cosmos(1, 2, device=device)
+    C = 1
     samples = simulate(
         model,
         N,
         F,
+        C,
         P,
         seed=args.seed,
         params=params,
@@ -51,14 +53,14 @@ def main(args):
     background = torch.full((F,), params["background"])
     height = torch.full((2 * N, F, 2), params["height"])
     width = torch.full((2 * N, F, 2), params["width"])
-    x = torch.stack([samples[f"d/x_{k}"][0] for k in range(2)], -1)
-    xc = torch.stack([samples[f"c/x_{k}"][0] for k in range(2)], -1)
+    x = torch.stack([samples[f"x_{k}"][0] for k in range(2)], -1)
+    xc = torch.stack([samples[f"x_{k}"][0] for k in range(2)], -1)
     x = torch.cat([x, xc], dim=0)
-    y = torch.stack([samples[f"d/y_{k}"][0] for k in range(2)], -1)
-    yc = torch.stack([samples[f"c/y_{k}"][0] for k in range(2)], -1)
+    y = torch.stack([samples[f"y_{k}"][0] for k in range(2)], -1)
+    yc = torch.stack([samples[f"y_{k}"][0] for k in range(2)], -1)
     y = torch.cat([y, yc], dim=0)
-    m = torch.stack([samples[f"d/m_{k}"][0] for k in range(2)], -1)
-    mc = torch.stack([samples[f"c/m_{k}"][0] for k in range(2)], -1)
+    m = torch.stack([samples[f"m_{k}"][0] for k in range(2)], -1)
+    mc = torch.stack([samples[f"m_{k}"][0] for k in range(2)], -1)
     m = torch.cat([m, mc], dim=0)
     spot_locs = target_locs.unsqueeze(-2) + torch.stack((x, y), -1)
     scale = width[..., None, None, None]
