@@ -1,3 +1,18 @@
+"""
+Supplemental Data 4
+-------------------
+
+No target-specific binding and varying non-specific binding rate simulation parameters and corresponding fit values
+
+To generate source image file ``supplementary/data4.xlsx``, run::
+
+  python scripts/supplementary/data4.py
+
+Input data:
+
+* ``simulations/negative*``
+"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -16,9 +31,9 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        statistics = pd.read_csv(data_path / "statistics.csv", index_col=0)
+        statistics = pd.read_csv(data_path / "cosmos-channel0-summary.csv", index_col=0)
 
-        fit[data_path.name] = statistics.drop("trained").astype(float)
+        fit[data_path.name] = statistics.astype(float)
         for p in ("gain", "proximity", "pi", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 

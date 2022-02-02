@@ -2,9 +2,15 @@
 Figure 4-Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-False negative spot misidentifications by Tapqir and spot-picker method.
+.. figure:: figures/tapqir_performance_fn.png
+   :alt: Figure 4-Figure supplement 1
+   :width: 800
 
-To generate source image file ``figures/tapqir_performance_fn.svg``, run::
+   False negative spot misidentifications by Tapqir and spot-picker method.
+
+Image file: `figures/tapqir_performance_fn.png <figures/tapqir_performance_fn.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_performance_fn.py
 

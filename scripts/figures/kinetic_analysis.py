@@ -2,9 +2,15 @@
 Figure 5
 --------
 
-Tapqir analysis of association/dissociation kinetics and thermodynamics.
+.. figure:: figures/kinetic_analysis.png
+   :alt: Figure 5
+   :width: 800
 
-To generate source image file ``figures/kinetic_analysis.svg``, run::
+   Tapqir analysis of association/dissociation kinetics and thermodynamics.
+
+Image file: `figures/kinetic_analysis.png <figures/kinetic_analysis.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/kinetic_analysis.py
 

@@ -2,9 +2,15 @@
 Figure 4
 --------
 
-Tapqir performance on simulated data with different SNRs or different non-specific binding rates.
+.. figure:: figures/tapqir_performance.png
+   :alt: Figure 4
+   :width: 800
 
-To generate source image file ``figures/tapqir_performance.svg``, run::
+   Tapqir performance on simulated data with different SNRs or different non-specific binding rates.
+
+Image file: `figures/tapqir_performance.png <figures/tapqir_performance.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_performance.py
 

@@ -1,3 +1,19 @@
+"""
+Figure 6-Figure supplement 3
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Additional example showing extraction of target-binder association kinetics from experimental data.
+
+To generate source image file ``figures/experimental_data_DatasetD.png``, run::
+
+  python scripts/figures/DatasetD_ttfb_analysis.py
+  python scripts/figures/experimental_data_DatasetD.py
+
+Input data:
+
+* ``experimental/DatsetD``
+"""
+
 from pathlib import Path
 
 import matplotlib as mpl
@@ -46,7 +62,7 @@ sdx = torch.argsort(ttfb, descending=True)
 
 norm = mpl.colors.Normalize(vmin=0, vmax=1)
 im = ax.imshow(
-    model.params["p(specific)"][: model.data.N][sdx][::2, ::13],
+    model.params["z_probs"][: model.data.N][sdx][::2, ::13],
     norm=norm,
     aspect="equal",
     interpolation="none",
@@ -75,7 +91,7 @@ results = pd.read_csv("scripts/figures/DatasetD.csv", index_col=0)
 # prepare data
 Tmax = model.data.F
 torch.manual_seed(0)
-z = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample((2000,))
+z = dist.Bernoulli(model.params["z_probs"][: model.data.N]).sample((2000,))
 data = time_to_first_binding(z)
 
 nz = (data == 0).sum(1, keepdim=True)
@@ -381,4 +397,4 @@ ax.set_xlabel(r"$A_\mathsf{f}$")
 ax.set_xlim(0, 1)
 ax.set_ylim(-0.6, 1.6)
 
-plt.savefig("figures/experimental_data_DatasetD.png", dpi=600)
+plt.savefig("figures/experimental_data_DatasetD.png", dpi=900)

@@ -1,3 +1,18 @@
+"""
+Supplemental Data 5
+-------------------
+
+Kinetic simulation parameters and corresponding fit values
+
+To generate source image file ``supplementary/data5.xlsx``, run::
+
+  python scripts/supplementary/data5.py
+
+Input data:
+
+* ``simulations/kon*``
+"""
+
 from pathlib import Path
 
 import pandas as pd
@@ -20,16 +35,16 @@ for data_path in SIMULATIONS_DIR.iterdir():
             data_path / "simulated_params.csv", squeeze=True, index_col=0
         ).rename(data_path.name)
 
-        statistics = pd.read_csv(data_path / "statistics.csv", index_col=0)
+        statistics = pd.read_csv(data_path / "cosmos-channel0-summary.csv", index_col=0)
 
-        fit[data_path.name] = statistics.drop("trained").astype(float)
+        fit[data_path.name] = statistics.astype(float)
         for p in ("gain", "proximity", "lamda", "SNR"):
             fit[data_path.name].loc[p, "True"] = truth[data_path.name][p]
 
-        model = Cosmos(verbose=False)
+        model = Cosmos()
         model.load(data_path, data_only=False)
 
-        z_samples = dist.Bernoulli(model.params["p(specific)"]).sample((500,))
+        z_samples = dist.Bernoulli(model.params["z_probs"]).sample((500,))
         # kon distribtion (MLE fit)
         kon_samples = association_rate(z_samples)
         fit[data_path.name].loc["kon", "Mean"] = kon_samples.mean().item()

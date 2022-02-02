@@ -188,9 +188,15 @@ Input data:
 Figure 4
 --------
 
-Tapqir performance on simulated data with different SNRs or different non-specific binding rates.
+.. figure:: figures/tapqir_performance.png
+   :alt: Figure 4
+   :width: 800
 
-To generate source image file ``figures/tapqir_performance.png``, run::
+   Tapqir performance on simulated data with different SNRs or different non-specific binding rates.
+
+Image file: `figures/tapqir_performance.png <figures/tapqir_performance.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_performance.py
 
@@ -203,9 +209,15 @@ Input data:
 Figure 4-Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-False negative spot misidentifications by Tapqir and spot-picker method.
+.. figure:: figures/tapqir_performance_fn.png
+   :alt: Figure 4-Figure supplement 1
+   :width: 800
 
-To generate source image file ``figures/tapqir_performance_fn.png``, run::
+   False negative spot misidentifications by Tapqir and spot-picker method.
+
+Image file: `figures/tapqir_performance_fn.png <figures/tapqir_performance_fn.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/tapqir_performance_fn.py
 
@@ -218,9 +230,15 @@ Input data:
 Figure 5
 --------
 
-Tapqir analysis of association/dissociation kinetics and thermodynamics.
+.. figure:: figures/kinetic_analysis.png
+   :alt: Figure 5
+   :width: 800
 
-To generate source image file ``figures/kinetic_analysis.png``, run::
+   Tapqir analysis of association/dissociation kinetics and thermodynamics.
+
+Image file: `figures/kinetic_analysis.png <figures/kinetic_analysis.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/kinetic_analysis.py
 
@@ -243,9 +261,15 @@ Input data:
 Figure 6
 --------
 
-Extraction of target-binder association kinetics from example experimental data.
+.. figure:: figures/experimental_data.png
+   :alt: Figure 6
+   :width: 800
 
-To generate source image file ``figures/experimental_data.png``, run::
+   Extraction of target-binder association kinetics from example experimental data.
+
+Image file: `figures/experimental_data.png <figures/experimental_data.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/DatasetB_ttfb_analysis.py
   python scripts/figures/experimental_data.py
@@ -257,9 +281,15 @@ Input data:
 Figure 6-Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Additional example showing extraction of target-binder association kinetics from experimental data.
+.. figure:: figures/experimental_data_DatasetA.png
+   :alt: Figure 6-Figure supplement 1
+   :width: 800
 
-To generate source image file ``figures/experimental_data_DatasetA.png``, run::
+   Additional example showing extraction of target-binder association kinetics from experimental data.
+
+Image file: `figures/experimental_data_DatasetA.png <figures/experimental_data_DatasetA.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/DatasetA_ttfb_analysis.py
   python scripts/figures/experimental_data_DatasetA.py
@@ -271,9 +301,15 @@ Input data:
 Figure 6-Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Additional example showing extraction of target-binder association kinetics from experimental data.
+.. figure:: figures/experimental_data_DatasetC.png
+   :alt: Figure 6-Figure supplement 2
+   :width: 800
 
-To generate source image file ``figures/experimental_data_DatasetC.png``, run::
+   Additional example showing extraction of target-binder association kinetics from experimental data.
+
+Image file: `figures/experimental_data_DatasetC.png <figures/experimental_data_DatasetC.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/DatasetC_ttfb_analysis.py
   python scripts/figures/experimental_data_DatasetC.py
@@ -285,9 +321,15 @@ Input data:
 Figure 6-Figure supplement 3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Additional example showing extraction of target-binder association kinetics from experimental data.
+.. figure:: figures/experimental_data_DatasetD.png
+   :alt: Figure 6-Figure supplement 3
+   :width: 800
 
-To generate source image file ``figures/experimental_data_DatasetD.png``, run::
+   Additional example showing extraction of target-binder association kinetics from experimental data.
+
+Image file: `figures/experimental_data_DatasetD.png <figures/experimental_data_DatasetD.png>`_
+
+To generate the image file, run::
 
   python scripts/figures/DatasetD_ttfb_analysis.py
   python scripts/figures/experimental_data_DatasetD.py

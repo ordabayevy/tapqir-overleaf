@@ -18,7 +18,7 @@ model.load(path_data, data_only=False)
 Tmax = model.data.F
 control = None
 torch.manual_seed(0)
-z = dist.Bernoulli(model.params["p(specific)"][: model.data.N]).sample((2000,))
+z = dist.Bernoulli(model.params["z_probs"][: model.data.N]).sample((2000,))
 data = time_to_first_binding(z)
 
 # use cuda
