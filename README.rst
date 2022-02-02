@@ -25,19 +25,25 @@ These folder contain following analysis outputs:
 Figure 1
 --------
 
-.. image:: figures/cosmos_experiment/cosmos_experiment.png
-   :caption: Example CoSMoS experiment.
+.. figure:: figures/cosmos_experiment/cosmos_experiment.png
+   :alt: Figure 1
+   :width: 800
+   
+   Example CoSMoS experiment.
 
-Image file: ``figures/cosmos_epxeriment/cosmos_experiment.png``
+Image file: `figures/cosmos_epxeriment/cosmos_experiment.png <figures/cosmos_epxeriment/cosmos_experiment.png>`_
 
 
 Figure 2
 --------
 
-.. image:: figures/graphical_model.png
-   :caption: Depiction of the cosmos probabilistic image model and model parameters.
+.. figure:: figures/graphical_model.png
+   :alt: Figure 2
+   :width: 800
+   
+   Depiction of the cosmos probabilistic image model and model parameters.
 
-Image file: ``figures/graphical_model.png``
+Image file: `figures/graphical_model.png <figures/graphical_model.png>`_
 
 To generate panels A, B, and C in the image, run (outpus ``figures/graphical_model.svg`` vector image)::
 
@@ -52,18 +58,24 @@ Graphical model in panel D is located at ``figures/graphical_model.pdf``.
 Figure 2–Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/graphical_model_extended.png
-   :caption: Extended graphical representation of the cosmos generative probabilistic model.
+.. figure:: figures/graphical_model_extended.png
+   :alt: Figure 2–Figure supplement 1
+   :width: 800
+   
+   Extended graphical representation of the cosmos generative probabilistic model.
 
-Image file: ``figures/graphical_model_extended.png``
+Image file: `figures/graphical_model_extended.png <figures/graphical_model_extended.png>`_
 
 Figure 2–Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/graphical_model_xy.png
-   :caption: The prior distributions for x and y spot position parameters.
+.. figure:: figures/graphical_model_xy.png
+   :alt: Figure 2–Figure supplement 2
+   :width: 300
+   
+   The prior distributions for x and y spot position parameters.
 
-Image file: ``figures/graphical_model_xy.png``
+Image file: `figures/graphical_model_xy.png <figures/graphical_model_xy.png>`_
 
 To generate the image file, run::
 
@@ -73,10 +85,13 @@ To generate the image file, run::
 Figure 3
 --------
 
-.. image:: figures/tapqir_analysis.png
-   :caption: Tapqir analysis and inferred model parameters.
+.. figure:: figures/tapqir_analysis.png
+   :alt: Figure 3
+   :width: 800
+   
+   Tapqir analysis and inferred model parameters.
 
-Image file: ``figures/tapqir_analysis.png``
+Image file: `figures/tapqir_analysis.png <figures/tapqir_analysis.png>`_
 
 To generate the image file, run::
 
@@ -90,10 +105,13 @@ Input data:
 Figure 3-Figure supplement 1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/tapqir_analysis_probs.png
-   :caption: Calculated spot probabilities.
+.. figure:: figures/tapqir_analysis_probs.png
+   :alt: Figure 3-Figure supplement 1
+   :width: 800
+   
+   Calculated spot probabilities.
 
-Image file: ``figures/tapqir_analysis_probs.png``
+Image file: `figures/tapqir_analysis_probs.png <figures/tapqir_analysis_probs.png>`_
 
 To generate the image file, run::
 
@@ -107,10 +125,13 @@ Input data:
 Figure 3-Figure supplement 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/tapqir_analysis_ppc.png
-   :caption: Reproduction of experimental data by posterior predictive sampling.
+.. figure:: figures/tapqir_analysis_ppc.png
+   :alt: Figure 3-Figure supplement 2
+   :width: 800
+   
+   Reproduction of experimental data by posterior predictive sampling.
 
-Image file: ``figures/tapqir_analysis_ppc.png``
+Image file: `figures/tapqir_analysis_ppc.png <figures/tapqir_analysis_ppc.png>`_
 
 To generate the image file, run::
 
@@ -126,10 +147,13 @@ Input data:
 Figure 3-Figure supplement 3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/tapqir_analysis_randomized.png
-   :caption: Tapqir analysis of image data simulated using a broad range of global parameters.
+.. figure:: figures/tapqir_analysis_randomized.png
+   :alt: Figure 3-Figure supplement 3
+   :width: 800
+   
+   Tapqir analysis of image data simulated using a broad range of global parameters.
 
-Image file: ``figures/tapqir_analysis_randomized.png``
+Image file: `figures/tapqir_analysis_randomized.png <figures/tapqir_analysis_randomized.png>`_
 
 To generate the image file, run::
 
@@ -142,10 +166,13 @@ Input data:
 Figure 3-Figure supplement 4
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: figures/tapqir_analysis_size.png
-   :caption: Effect of AOI size on analysis of experimental data.
+.. figure:: figures/tapqir_analysis_size.png
+   :alt: Figure 3-Figure supplement 4
+   :width: 800
+   
+   Effect of AOI size on analysis of experimental data.
 
-Image file: ``figures/tapqir_analysis_size.png``
+Image file: `figures/tapqir_analysis_size.png <figures/tapqir_analysis_size.png>`_
 
 To generate the image file, run::
 
