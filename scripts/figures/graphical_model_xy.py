@@ -4,7 +4,9 @@ Figure 2–Figure supplement 2
 
 The prior distributions for x and y spot position parameters.
 
-To generate source image file ``figures/graphical_model_xy.svg``, run::
+Image file: ``figures/graphical_model_xy.png``
+
+To generate the image file, run::
 
   python scripts/figures/graphical_model_xy.py
 """
@@ -54,4 +56,4 @@ ax.set_ylim(-0.03, 1.2)
 ax.legend(frameon=False)
 
 plt.tight_layout()
-plt.savefig("figures/graphical_model_xy.png", dpi=600)
+plt.savefig("figures/graphical_model_xy.png", dpi=900)

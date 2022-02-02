@@ -2,15 +2,19 @@
 Figure 2
 --------
 
-Depiction of the *cosmos* probabilistic image model and model parameters.
+Depiction of the cosmos probabilistic image model and model parameters.
 
-To generate source image file ``figures/graphical_model.svg``, run::
+Image file: ``figures/graphical_model.png``
+
+To generate panels A, B, and C in the image, run (outpus ``figures/graphical_model.svg`` vector image)::
 
   python scripts/figures/graphical_model.py
 
 Input data:
 
 * ``experimental/DatasetA``
+
+Graphical model in panel D is located at ``figures/graphical_model.pdf``.
 """
 
 from pathlib import Path
@@ -280,4 +284,4 @@ ax = fig.add_subplot(gs[:, 1])
 ax.axis("off")
 ax.text(-0.1, 0.95, r"\textbf{D}")
 
-plt.savefig("figures/graphical_model.svg", dpi=600)
+plt.savefig("figures/graphical_model.svg", dpi=900)
