@@ -226,7 +226,7 @@ Variational inference directly optimizes $q(m) \equiv m_\mathsf{prob}$ (see Eq. 
 \end{aligned}
 \end{equation}
 
-In our calculations we used $S = 50$ number of Monte Carlo samples. Marginal probabilities $p(z | D)$ and $p(\theta | D)$ are calculated as:
+In our calculations we used $S = 25$ number of Monte Carlo samples. Marginal probabilities $p(z | D)$ and $p(\theta | D)$ are calculated as:
 
 \begin{subequations}
 \begin{align}
@@ -254,7 +254,7 @@ Credible intervals were calculated from posterior distribution samples as the hi
 
 \subsection{Data simulation}
 
-Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($z$, $\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--5.
+Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($z$, $\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--6.
 
 For kinetic simulations (\FIG{kinetic_analysis}, Supplemental Data 5), $z$ was modeled using a discrete Markov process with the initial probability and the transition probability matrices:
 \begin{subequations}
