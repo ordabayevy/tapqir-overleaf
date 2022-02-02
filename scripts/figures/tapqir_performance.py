@@ -84,7 +84,7 @@ for i, name in enumerate(truth_df.index):
     ax = fig.add_subplot(gsa[i])
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
-    ax.set_title(fr"${truth_df.loc[name, 'SNR']:.2f}$", fontsize=8)
+    ax.set_title(rf"${truth_df.loc[name, 'SNR']:.2f}$", fontsize=8)
     data = load(SIMULATIONS_DIR / name)
     ax.imshow(data.images[3, 222, 0].numpy(), vmin=190, vmax=380, cmap="gray")
     if i == 0:

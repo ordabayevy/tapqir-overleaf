@@ -65,7 +65,7 @@ def main(args):
     spot_locs = target_locs.unsqueeze(-2) + torch.stack((x, y), -1)
     scale = width[..., None, None, None]
     loc = spot_locs[..., None, None, :]
-    var = scale ** 2
+    var = scale**2
     normalized_gaussian = torch.exp(
         (
             -((ij_pixel - loc) ** 2) / (2 * var)

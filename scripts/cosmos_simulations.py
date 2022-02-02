@@ -57,7 +57,7 @@ def main(args):
     i_pixel, j_pixel = torch.meshgrid(P_range, P_range, indexing="xy")
     ij_pixel = torch.stack((i_pixel, j_pixel), dim=-1)
     weights = rv.log_prob(ij_pixel).exp()
-    signal = (weights ** 2 * params["height"]).sum()
+    signal = (weights**2 * params["height"]).sum()
     noise = math.sqrt((params["background"] * params["gain"]))
     params["SNR"] = float(signal / noise)
     params["N"] = args.N

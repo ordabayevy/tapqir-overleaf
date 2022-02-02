@@ -73,7 +73,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     )
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
-    ax.set_title(fr"${n}$" + "\n" + fr"${f}$", fontsize=8)
+    ax.set_title(rf"${n}$" + "\n" + rf"${f}$", fontsize=8)
     if i == 0:
         ax.text(
             -25,
@@ -174,7 +174,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     )
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
-    ax.set_title(fr"${n}$" + "\n" + fr"${f}$", fontsize=8)
+    ax.set_title(rf"${n}$" + "\n" + rf"${f}$", fontsize=8)
     if i == 0:
         ax.text(
             -25,
@@ -281,7 +281,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     )
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
-    ax.set_title(fr"${n}$" + "\n" + fr"${f}$", fontsize=8)
+    ax.set_title(rf"${n}$" + "\n" + rf"${f}$", fontsize=8)
     if i == 0:
         ax.text(
             -25,
@@ -382,7 +382,7 @@ for i, n, f in zip(torch.arange(6), aois, frames):
     )
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
-    ax.set_title(fr"${n}$" + "\n" + fr"${f}$", fontsize=8)
+    ax.set_title(rf"${n}$" + "\n" + rf"${f}$", fontsize=8)
     if i == 0:
         ax.text(
             -25,

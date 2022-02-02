@@ -60,7 +60,7 @@ for i, (n, f) in enumerate(zip(aois, frames)):
     tsign = "+" if model.params["z_map"][n, f] else "-"
     ssign = "+" if spotpicker["binary_default1p5"][n, f] else "-"
     ax.set_title(
-        fr"${n}$; ${f}$" + "\n" + fr"${tsign}$" + "\n" + fr"${ssign}$", fontsize=8
+        rf"${n}$; ${f}$" + "\n" + rf"${tsign}$" + "\n" + rf"${ssign}$", fontsize=8
     )
     if not i % 10:
         ax.text(

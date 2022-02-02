@@ -175,7 +175,7 @@ for k in range(2):
     ax.set_yticklabels([r"$0$", r"$0.5$", r"$1$"])
     ax.set_xlim(f1 - 0.5, f2 - 0.5)
     ax.set_ylim(-0.15, 1.15)
-    ax.set_ylabel(fr"$p(\theta={k+1})$")
+    ax.set_ylabel(rf"$p(\theta={k+1})$")
 
     # p(m)
     ax = fig.add_subplot(gs[3 + k * 2, :])
