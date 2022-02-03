@@ -43,10 +43,10 @@ Analysis output of simulated data is stored in ``simulations`` folder:
 
 These folders contain following files:
 
-* ``data.tpqr`` AOI images
+* ``data.tpqr``: AOI images
 * ``cosmos-channel0-params.tpqr``: posterior parameter distributions
 * ``cosmos-channel0-summary.csv``: summary of global parameter values
-* ``.tapqir``: folder containing internal files such as last model checkpoint, configuration file, and log files.
+* ``.tapqir``: sub-folder containing internal files such as last model checkpoint, configuration file, and log files.
 
 Figure 1
 --------
@@ -370,7 +370,9 @@ Supplemental Data 1
 
 Varying non-specific binding rate simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data1.xlsx``, run::
+Spreadsheet file: `supplementary/data1.xlsx <supplementary/data1.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data1.py
 
@@ -384,7 +386,9 @@ Supplemental Data 2
 
 Randomized simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data2.xlsx``, run::
+Spreadsheet file: `supplementary/data2.xlsx <supplementary/data2.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data2.py
 
@@ -398,7 +402,9 @@ Supplemental Data 3
 
 Randomized simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data3.xlsx``, run::
+Spreadsheet file: `supplementary/data3.xlsx <supplementary/data3.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data3.py
 
@@ -412,7 +418,9 @@ Supplemental Data 4
 
 No target-specific binding and varying non-specific binding rate simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data4.xlsx``, run::
+Spreadsheet file: `supplementary/data4.xlsx <supplementary/data4.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data4.py
 
@@ -426,7 +434,9 @@ Supplemental Data 5
 
 Kinetic simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data5.xlsx``, run::
+Spreadsheet file: `supplementary/data5.xlsx <supplementary/data5.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data5.py
 
@@ -440,7 +450,9 @@ Supplemental Data 6
 
 Varying proximity simulation parameters and corresponding fit values
 
-To generate supplementary file ``supplementary/data6.xlsx``, run::
+Spreadsheet file: `supplementary/data6.xlsx <supplementary/data6.xlsx>`_
+
+To generate the file, run::
 
   python scripts/supplementary/data6.py
 
