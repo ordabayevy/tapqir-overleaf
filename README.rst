@@ -57,7 +57,7 @@ Figure 1
    
    Example CoSMoS experiment.
 
-Image file: `figures/cosmos_epxeriment/cosmos_experiment.png <figures/cosmos_epxeriment/cosmos_experiment.png>`_
+Image file: `figures/cosmos_experiment/cosmos_experiment.png <figures/cosmos_experiment/cosmos_experiment.png>`_
 
 
 Figure 2
