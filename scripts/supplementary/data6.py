@@ -1,6 +1,6 @@
 """
-Supplemental Data 6
--------------------
+Supplementary File 6
+--------------------
 
 Varying proximity simulation parameters and corresponding fit values
 
@@ -39,14 +39,11 @@ for data_path in SIMULATIONS_DIR.iterdir():
 
 truth_df = pd.concat(truth.values(), axis=1).T.sort_values(by="lamda").astype(float)
 description.name = (
-    "Supplemental Data 6: Varying proximity "
+    "Supplementary File 6: Varying proximity "
     "simulation parameters and corresponding fit values"
 )
 
-with pd.ExcelWriter(
-    "/home/ordabayev/repos/tapqir-overleaf/supplementary/data6.xlsx",
-    engine="xlsxwriter",
-) as writer:
+with pd.ExcelWriter("supplementary/data6.xlsx", engine="xlsxwriter") as writer:
     description.to_excel(writer, sheet_name="Description")
     worksheet = writer.sheets["Description"]
     worksheet.set_column(0, 0, 15)

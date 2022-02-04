@@ -1,6 +1,6 @@
 """
-Supplemental Data 3
--------------------
+Supplementary File 3
+--------------------
 
 Randomized simulation parameters and corresponding fit values
 
@@ -44,14 +44,11 @@ truth_df = (
     .drop(columns=["Fc"])
 )
 description.name = (
-    "Supplemental Data 3: Varying intensity (SNR) "
+    "Supplementary File 3: Varying intensity (SNR) "
     "simulation parameters and corresponding fit values"
 )
 
-with pd.ExcelWriter(
-    "/home/ordabayev/repos/tapqir-overleaf/supplementary/data3.xlsx",
-    engine="xlsxwriter",
-) as writer:
+with pd.ExcelWriter("supplementary/data3.xlsx", engine="xlsxwriter") as writer:
     description.to_excel(writer, sheet_name="Description")
     worksheet = writer.sheets["Description"]
     worksheet.set_column(0, 0, 15)

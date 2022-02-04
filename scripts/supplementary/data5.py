@@ -1,6 +1,6 @@
 """
-Supplemental Data 5
--------------------
+Supplementary File 5
+--------------------
 
 Kinetic simulation parameters and corresponding fit values
 
@@ -62,13 +62,10 @@ truth_df = pd.concat(truth.values(), axis=1).T.astype(float).drop(columns=["Fc"]
 truth_df["Keq"] = truth_df["kon"] / truth_df["koff"]
 truth_df = truth_df.sort_values(by=["kon", "lamda"])
 description.name = (
-    "Supplemental Data 5: Kinetic simulation parameters and corresponding fit values"
+    "Supplementary File 5: Kinetic simulation parameters and corresponding fit values"
 )
 
-with pd.ExcelWriter(
-    "/home/ordabayev/repos/tapqir-overleaf/supplementary/data5.xlsx",
-    engine="xlsxwriter",
-) as writer:
+with pd.ExcelWriter("supplementary/data5.xlsx", engine="xlsxwriter") as writer:
     description.to_excel(writer, sheet_name="Description")
     worksheet = writer.sheets["Description"]
     worksheet.set_column(0, 0, 15)

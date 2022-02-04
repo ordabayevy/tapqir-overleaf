@@ -1,6 +1,6 @@
 """
-Supplemental Data 2
--------------------
+Supplementary File 2
+--------------------
 
 Randomized simulation parameters and corresponding fit values
 
@@ -41,14 +41,11 @@ for data_path in SIMULATIONS_DIR.iterdir():
 truth_df = pd.concat(truth.values(), axis=1).T.astype(float).sort_values(by="seed")
 truth_df = truth_df.drop(columns=["seed"])
 description.name = (
-    "Supplemental Data 2: Randomized simulation parameters "
+    "Supplementary File 2: Randomized simulation parameters "
     "and corresponding fit values"
 )
 
-with pd.ExcelWriter(
-    "/home/ordabayev/repos/tapqir-overleaf/supplementary/data2.xlsx",
-    engine="xlsxwriter",
-) as writer:
+with pd.ExcelWriter("supplementary/data2.xlsx", engine="xlsxwriter") as writer:
     description.to_excel(writer, sheet_name="Description")
     worksheet = writer.sheets["Description"]
     worksheet.set_column(0, 0, 15)

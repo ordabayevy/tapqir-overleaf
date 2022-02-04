@@ -1,6 +1,6 @@
 Source data repository for: Bayesian machine learning analysis of single-molecule fluorescence colocalization images (Ordabayev et. al.).
 
-This repository contains Figures, Figure supplements, Supplemental Data files, and the scripts and data used to generate them.
+This repository contains Figures, Figure supplements, Supplementary files, and the scripts and data used to generate them.
 
 Clone repository
 ----------------
@@ -34,12 +34,12 @@ Analysis output of experimental data is stored in ``experimental`` folder:
 
 Analysis output of simulated data is stored in ``simulations`` folder:
 
-* Supplemental Data 1: ``simulations/lamda*``
-* Supplemental Data 2: ``simulations/seed*``
-* Supplemental Data 3: ``simulations/height*``
-* Supplemental Data 4: ``simulations/negative*``
-* Supplemental Data 5: ``simulations/kon*``
-* Supplemental Data 6: ``simulations/sigma*``
+* Supplementary File 1: ``simulations/lamda*``
+* Supplementary File 2: ``simulations/seed*``
+* Supplementary File 3: ``simulations/height*``
+* Supplementary File 4: ``simulations/negative*``
+* Supplementary File 5: ``simulations/kon*``
+* Supplementary File 6: ``simulations/sigma*``
 
 These folders contain following files:
 
@@ -365,8 +365,8 @@ Input data:
 * ``experimental/DatsetD``
 
 
-Supplemental Data 1
--------------------
+Supplementary File 1
+--------------------
 
 Varying non-specific binding rate simulation parameters and corresponding fit values
 
@@ -381,8 +381,8 @@ Input data:
 * ``simulations/lamda*``
 
 
-Supplemental Data 2
--------------------
+Supplementary File 2
+--------------------
 
 Randomized simulation parameters and corresponding fit values
 
@@ -397,8 +397,8 @@ Input data:
 * ``simulations/seed*``
 
 
-Supplemental Data 3
--------------------
+Supplementary File 3
+--------------------
 
 Randomized simulation parameters and corresponding fit values
 
@@ -413,8 +413,8 @@ Input data:
 * ``simulations/height*``
 
 
-Supplemental Data 4
--------------------
+Supplementary File 4
+--------------------
 
 No target-specific binding and varying non-specific binding rate simulation parameters and corresponding fit values
 
@@ -429,8 +429,8 @@ Input data:
 * ``simulations/negative*``
 
 
-Supplemental Data 5
--------------------
+Supplementary File 5
+--------------------
 
 Kinetic simulation parameters and corresponding fit values
 
@@ -445,8 +445,8 @@ Input data:
 * ``simulations/kon*``
 
 
-Supplemental Data 6
--------------------
+Supplementary File 6
+--------------------
 
 Varying proximity simulation parameters and corresponding fit values
 
