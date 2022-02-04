@@ -254,9 +254,9 @@ Credible intervals were calculated from posterior distribution samples as the hi
 
 \subsection{Data simulation}
 
-Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($z$, $\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplemental Data 1--6.
+Simulated data were produced using the generative model (\ALGORITHM{model}). Each simulation has a subset of parameters ($\pi$, $\lambda$, $g$, $\sigma^{xy}$, $b$, $h$, $w$, $\delta$) set to desired values while  the remaining parameters ($z$, $\theta$, $m$, $x$, $y$) and resulting noisy images ($D$) are sampled from distributions. The fixed parameter values and data set sizes for all simulations are provided in Supplementary File 1--6.
 
-For kinetic simulations (\FIG{kinetic_analysis}, Supplemental Data 5), $z$ was modeled using a discrete Markov process with the initial probability and the transition probability matrices:
+For kinetic simulations (\FIG{kinetic_analysis}, Supplementary File 5), $z$ was modeled using a discrete Markov process with the initial probability and the transition probability matrices:
 \begin{subequations}
 \begin{align}
     p(z_{\mathsf{frame}(0)} | k_\mathsf{on}, k_\mathsf{off}) &= \mathbf{Categorical} \left( \begin{bmatrix} \frac{k_\mathsf{off}}{k_\mathsf{on} + k_\mathsf{off}} & \frac{k_\mathsf{on}}{k_\mathsf{on} + k_\mathsf{off}} \end{bmatrix} \right) \\
