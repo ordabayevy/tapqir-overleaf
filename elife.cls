@@ -347,9 +347,8 @@
     \ifstrequal{#1}{none}{}{%
       \small\textbf{Figure~\thefigure--Figure supplement \arabic{figsupp}.} \ifstrempty{#1}{#2}{#1}}}\par
     \addtostream{suppinfo}{%
-      %\begin{figure}\begin{fullwidth}
-      %\end{fullwidth}\end{figure}
-      \noindent\protect\begin{figure}\begin{fullwidth}%{\linewidth}
+      % edited from minipage to fullwidth figure
+      \noindent\protect\begin{figure}\begin{fullwidth}
       \protect #3\noexpand\par
       \textbf{Figure \thefigure--Figure supplement \arabic{figsupp}.} #2\noexpand\par
       \vskip8pt

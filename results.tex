@@ -28,7 +28,7 @@ Finally, to construct realistic noisy AOI images $D$ from the noise-free images 
 
 The resulting probabilistic image model can be interpreted as a generative process that produces the observed image data $D$. A graphical representation of the probabilistic relationships in the model is shown in \FIG{graphical_model}D. A complete description of the model is given in Materials and Methods and \FIGSUPP[graphical_model]{extended}.  
  
-\include{figures/graphical_model}
+\input{figures/graphical_model}
 
 \subsection{Parameter prior distributions}
 
@@ -42,7 +42,7 @@ Tapqir calculates posterior distributions of model parameters conditioned on the
 
 To test the approach, we used Tapqir to analyze simulated CoSMoS image data with a comparatively high SNR of 3.76 as well as data from the experiment shown in \FIG{cosmos_experiment}B-D, which has a lower SNR of 1.61. The simulated data were generated using the same \emph{cosmos} model (\FIG{graphical_model}D) that was used for analysis. Tapqir correctly detects fluorescent spots in both simulated and experimental images (compare ``AOI images'' and ``Spot-detection'' rows in \FIG{tapqir_analysis}). The program precisely calculates the position ($x$, $y$), intensity ($h$), and width ($w$) for each spot and also determines the background intensity ($b$) for each image without requiring a separate analysis. These parameters confirm the desired behavior of the model and could be used in further calculations.  However, the most important output of the analysis is assessment of the presence of target-specific binding.  For each AOI image, we calculate $p(\mathsf{specific}) \equiv p(z=1)$ (\FIG{tapqir_analysis}, green), the probability that any target-specific spot is present. Spots determined as likely target-specific ($p(\mathsf{specific}) > 0.5$) are represented as filled circles in the spot detection row of \FIG{tapqir_analysis}. For a particular spot to have high $p(\mathsf{specific})$, it must have a high spot probability and be colocalized with the target molecule at the center of the AOI (\FIGSUPP[tapqir_analysis]{probs}).  
 
-\include{figures/tapqir_analysis}
+\input{figures/tapqir_analysis}
 
 \subsection{Tapqir robustly fits experimental data sets with different characteristics}
 
@@ -68,7 +68,7 @@ A weakness of some existing image-based CoSMoS spot discrimination methods is th
 
 To further evaluate whether Tapqir is prone to misidentifying target-nonspecific spots as specific, we  simulated data sets with no target-specific binding at both low and high non-specific binding densities (Supplementary File 4). Analysis of such data (\FIG{tapqir_performance}I) shows that no target-specific binding (i.e., $p(\mathsf{specific}) > 0.6$) was detected even under the highest non-specific binding density, demonstrating that Tapqir is robust to false-positive target-specific spot detection even under these extreme conditions. 
 
-\include{figures/tapqir_performance}
+\input{figures/tapqir_performance}
 
 Since target-nonspecific spots are built into the \emph{cosmos} model, there is no need to choose excessively small AOIs in an attempt to exclude non-specific spots from analysis. We found that reducing AOI size (from 14 x 14 to 6 x 6 pixels) did not appreciably affect analysis accuracy on simulated data (\TABLE{aoisize}). In analysis of experimental data, smaller AOI sizes caused occasional changes in calculated $p(\mathsf{specific})$ values reflecting apparent missed detection of a few spots (\FIGSUPP[tapqir_analysis]{size}). Out of caution, we therefore used 14 x 14 pixel AOIs routinely, even though the larger AOIs somewhat reduced computation speed (\TABLE{aoisize} and \FIGSUPP[tapqir_analysis]{size}).
 
@@ -82,13 +82,13 @@ From the same simulated data we calculated the equilibrium constant $K_\mathsf{e
 
 The forgoing analysis shows that Tapqir can accurately recover kinetic and thermodynamic constants from simulated CoSMoS data.  However, experimental CoSMoS data sets can be more diverse.  In addition to having different SNR and non-specific binding frequency values, they also may have non-idealities in spot shape (caused by optical aberrations) and in noise (caused by molecular diffusion in and out of the TIRF evanescent field).  In order to see if Tapqir analysis is robust to these and other properties of real experimental data, we analyzed several CoSMoS data sets taken from different experimental projects. Analysis of each data set took a few hours of computation time on a GPU-equipped desktop computer or cloud computing service (\TABLE{datasets}). We first visualized the results as probabilistic rastergrams (\FIG{experimental_data}A, \FIGSUPP[experimental_data]{DatasetA}A, \FIGSUPP[experimental_data]{DatasetC}A, and \FIGSUPP[experimental_data]{DatasetD}A), in which each horizontal line represents the time record from a single AOI.  Unlike the binary spot/no-spot rastergrams in previous studies (e.g., \cite{Friedman2013-sf,Rosen2020-zn}) we plotted the Tapqir-calculated spot probability $p(\mathsf{specific})$ using a color scale.  This representation allows a more nuanced understanding of the data.  For example, \FIG{experimental_data}A reveals that while the long-duration spot detection events typically are assigned a high probability (yellow), some of the shortest duration events have an intermediate $p(\mathsf{specific})$ (green) indicating that the assignment of these as target-specific is uncertain.  
 
-\include{figures/kinetic_analysis}
+\input{figures/kinetic_analysis}
 
 To demonstrate the utility of Tapqir for kinetic analysis of real experimental data, we measured binder association rate constants in previously published experimental data sets (\TABLE{datasets}).  We employed our previous strategy  \citep{Friedman2012-if,Friedman2015-nx} of analyzing the duration of the binder-absent intervals that preceded the first binding event.  Such time-to-first binding analysis improves the accuracy of association rate constant estimates relative to those obtained by analyzing all $\Delta t_\mathsf{off}$ values by minimizing the effects of target molecules occupied by photobleached binders, dye blinking and false negative dropouts that occur within a continuous binder dwell interval.  To perform a time-to-first-binding analysis using Tapqir, we used the posterior sampling method (as in \FIG{kinetic_analysis}B, black records) to determine the initial $\Delta t_\mathsf{off}$ in each AOI record. These data were fit to a kinetic model \citep{Friedman2012-if,Friedman2015-nx} in which only a fraction of target molecules $A_\mathsf{f}$ were binding competent and which includes both exponential target-specific association with rate constant $k_\mathsf{a}$, as well as exponential non-specific association with rate constant $k_\mathsf{ns}$ (\FIG{experimental_data}B, \FIGSUPP[experimental_data]{DatasetA}B, \FIGSUPP[experimental_data]{DatasetC}B, and \FIGSUPP[experimental_data]{DatasetD}B).  The Tapqir-derived fits showed excellent agreement with the kinetic model.  
 
 To further assess the utility of the Tapqir method, we used experimental data sets and compared the Tapqir association kinetics results with those from the previously published empirical binary ``spot-picker'' method \citep{Friedman2015-nx} (\FIG{experimental_data}C, \FIGSUPP[experimental_data]{DatasetA}C, \FIGSUPP[experimental_data]{DatasetC}C, and \FIGSUPP[experimental_data]{DatasetD}C). The values of the association rate constant $k_\mathsf{a}$ obtained using these two methods are in good agreement with each other (\FIG{experimental_data}D, \FIGSUPP[experimental_data]{DatasetA}D, \FIGSUPP[experimental_data]{DatasetC}D, and \FIGSUPP[experimental_data]{DatasetD}D). We emphasize that while Tapqir is fully objective, achieving these results with the spot-picker method required optimization by subjective adjustment of spot detection thresholds.  We noted some differences between the two methods in the non-specific association rate constants $k_\mathsf{ns}$. Differences are expected because these parameters are defined differently in the different non-specific binding models used in Tapqir and  spot-picker (see Materials and Methods).
 
-\include{figures/experimental_data}
+\input{figures/experimental_data}
 
 \input{tables/datasets}
 
